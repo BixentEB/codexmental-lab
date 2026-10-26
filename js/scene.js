@@ -8,7 +8,7 @@
 
 const cvs = document.getElementById('scene');
 if (!cvs) return;
-const x = cvs.getContext('2d');
+let x = cvs.getContext('2d');
 const back = document.createElement('canvas');
 const bx = back.getContext('2d');
 
@@ -260,8 +260,40 @@ const MICRO = bake([
   '   iiiiiiiii'], { k: '#1d1f26', b: C.brass, B: C.brassHi, I: C.ironHi, i: C.iron, e: C.cyan, s: 'rgba(200,240,255,.7)', g: C.pink, y: C.amber });
 const BRAIN = bake([' ppPpp ', 'pPpppPp', 'ppPpPpp', 'pppPppp', ' pp pp ', '   P   '], { p: '#ff9fd0', P: '#c74a8a' });
 
+
+/* ---------- agrandissement pixel art (Scale2x) : personnages plus grands, même finesse ---------- */
+function scale2x(src) {
+  const w0 = src.width, h0 = src.height, s = src.getContext('2d').getImageData(0, 0, w0, h0).data;
+  const out = new ImageData(w0 * 2, h0 * 2), d = out.data;
+  const at = (a, b) => ((Math.max(0, Math.min(h0 - 1, b)) * w0) + Math.max(0, Math.min(w0 - 1, a))) * 4;
+  const eq = (a, b) => s[a] === s[b] && s[a + 1] === s[b + 1] && s[a + 2] === s[b + 2] && s[a + 3] === s[b + 3];
+  const put = (xx, yy, i) => { const o = (yy * w0 * 2 + xx) * 4; d[o] = s[i]; d[o + 1] = s[i + 1]; d[o + 2] = s[i + 2]; d[o + 3] = s[i + 3]; };
+  for (let yy = 0; yy < h0; yy++) for (let xx = 0; xx < w0; xx++) {
+    const p = at(xx, yy), A = at(xx, yy - 1), B = at(xx + 1, yy), Cc = at(xx - 1, yy), D = at(xx, yy + 1);
+    let e0 = p, e1 = p, e2 = p, e3 = p;
+    if (!eq(Cc, B) && !eq(A, D)) { if (eq(Cc, A)) e0 = A; if (eq(A, B)) e1 = B; if (eq(Cc, D)) e2 = Cc; if (eq(D, B)) e3 = D; }
+    put(xx * 2, yy * 2, e0); put(xx * 2 + 1, yy * 2, e1); put(xx * 2, yy * 2 + 1, e2); put(xx * 2 + 1, yy * 2 + 1, e3);
+  }
+  const c = document.createElement('canvas'); c.width = w0 * 2; c.height = h0 * 2; c.getContext('2d').putImageData(out, 0, 0);
+  return c;
+}
+const offC = document.createElement('canvas'), offX = offC.getContext('2d', { willReadFrequently: true });
+// dessine fn à l'échelle 1 dans une petite toile, puis l'agrandit autour du point d'ancrage (les pieds)
+function drawBig(k, ox, oy, ww, hh, ax, ay, fn) {
+  if (k === 1) { fn(); return; }
+  offC.width = ww; offC.height = hh; offX.imageSmoothingEnabled = false;
+  const saved = x; x = offX; offX.setTransform(1, 0, 0, 1, -ox, -oy); fn(); offX.setTransform(1, 0, 0, 1, 0, 0); x = saved;
+  const big = scale2x(offC);
+  x.drawImage(big, F(ax - (ax - ox) * 2), F(ay - (ay - oy) * 2));
+}
+/* ---------- porte commune : même taille et même place dans tous les labos ---------- */
+function doorBox() {
+  const dh = clamp(innerHeight * .17, 120, 190);
+  return { h: dh, w: dh * .48, left: 14, right: 14 + dh * .48 };
+}
+
 /* ---------- état ---------- */
-let S = 3, W = 0, H = 0, w = 0, h = 0, L = {};
+let S = 3, W = 0, H = 0, w = 0, h = 0, L = {}, KS = 1;
 let tick = 0, t = 0, last = 0;
 let shelf = [], lamps = [], bench = [], stars = [], coil = {}, col = {}, alem = null, chem = null;
 let arcs = [], smoke = [], bats = [], sparks = [];
@@ -279,7 +311,9 @@ function layout() {
   cvs.style.width = (w * S) + 'px'; cvs.style.height = (h * S) + 'px';
   const offX = w * S - W, offY = h * S - H, left = -F(offX / 2);
   cvs.style.left = left + 'px'; cvs.style.top = (-offY) + 'px';
-  const TOP = mobile ? 22 : 32, BOT = mobile ? 30 : 36, SIDE = mobile ? 3 : 30;
+  KS = mobile ? 1 : 2;
+  const DB = doorBox(), coilCx = mobile ? 7 : Math.ceil((DB.right + 10) / S) + 10;
+  const TOP = mobile ? 22 : 32, BOT = mobile ? 30 : 38, SIDE = mobile ? 3 : Math.max(30, coilCx + 15);
   L = {
     mobile, TOP, BOT, SIDE, px0: SIDE, py0: TOP, px1: w - SIDE, py1: h - BOT,
     shelfY: TOP - 4, floorY: h - (mobile ? 3 : 4), benchY: h - (mobile ? 11 : 13)
@@ -294,7 +328,7 @@ function layout() {
 
   // bobine Tesla
   if (mobile) coil = { cx: 7, base: L.floorY, top: L.py1 + 6, small: true };
-  else coil = { cx: 15, base: L.floorY, top: F(L.py1 - (L.py1 - L.py0) * .45), small: false };
+  else coil = { cx: coilCx, base: L.floorY, top: F(L.py1 - (L.py1 - L.py0) * .45), small: false };
   L.benchX0 = coil.cx + (coil.small ? 8 : 13);
   L.benchX1 = w - 1;
   // colonne à bulles (droite)
@@ -302,10 +336,11 @@ function layout() {
   // zone des bocaux
   L.jx0 = mobile ? 3 : SIDE + 1;
   L.jx1 = mobile ? w - 22 : w - SIDE - 1;
-  door = L.mobile ? null : { x: 18, y: L.shelfY - 13, w: 8, h: 13 };
+  door = null;
+  st.setProperty('--door-b', (4 * S) + 'px');
   genShelf(); genLamps(); genBench(); genStars();
   if (!chem) chem = { x: F((L.benchX0 + L.benchX1) / 2), dir: 1, mode: 'idle', timer: 40, bub: null, jump: 0, target: null };
-  chem.x = clamp(chem.x, L.benchX0 + 4, L.benchX1 - 14);
+  chem.x = clamp(chem.x, L.benchX0 + 6, L.benchX1 - 20);
   buildBack();
   if (reduce) draw();
 }
@@ -633,13 +668,13 @@ function startCreature() {
   const cx = F((L.benchX0 + (col ? col.x : L.benchX1)) / 2);
   ev = { t0: t, tx: cx - 12, stage: 0, zx: 0, told: false };
   dimTarget = .62;
-  if (chem) { chem.mode = 'walk'; chem.target = clamp(ev.tx - 12, L.benchX0 + 2, w - 12); chem.bub = { s: '!', t: 40 }; }
+  if (chem) { chem.mode = 'walk'; chem.target = clamp(ev.tx - 6 - 12 * KS, L.benchX0 + 2, w - 12); chem.bub = { s: '!', t: 40 }; }
   window.dispatchEvent(new CustomEvent('lab:creature', { detail: { phase: 'start' } }));
 }
 function updateEvent() {
   if (!ev) return;
   const e = t - ev.t0, tx = ev.tx, B = L.benchY;
-  const eL = [tx - 1, B - 15], eR = [tx + 24, B - 15];
+  const eL = [tx + 12 - 13 * KS, B - 15 * KS], eR = [tx + 12 + 12 * KS, B - 15 * KS];
   if (e < 3.2) {
     if (tick % 4 === 0) arcs.push(makeArc(...coilTip(), eL[0], eL[1], 2, true));
     if (e > 1 && tick % 3 === 0) arcs.push(makeArc(eL[0], eL[1], eR[0], eR[1], 2, true));
@@ -648,7 +683,7 @@ function updateEvent() {
   }
   if (e >= 3.2 && ev.stage === 0) ev.stage = 1;
   if (e >= 4.4 && ev.stage === 1) {
-    ev.stage = 2; ev.zx = tx + 24;
+    ev.stage = 2; ev.zx = tx + 12 + 12 * KS;
     if (chem) { chem.mode = 'cheer'; chem.timer = 40; chem.bub = { s: 'EUREKA!', t: 44 }; chem.jump = 8; }
     ev.say = { s: 'GRRR!', t: 40 };
   }
@@ -661,19 +696,22 @@ function updateEvent() {
 function drawEvent() {
   if (!ev) return;
   const tx = ev.tx, B = L.benchY;
-  // table d'opération + électrodes
-  R(x, tx, B - 6, 24, 1, C.steel); R(x, tx, B - 5, 24, 1, C.ironHi); R(x, tx + 2, B - 4, 2, 4, C.iron); R(x, tx + 20, B - 4, 2, 4, C.iron);
-  R(x, tx - 2, B - 15, 1, 15, C.brassLo); R(x, tx + 24, B - 15, 1, 15, C.brassLo);
-  disc(x, tx - 2, B - 16, 1, C.brassHi); disc(x, tx + 24, B - 16, 1, C.brassHi);
-  if (ev.stage === 0) x.drawImage(CREATURE.lie, tx + 2, B - 11);
-  else if (ev.stage === 1) x.drawImage(CREATURE.sit, tx + 3, B - 16);
-  else if (ev.stage >= 2) {
+  // table d'opération + électrodes (dessinées à l'échelle 1 puis agrandies autour du pied de la table)
+  drawBig(KS, tx - 4, B - 18, 32, 19, tx + 12, B, () => {
+    R(x, tx, B - 6, 24, 1, C.steel); R(x, tx, B - 5, 24, 1, C.ironHi); R(x, tx + 2, B - 4, 2, 4, C.iron); R(x, tx + 20, B - 4, 2, 4, C.iron);
+    R(x, tx - 2, B - 15, 1, 15, C.brassLo); R(x, tx + 24, B - 15, 1, 15, C.brassLo);
+    disc(x, tx - 2, B - 16, 1, C.brassHi); disc(x, tx + 24, B - 16, 1, C.brassHi);
+    if (ev.stage === 0) x.drawImage(CREATURE.lie, tx + 2, B - 11);
+    else if (ev.stage === 1) x.drawImage(CREATURE.sit, tx + 3, B - 16);
+  });
+  if (ev.stage >= 2) {
     const walking = ev.stage === 3, spr = walking && (tick >> 2) % 2 ? CREATURE.walk[0] : CREATURE.stand[0];
-    x.drawImage(spr, F(ev.zx), L.floorY - 16 + (walking && (tick >> 2) % 2 ? -1 : 0));
-    glow(x, ev.zx + 4, L.floorY - 13, 5, C.lime, .35);
-    if (ev.say) bubble(x, ev.say.s, F(ev.zx + 5), L.floorY - 18, '#2f6b1a');
+    const zx = F(ev.zx), Y = L.floorY - 16 + (walking && (tick >> 2) % 2 ? -1 : 0), ax = zx + 5.5;
+    drawBig(KS, zx - 1, Y - 1, spr.width + 2, spr.height + 2, ax, L.floorY, () => x.drawImage(spr, zx, Y));
+    glow(x, ax, L.floorY - 8 * KS, 5 * KS, C.lime, .35);
+    if (ev.say) bubble(x, ev.say.s, F(ax), L.floorY - 17 * KS, '#2f6b1a');
   }
-  if (ev.stage === 1) glow(x, tx + 6, B - 13, 4, C.lime, .5);
+  if (ev.stage === 1) glow(x, tx + 12 + (6 - 12) * KS, B - 13 * KS, 4 * KS, C.lime, .5);
 }
 
 /* ---------- mise à jour ---------- */
@@ -749,7 +787,7 @@ function updateChem() {
     c.dir = dx >= 0 ? 1 : -1;
     if (Math.abs(dx) <= sp) {
       c.x = c.target;
-      if (c.mode === 'chase') { c.x = -12; c.mode = 'walk'; c.target = ri(L.benchX0 + 4, F(w * .5)); return; }
+      if (c.mode === 'chase') { c.x = -12 * KS; c.mode = 'walk'; c.target = ri(L.benchX0 + 4, F(w * .5)); return; }
       c.mode = 'idle'; c.timer = ri(30, 110);
       if (!ev) {
         const near = stops().find(s => Math.abs(s.x - c.x) < 3);
@@ -758,7 +796,7 @@ function updateChem() {
     } else c.x += c.dir * sp;
   } else if (c.mode === 'idle') {
     if (ev) return;
-    if (--c.timer <= 0) { const s = stops(); c.target = clamp(s.length ? pick(s).x : ri(L.benchX0 + 4, w - 20), L.benchX0 + 1, (col ? col.x - 10 : w - 12)); c.mode = 'walk'; }
+    if (--c.timer <= 0) { const s = stops(); c.target = clamp(s.length ? pick(s).x : ri(L.benchX0 + 4, w - 20), L.benchX0 + 6, (col ? col.x - 14 : w - 16)); c.mode = 'walk'; }
   } else if (c.mode === 'cheer') {
     if (--c.timer <= 0) c.mode = 'idle';
   }
@@ -769,9 +807,10 @@ function drawChem() {
   const fr = c.mode === 'cheer' ? CHEM.cheer : (walking && (tick >> 2) % 2) ? CHEM.walk : CHEM.stand;
   const img = fr[c.dir > 0 ? 0 : 1];
   const bob = walking && (tick >> 2) % 2 ? -1 : 0, jmp = c.jump > 0 ? -Math.round(Math.sin(c.jump / 8 * Math.PI) * 3) : 0;
-  const Y = L.floorY - img.height + bob + jmp;
-  x.drawImage(img, F(c.x), Y);
-  if (c.bub) bubble(x, c.bub.s, F(c.x + 5), Y - 1, c.bub.s === 'EUREKA!' ? '#b0401a' : '#14161c');
+  const Y = L.floorY - img.height + bob + jmp, ax = F(c.x) + 5, ay = L.floorY;
+  drawBig(KS, F(c.x) - 1, Y - 1, img.width + 2, img.height + 2, ax, ay, () => x.drawImage(img, F(c.x), Y));
+  const top = ay - (ay - Y) * KS;
+  if (c.bub) { const s2 = c.bub.s, wd = s2.length * 4 + 3; bubble(x, s2, KS > 1 ? ax + 8 + wd / 2 : ax, KS > 1 ? top + 10 : Y - 1, s2 === 'EUREKA!' ? '#b0401a' : '#14161c'); }
 }
 
 /* ---------- dessin ---------- */
@@ -960,7 +999,7 @@ function draw() {
   for (const a of arcs) drawArc(a);
   for (const s of sparks) P(x, s.x, s.y, s.life > 6 ? '#ffffff' : C.cyan);
   if (ev && dim > .2) {
-    if (ev.stage >= 2) { const zy = L.floorY - 13; P(x, F(ev.zx) + 3, zy, C.lime); P(x, F(ev.zx) + 6, zy, C.lime); }
+    if (ev.stage >= 2) { const ax = F(ev.zx) + 5.5, zy = L.floorY - 13 * KS; R(x, ax - 2.5 * KS, zy, KS, KS, C.lime); R(x, ax + .5 * KS, zy, KS, KS, C.lime); }
     for (const it of bench) if (it.type === 'pumpkin') drawPumpkin(it.x, L.benchY - 8);
     for (const l of lamps) if (l.k > .5) glow(x, l.x, 12, 8, '#ffc36b', .15);
   }
@@ -983,7 +1022,7 @@ function loop(now) {
 function toLogical(e) { const r = cvs.getBoundingClientRect(); return [(e.clientX - r.left) / S, (e.clientY - r.top) / S]; }
 function hitCoil(lx, ly) { return Math.abs(lx - coil.cx) < (coil.small ? 7 : 13) && ly > coil.top - 6 && ly < coil.base; }
 function hitShelf(lx, ly) { return shelf.find(it => lx >= it.x && lx < it.x + it.w && ly >= it.y && ly < it.y + it.h); }
-function hitChem(lx, ly) { return chem && lx >= chem.x && lx < chem.x + 10 && ly > L.floorY - 16 && ly < L.floorY; }
+function hitChem(lx, ly) { const ax = chem ? chem.x + 5 : 0; return chem && lx >= ax - 6 * KS && lx < ax + 6 * KS && ly > L.floorY - 16 * KS && ly < L.floorY; }
 function hitDoor(lx, ly) { return door && lx >= door.x - 1 && lx < door.x + door.w + 1 && ly >= door.y - 1 && ly < door.y + door.h; }
 function hitPort(lx, ly) { const p = porthole(); return Math.hypot(lx - p.cx, ly - p.cy) <= p.r + 2; }
 cvs.addEventListener('pointermove', e => {

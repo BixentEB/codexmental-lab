@@ -282,10 +282,10 @@ function layout() {
   cvs.style.width = W + 'px'; cvs.style.height = H + 'px'; cvs.style.left = '0px'; cvs.style.top = '0px';
   u = compact ? clamp(Math.min(H / 1080, W / 640), .45, .9) : clamp(Math.min(H / 900, W / 1500), .62, 1.7);
   const TOP = compact ? 62 : 84 * u, yB = H - (compact ? 128 : 150) * u, pBot = yB - 150 * u;
-  const SL = compact ? 10 : Math.max(230 * u, W * .13), SR = SL;
+  const SL = compact ? 10 : Math.max(250 * u, W * .14), SR = SL;
   G = { TOP, yB, pBot, SL, SR };
   const st = document.documentElement.style;
-  st.setProperty('--in-t', TOP + 'px'); st.setProperty('--in-b', (H - pBot) + 'px'); st.setProperty('--in-l', SL + 'px'); st.setProperty('--in-r', SR + 'px');
+  st.setProperty('--in-t', TOP + 'px'); st.setProperty('--door-b', (8 * u) + 'px'); st.setProperty('--in-b', (H - pBot) + 'px'); st.setProperty('--in-l', SL + 'px'); st.setProperty('--in-r', SR + 'px');
   puffImg = puffImg || makePuff();
   if (!cloudImg) { cloudImg = document.createElement('canvas'); cloudImg.width = cloudImg.height = 64; const k = cloudImg.getContext('2d'); k.drawImage(puffImg, 0, 0); k.globalCompositeOperation = 'source-in'; k.fillStyle = rgba(DAY.cloud); k.fillRect(0, 0, 64, 64); }
   build();
@@ -390,10 +390,10 @@ function build() {
 
   /* bobine Tesla, fenêtre, porte, lampes, engrenages, manomètres */
   if (!compact) {
-    const tcx = SL * .58, torY = TOP + (H - TOP) * .34, torW = Math.min(170 * u, SL * .88);
+    const DBx = clamp(H * .17, 120, 190) * .48 + 14, tcx = Math.max(SL * .58, DBx + 12 + 64 * u), torY = TOP + (H - TOP) * .34, torW = Math.max(90 * u, Math.min(170 * u, SL * .88, (SL - 6 - tcx) * 2));
     G.tesla = { cx: tcx, torY, torW, torH: 44 * u, base: H, cabW: 128 * u, cabH: 70 * u };
     G.win = { cx: SL * .5, top: TOP + 26 * u, bot: TOP + (H - TOP) * .62, w: SL * .8 };
-    G.door = { x: 12 * u, w: 46 * u, top: H - 92 * u, bot: H - 4 * u };
+    G.door = null;
     G.lamps = [W * .3, W * .5, W * .7].map(x => ({ x, y: TOP * .62, k: 1, off: 0, swing: 0, vs: 0 }));
     G.gears = [
       { x: 40 * u, y: 40 * u, r: 34 * u, n: 14, sp: .4, pal: BRASS }, { x: 92 * u, y: 70 * u, r: 20 * u, n: 9, sp: -.4 * 34 / 20, pal: COPPER, ph: .2 }, { x: 118 * u, y: 28 * u, r: 14 * u, n: 7, sp: .4 * 34 / 14 * .6, pal: STEEL },
@@ -835,7 +835,7 @@ function skyBolt() {
 
 /* ---------- le savant (dessiné en vectoriel) ---------- */
 function drawScientist() {
-  const s = sci, sc = u * (compact ? 1.15 : 1), x = s.x, fy = H - 8 * u;
+  const s = sci, sc = compact ? u * 1.15 : clamp(H * .17, 120, 190) / 1.12 / 122, x = s.x, fy = H - 8 * u;
   const walk = s.mode === 'walk' || s.mode === 'run', ph = s.phase;
   const jump = s.jump > 0 ? Math.sin(s.jump / .35 * Math.PI) * 14 * sc : 0;
   const bob = walk ? Math.abs(Math.sin(ph)) * 2.5 * sc : Math.sin(t * 2) * .8 * sc;
@@ -1149,7 +1149,7 @@ function hit(x, y) {
   for (const gg of G.gauges) if (Math.hypot(x - gg.x, y - gg.y) < gg.r + 4 * u) return 'gauge';
   for (const gg of G.gears) if (Math.hypot(x - gg.x, y - gg.y) < gg.r * 1.1) return 'gear';
   for (const l of G.lamps) if (Math.abs(x - l.x) < 22 * u && Math.abs(y - l.y) < 16 * u) return 'lamp';
-  if (Math.abs(x - sci.x) < 22 * u && y > H - 160 * u) return 'sci';
+  { const sc = compact ? u * 1.15 : clamp(H * .17, 120, 190) / 1.12 / 122; if (Math.abs(x - sci.x) < 22 * sc && y > H - 140 * sc) return 'sci'; }
   return null;
 }
 cvs.addEventListener('pointermove', e => {

@@ -415,13 +415,13 @@ a { color: var(--accent); }
 .lb-x { top: 16px; right: 16px; }
 .lb-prev { left: 16px; top: 50%; transform: translateY(-50%); }
 .lb-next { right: 16px; top: 50%; transform: translateY(-50%); }
-[data-theme="alchimie"] .g-open, [data-theme="alchimie"] .tool, [data-theme="alchimie"] .btn, [data-theme="alchimie"] .code pre { border-radius: 3px; }
-[data-theme="hd"] .g-open, [data-theme="hd"] .tool { border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 1px var(--edge); }
-[data-theme="hd"] .btn { border-radius: 999px; padding: 8px 16px; }
-[data-theme="hd"] .code pre { border-radius: 10px; }
-[data-theme="hd"] .steps li::before { border-radius: 50%; }
-[data-theme="hd"] .lightbox img { border-radius: 10px; }
-[data-theme="pixel"] .tool b, [data-theme="pixel"] .file-head b, [data-theme="pixel"] .step-box h3 { font-family: var(--f-px); font-size: 11px; font-weight: 400; line-height: 1.6; }
+[data-lab="alchimie"] .g-open, [data-lab="alchimie"] .tool, [data-lab="alchimie"] .btn, [data-lab="alchimie"] .code pre { border-radius: 3px; }
+[data-lab="hd"] .g-open, [data-lab="hd"] .tool { border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 1px var(--edge); }
+[data-lab="hd"] .btn { border-radius: 999px; padding: 8px 16px; }
+[data-lab="hd"] .code pre { border-radius: 10px; }
+[data-lab="hd"] .steps li::before { border-radius: 50%; }
+[data-lab="hd"] .lightbox img { border-radius: 10px; }
+[data-lab="pixel"] .tool b, [data-lab="pixel"] .file-head b, [data-lab="pixel"] .step-box h3 { font-family: var(--f-px); font-size: 11px; font-weight: 400; line-height: 1.6; }
 
 /* passage d'un labo à l'autre */
 html::after { content: ''; position: fixed; inset: 0; z-index: 50; background: #000; opacity: 0; pointer-events: none; transition: opacity .6s ease; }
@@ -429,3 +429,28 @@ html.leaving::after { opacity: 1; }
 html:not(.leaving)::after { animation: arrive .7s ease-out 1; }
 @keyframes arrive { from { opacity: 1; } to { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { html::after { transition: none; animation: none; } }
+
+/* ---------- la porte commune ---------- */
+.lab-door {
+  position: fixed; z-index: 2; left: max(14px, env(safe-area-inset-left)); bottom: var(--door-b, 12px);
+  height: clamp(120px, 17vh, 190px); aspect-ratio: .48; padding: 0; border: 0; background: none; cursor: pointer;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.6));
+}
+.lab-door svg { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+.lab-door::before { /* lumière sous la porte */
+  content: ''; position: absolute; left: 6%; right: 6%; bottom: -3px; height: 6px; border-radius: 50%;
+  background: #ff6ad5; filter: blur(4px); opacity: .55; animation: door-glow 2.8s ease-in-out infinite;
+}
+.lab-door:hover::before, .lab-door:focus-visible::before { opacity: 1; height: 9px; }
+.lab-door:hover, .lab-door:focus-visible { filter: drop-shadow(0 0 14px rgba(255,106,213,.55)) drop-shadow(0 6px 10px rgba(0,0,0,.6)); outline: none; }
+.door-plate {
+  position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-30%); white-space: nowrap; pointer-events: none;
+  font-family: var(--f-vt); font-size: 18px; line-height: 1; color: #1a1206; background: linear-gradient(#f6dc8c, #c99a3e); padding: 5px 9px;
+  box-shadow: 0 0 0 2px #5a3f12, 0 6px 16px rgba(0,0,0,.5); opacity: 0; transition: opacity .2s;
+}
+.lab-door:hover .door-plate, .lab-door:focus-visible .door-plate { opacity: 1; }
+@keyframes door-glow { 50% { opacity: .85; } }
+[data-lab="hd"] .door-plate { font-family: var(--f-title); font-weight: 700; font-size: 13px; letter-spacing: .5px; border-radius: 999px; padding: 6px 12px; }
+.in-salle .lab-door { display: none; }
+@media (max-width: 759px) { .lab-door { display: none; } }
+@media (prefers-reduced-motion: reduce) { .lab-door::before { animation: none; } }

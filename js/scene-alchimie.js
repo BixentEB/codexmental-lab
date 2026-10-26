@@ -11,7 +11,7 @@
 
 const cvs = document.getElementById('scene');
 if (!cvs) return;
-const x = cvs.getContext('2d');
+let x = cvs.getContext('2d');
 const back = document.createElement('canvas');
 const bx = back.getContext('2d');
 
@@ -133,8 +133,40 @@ const SH = {
   funnel: (fw, fh) => { const w = fw + 2, cx = w / 2 - .5; return Object.assign(makeShape(w, fh + 2, (a, b) => { if (b < 1 || b > fh) return false; if (b <= 2) return Math.abs(a - cx) <= 1; const k = (b - 2) / (fh - 2); const half = k < .45 ? (fw / 2) * Math.sin(Math.PI / 2 * (k / .45) * .9 + .3) : (fw / 2) * (1 - (k - .45) / .55 * .85); return Math.abs(a - cx) <= Math.max(.6, half) - .5; }), { cx }); }
 };
 
+
+/* ---------- agrandissement pixel art (Scale2x) : personnages plus grands, même finesse ---------- */
+function scale2x(src) {
+  const w0 = src.width, h0 = src.height, s = src.getContext('2d').getImageData(0, 0, w0, h0).data;
+  const out = new ImageData(w0 * 2, h0 * 2), d = out.data;
+  const at = (a, b) => ((Math.max(0, Math.min(h0 - 1, b)) * w0) + Math.max(0, Math.min(w0 - 1, a))) * 4;
+  const eq = (a, b) => s[a] === s[b] && s[a + 1] === s[b + 1] && s[a + 2] === s[b + 2] && s[a + 3] === s[b + 3];
+  const put = (xx, yy, i) => { const o = (yy * w0 * 2 + xx) * 4; d[o] = s[i]; d[o + 1] = s[i + 1]; d[o + 2] = s[i + 2]; d[o + 3] = s[i + 3]; };
+  for (let yy = 0; yy < h0; yy++) for (let xx = 0; xx < w0; xx++) {
+    const p = at(xx, yy), A = at(xx, yy - 1), B = at(xx + 1, yy), Cc = at(xx - 1, yy), D = at(xx, yy + 1);
+    let e0 = p, e1 = p, e2 = p, e3 = p;
+    if (!eq(Cc, B) && !eq(A, D)) { if (eq(Cc, A)) e0 = A; if (eq(A, B)) e1 = B; if (eq(Cc, D)) e2 = Cc; if (eq(D, B)) e3 = D; }
+    put(xx * 2, yy * 2, e0); put(xx * 2 + 1, yy * 2, e1); put(xx * 2, yy * 2 + 1, e2); put(xx * 2 + 1, yy * 2 + 1, e3);
+  }
+  const c = document.createElement('canvas'); c.width = w0 * 2; c.height = h0 * 2; c.getContext('2d').putImageData(out, 0, 0);
+  return c;
+}
+const offC = document.createElement('canvas'), offX = offC.getContext('2d', { willReadFrequently: true });
+// dessine fn à l'échelle 1 dans une petite toile, puis l'agrandit autour du point d'ancrage (les pieds)
+function drawBig(k, ox, oy, ww, hh, ax, ay, fn) {
+  if (k === 1) { fn(); return; }
+  offC.width = ww; offC.height = hh; offX.imageSmoothingEnabled = false;
+  const saved = x; x = offX; offX.setTransform(1, 0, 0, 1, -ox, -oy); fn(); offX.setTransform(1, 0, 0, 1, 0, 0); x = saved;
+  const big = scale2x(offC);
+  x.drawImage(big, F(ax - (ax - ox) * 2), F(ay - (ay - oy) * 2));
+}
+/* ---------- porte commune : même taille et même place dans tous les labos ---------- */
+function doorBox() {
+  const dh = clamp(innerHeight * .17, 120, 190);
+  return { h: dh, w: dh * .48, left: 14, right: 14 + dh * .48 };
+}
+
 /* ---------- état ---------- */
-let S = 2, W = 0, H = 0, w = 0, h = 0, L = {};
+let S = 2, W = 0, H = 0, w = 0, h = 0, L = {}, KS = 1;
 let tick = 0, t = 0, last = 0;
 let V = {}, links = [], drops = [], parts = [], smoke = [], arcs = [], sparks = [], bats = [];
 let G = {};               // géométrie
@@ -266,12 +298,15 @@ function layout() {
   cvs.style.width = (w * S) + 'px'; cvs.style.height = (h * S) + 'px';
   const offX = w * S - W, offY = h * S - H, left = -F(offX / 2);
   cvs.style.left = left + 'px'; cvs.style.top = (-offY) + 'px';
-  const TOP = compact ? 22 : (S >= 3 ? 38 : 44), BOT = compact ? 66 : (S >= 3 ? 82 : 88), SL = compact ? 3 : 46, SR = compact ? 3 : 42;
-  L = { compact, TOP, BOT, SL, SR, floor: h - (compact ? 4 : 6), yB: h - (compact ? 14 : 20), py0: TOP, py1: h - BOT };
+  KS = compact ? 1 : 2;
+  const DB = doorBox(), teslaCx = Math.ceil((DB.right + 10) / S) + 12;
+  const TOP = compact ? 22 : (S >= 3 ? 38 : 44), BOT = compact ? 66 : (S >= 3 ? 82 : 88), SL = compact ? 3 : Math.max(46, teslaCx + 15), SR = compact ? 3 : 42;
+  L = { compact, TOP, BOT, SL, SR, teslaCx, floor: h - (compact ? 4 : 6), yB: h - (compact ? 14 : 20), py0: TOP, py1: h - BOT };
   const st = document.documentElement.style;
   st.setProperty('--in-t', (TOP * S - offY) + 'px'); st.setProperty('--in-b', (BOT * S) + 'px');
   st.setProperty('--in-l', (SL * S + left) + 'px'); st.setProperty('--in-r', (SR * S - (offX + left)) + 'px');
   st.setProperty('--px', S + 'px');
+  st.setProperty('--door-b', ((compact ? 4 : 6) * S) + 'px');
   build();
   buildBack();
   // préchauffage : l'installation tourne déjà quand la page s'affiche
@@ -414,7 +449,7 @@ function build() {
 
   /* bobine Tesla */
   if (c) G.tesla = { cx: w - 14, base: fl, sy: yB - 34, r: 6, small: true };
-  else G.tesla = { cx: 23, base: fl, sy: F(L.py0 + (fl - L.py0) * .5), r: 12, small: false };
+  else G.tesla = { cx: L.teslaCx, base: fl, sy: F(L.py0 + (fl - L.py0) * .5), r: 12, small: false };
 
   /* instruments sur l'espace libre */
   const used = c ? rackX + nT * gap + 6 : spx + 18;
@@ -434,7 +469,7 @@ function build() {
   G.lamps = [];
   if (!c) { const r0 = L.SL + 30, r1 = V.R.X - 20; const n = r1 - r0 > 260 ? 3 : 2; for (let i = 0; i < n; i++) G.lamps.push({ x: F(r0 + (r1 - r0) * (i + .5) / n), k: 1, off: 0 }); }
 
-  G.door = c ? null : { x: 31, y: L.TOP + 6, w: 9, h: 14 };
+  G.door = null;
 
   /* scientifique */
   sci = { x: F((G.bx0 + G.bx1) / 2), dir: 1, mode: 'idle', timer: 60, task: null, bub: null, jump: 0, frame: 'stand', note: 0 };
@@ -714,9 +749,10 @@ function drawSci() {
   const img = set[s.dir > 0 ? 0 : 1];
   const jmp = s.jump > 0 ? -Math.round(Math.sin(s.jump / 6 * Math.PI) * 3) : 0;
   const kneel = s.frame === 'kneel' ? 3 : 0, look = s.frame === 'look' ? 2 : 0;
-  const X = F(s.x), Y = L.floor - img.height + jmp + kneel + look;
-  x.drawImage(img, X, Y);
+  const X = F(s.x), Y = L.floor - img.height + jmp + kneel + look, ax = X + 7, ay = L.floor;
   const d = s.dir;
+  drawBig(KS, X - 6, Y - 2, 28, img.height + 4, ax, ay, () => {
+  x.drawImage(img, X, Y);
   if (s.frame === 'notes' && (tick >> 3) % 2) P(x, X + (d > 0 ? 10 : 3), Y + 18, '#2b2e39');
   if (s.frame === 'reach') {      // bras levé avec une fiole
     const ax = d > 0 ? X + 12 : X + 1;
@@ -727,10 +763,12 @@ function drawSci() {
   if (s.frame === 'spray') {      // extincteur
     const ax = d > 0 ? X + 11 : X - 4;
     R(x, ax, Y + 15, 5, 8, '#c0392b'); R(x, ax, Y + 15, 5, 1, '#e74c3c'); R(x, ax + 1, Y + 13, 3, 2, '#222');
-    if (MOTION !== 'off') for (let i = 0; i < 3; i++) parts.push({ x: ax + (d > 0 ? 5 : 0), y: Y + 14, vx: d * rnd(1, 2.4), vy: rnd(-1, .2), life: ri(8, 16), col: 'rgba(235,245,255,.8)' });
   }
   if (s.frame === 'look') { P(x, X + (d > 0 ? 11 : 2), Y + 8, K.brassHi); }
-  if (s.bub) bubble(x, s.bub.s, X + 7, Y + 3, s.bub.s === 'EUREKA!' ? '#a0401a' : '#14161c');
+  });
+  if (s.frame === 'spray' && MOTION !== 'off') { const nx = (d > 0 ? X + 16 : X - 4), px = ax + (nx - ax) * KS, py = ay - (ay - (Y + 14)) * KS; for (let i = 0; i < 3 * KS; i++) parts.push({ x: px, y: py + rnd(-1, 1), vx: d * rnd(1, 2.4) * KS, vy: rnd(-1, .2), life: ri(8, 16), col: 'rgba(235,245,255,.8)' }); }
+  const top = ay - (ay - Y) * KS;
+  if (s.bub) { const s2 = s.bub.s, wd = s2.length * 4 + 3; bubble(x, s2, KS > 1 ? ax + 10 + wd / 2 : ax, KS > 1 ? top + 14 : Y + 3, s2 === 'EUREKA!' ? '#a0401a' : '#14161c'); }
 }
 
 /* ---------- événements rares ---------- */
@@ -751,7 +789,7 @@ function startEvent(type) {
   } else if (type === 'creature') {
     const span = (G.sp ? G.sp.x + 20 : G.rack.x + 20), xx = F(clamp(span, G.bx0 + 40, G.bx1 - 60));
     ev = { type, t0: t, tx: xx, stage: 0 }; dimT = .6;
-    goTo(xx - 22, null, 'run'); sci.bub = { s: '!', t: 36 };
+    goTo(xx + 14 - 16 * KS - 18, null, 'run'); sci.bub = { s: '!', t: 36 };
     window.dispatchEvent(new CustomEvent('lab:creature', { detail: { phase: 'start' } }));
   }
 }
@@ -788,12 +826,13 @@ function stepEvent() {
   } else if (ev.type === 'creature') {
     const tx = ev.tx, yB = L.yB;
     if (e < 3.4) {
-      if (tick % 4 === 0) arcs.push(makeArc(...teslaTip(), tx - 2, yB - 18, 2, true));
-      if (e > 1 && tick % 3 === 0) arcs.push(makeArc(tx - 2, yB - 18, tx + 28, yB - 18, 2, true));
+      const eLx = tx + 14 - 16 * KS, eRx = tx + 14 + 14 * KS, eY = yB - 18 * KS;
+      if (tick % 4 === 0) arcs.push(makeArc(...teslaTip(), eLx, eY, 2, true));
+      if (e > 1 && tick % 3 === 0) arcs.push(makeArc(eLx, eY, eRx, eY, 2, true));
       if (MOTION === 'full' && [1.2, 2.2, 3.1].some(k2 => Math.abs(e - k2) < .02)) flash = .22;
     }
     if (e >= 3.4 && ev.stage === 0) ev.stage = 1;
-    if (e >= 4.6 && ev.stage === 1) { ev.stage = 2; ev.zx = tx + 28; ev.say = { s: 'GRR!', t: 40 }; sci.bub = { s: 'EUREKA!', t: 46 }; sci.jump = 8; sci.mode = 'act'; sci.timer = 40; sci.frame = 'stand'; window.dispatchEvent(new CustomEvent('lab:creature', { detail: { phase: 'alive' } })); }
+    if (e >= 4.6 && ev.stage === 1) { ev.stage = 2; ev.zx = tx + 14 + 14 * KS; ev.say = { s: 'GRR!', t: 40 }; sci.bub = { s: 'EUREKA!', t: 46 }; sci.jump = 8; sci.mode = 'act'; sci.timer = 40; sci.frame = 'stand'; window.dispatchEvent(new CustomEvent('lab:creature', { detail: { phase: 'alive' } })); }
     if (e >= 6.4 && ev.stage === 2) { ev.stage = 3; goTo(w + 40, 'chase', 'run'); sci.bub = { s: '?!', t: 30 }; }
     if (ev.stage === 3) { ev.zx += .8 * (FPS === 15 ? 2 : 1); if (ev.zx > w + 20) { ev.stage = 4; ev.end = t; dimT = 0; } }
     if (ev.say && --ev.say.t <= 0) ev.say = null;
@@ -812,15 +851,18 @@ function drawFoam() {
 function drawEventBack() {
   if (!ev || ev.type !== 'creature') return;
   const tx = ev.tx, yB = L.yB;
+  drawBig(KS, tx - 4, yB - 27, 36, 28, tx + 14, yB, () => {
   R(x, tx, yB - 7, 28, 1, K.steel); R(x, tx, yB - 6, 28, 1, K.ironHi); R(x, tx + 2, yB - 5, 2, 5, K.iron); R(x, tx + 24, yB - 5, 2, 5, K.iron);
   for (const ex of [tx - 2, tx + 28]) { R(x, ex, yB - 18, 1, 18, K.brassLo); disc(x, ex, yB - 19, 1, K.brassHi); }
   if (ev.stage === 0) { R(x, tx + 3, yB - 10, 22, 3, '#e9e6dc'); R(x, tx + 1, yB - 11, 4, 4, '#86c45a'); P(x, tx + 2, yB - 10, '#e8ff6a'); R(x, tx, yB - 11, 1, 3, '#15131b'); }
-  else if (ev.stage === 1) { R(x, tx + 8, yB - 10, 18, 3, '#e9e6dc'); R(x, tx + 3, yB - 20, 6, 11, '#3b3352'); R(x, tx + 3, yB - 25, 6, 5, '#86c45a'); R(x, tx + 3, yB - 26, 6, 2, '#15131b'); P(x, tx + 5, yB - 23, '#e8ff6a'); P(x, tx + 7, yB - 23, '#e8ff6a'); glow(x, tx + 6, yB - 22, 6, [140, 255, 120], .5); }
-  else if (ev.stage >= 2) {
-    const wk = ev.stage === 3 && (tick >> 2) % 2, img = (wk ? CRE.walk : CRE.stand)[0];
-    x.drawImage(img, F(ev.zx), L.floor - img.height);
-    glow(x, ev.zx + 5, L.floor - 15, 6, [140, 255, 120], .3);
-    if (ev.say) bubble(x, ev.say.s, F(ev.zx + 6), L.floor - img.height - 1, '#2f6b1a');
+  else if (ev.stage === 1) { R(x, tx + 8, yB - 10, 18, 3, '#e9e6dc'); R(x, tx + 3, yB - 20, 6, 11, '#3b3352'); R(x, tx + 3, yB - 25, 6, 5, '#86c45a'); R(x, tx + 3, yB - 26, 6, 2, '#15131b'); P(x, tx + 5, yB - 23, '#e8ff6a'); P(x, tx + 7, yB - 23, '#e8ff6a'); }
+  });
+  if (ev.stage === 1) glow(x, tx + 14 - 8 * KS, yB - 22 * KS, 6 * KS, [140, 255, 120], .5);
+  if (ev.stage >= 2) {
+    const wk = ev.stage === 3 && (tick >> 2) % 2, img = (wk ? CRE.walk : CRE.stand)[0], zx = F(ev.zx), ax = zx + 7, Y = L.floor - img.height;
+    drawBig(KS, zx - 1, Y - 1, img.width + 2, img.height + 2, ax, L.floor, () => x.drawImage(img, zx, Y));
+    glow(x, ax, L.floor - 10 * KS, 6 * KS, [140, 255, 120], .3);
+    if (ev.say) bubble(x, ev.say.s, ax, L.floor - img.height * KS - 1, '#2f6b1a');
   }
 }
 
@@ -1008,7 +1050,7 @@ function hitTesla(lx, ly) { const T = G.tesla; return Math.hypot(lx - T.cx, ly -
 function hitVessel(lx, ly) { for (const k in V) { const v = V[k]; if (lx >= v.X && lx < v.X + v.shape.w && ly >= v.Y && ly < v.Y + v.shape.h) return v; } return null; }
 let doorHov = false;
 function hitDoor(lx, ly) { const d = G.door; return d && lx >= d.x - 1 && lx < d.x + d.w + 1 && ly >= d.y - 1 && ly < d.y + d.h; }
-function hitSci(lx, ly) { return sci && lx >= sci.x && lx < sci.x + 14 && ly > L.floor - sciH() && ly < L.floor; }
+function hitSci(lx, ly) { const ax = sci ? sci.x + 7 : 0; return sci && lx >= ax - 7 * KS && lx < ax + 7 * KS && ly > L.floor - sciH() * KS && ly < L.floor; }
 cvs.addEventListener('pointermove', e => { const [lx, ly] = toLogical(e); doorHov = !!hitDoor(lx, ly); cvs.style.cursor = (doorHov || hitTesla(lx, ly) || hitVessel(lx, ly) || hitSci(lx, ly)) ? 'pointer' : 'default'; });
 cvs.addEventListener('click', e => {
   const [lx, ly] = toLogical(e);

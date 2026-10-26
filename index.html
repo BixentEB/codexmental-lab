@@ -35,7 +35,7 @@
     var f = q.get('halloween'), season = (m === 9 && day >= 20) || (m === 10 && day <= 2);
     var hw = f === null ? season : f === '1';
     var root = document.documentElement;
-    root.dataset.theme = theme; root.dataset.motion = motion;
+    root.dataset.lab = theme; root.dataset.motion = motion;
     if (hw) root.classList.add('halloween');
     return { halloween: hw, theme: theme, themes: THEMES, motion: motion, motionExplicit: explicit };
   })();

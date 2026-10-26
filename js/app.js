@@ -34,7 +34,7 @@ const VEC = {
   door: c => `<path d="M5.5 21V9.5a6.5 6.5 0 0 1 13 0V21Z" fill="none" stroke="${c}" stroke-width="1.4" stroke-linejoin="round"/><path d="M3.5 21h17M9 21V11M12 21V9M15 21V11" stroke="${c}" stroke-width="1" opacity=".55"/><circle cx="15.8" cy="15" r="1" fill="${c}"/>`
 };
 function pix(name, color, size = 32, forcePixel) {
-  if (!forcePixel && document.documentElement.dataset.theme === 'hd' && VEC[name]) {
+  if (!forcePixel && document.documentElement.dataset.lab === 'hd' && VEC[name]) {
     return `<svg class="vec" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true">${VEC[name](color)}</svg>`;
   }
   const rows = ICONS[name] || ICONS.flask, wd = Math.max(...rows.map(r => r.length)), ht = rows.length;
@@ -82,7 +82,7 @@ function card(p) {
 function footer() {
   const hw = window.LAB && window.LAB.halloween;
   return `<footer class="lab-foot">
-    <p class="hint">${hw ? '🎃 Saison d\'Halloween : la bobine Tesla semble… agitée. Trois décharges rapprochées, et qui sait ?' : (document.documentElement.dataset.theme === 'alchimie' ? '⚗ Astuce : la bobine Tesla réagit aux clics, et le ballon de réaction aime les gouttes de réactif.' : '⚡ Astuce : la bobine Tesla, à gauche, réagit aux clics. Les fioles de l\'étagère aussi.')}</p>
+    <p class="hint">${hw ? '🎃 Saison d\'Halloween : la bobine Tesla semble… agitée. Trois décharges rapprochées, et qui sait ?' : (document.documentElement.dataset.lab === 'alchimie' ? '⚗ Astuce : la bobine Tesla réagit aux clics, et le ballon de réaction aime les gouttes de réactif.' : '⚡ Astuce : la bobine Tesla, à gauche, réagit aux clics. Les fioles de l\'étagère aussi.')}</p>
     <p>Codex Mental · Laboratoire <span class="sep">/</span> <a href="https://codexmental.com">retour au Codex</a></p>
   </footer>`;
 }
@@ -99,7 +99,7 @@ function pageHome() {
   }).join('') + `<a class="shelf" href="#/atelier" style="--c:#c9a6ff">${pix('book', '#c9a6ff', 30)}<b>Atelier</b><small>${ATELIER.sections.reduce((s, x) => s + x.items.length, 0)} dossiers d'idées</small></a>`;
   const now = DATA.projects.filter(p => p.status === 'cours').slice(0, 3).map(card).join('');
   return `<section class="hero">
-      ${document.documentElement.dataset.theme === 'hd' ? '<p class="kicker">Codex Mental · Laboratoire d\'alchimie</p>' : '<p class="kicker"><span class="prompt">&gt;</span> ouverture du labo… ok <span class="caret"></span></p>'}
+      ${document.documentElement.dataset.lab === 'hd' ? '<p class="kicker">Codex Mental · Laboratoire d\'alchimie</p>' : '<p class="kicker"><span class="prompt">&gt;</span> ouverture du labo… ok <span class="caret"></span></p>'}
       <h1 class="px-title">Le Laboratoire</h1>
       <p class="lead">Bienvenue dans l'antre du Codex Mental. Ici, les idées passent de la fiole à l'éprouvette : applications, logiciels, bidouilles CSS, prototypes de jeux, et tout ce qui mijote dans l'Atelier.</p>
       <p class="warn">${pix('bolt', '#ffb347', 14)} Certaines expériences sont encore instables. Merci de ne pas secouer les fioles.</p>
@@ -314,6 +314,41 @@ function exitSalle() {
 document.addEventListener('keydown', e => { if (salleOn && e.key === 'Escape') location.hash = lastRoute === '#/salle' ? '#/' : lastRoute; });
 // la porte du décor mène au labo suivant : pixel → alchimie → grand labo → pixel
 const LAB_ORDER = ['pixel', 'alchimie', 'hd'];
+/* la porte commune : un vrai bouton, même place et même taille dans tous les labos */
+(function () {
+  const C = window.LAB || {}, ids = LAB_ORDER.filter(id => C.themes && C.themes[id]);
+  if (!ids.length) return;
+  const next = ids[(ids.indexOf(C.theme) + 1) % ids.length], name = C.themes[next].label;
+  const pixelDoor = () => {
+    const W2 = 12, H2 = 25, r = [];
+    const inside = (x, y) => { const cx = 5.5, rr = 6; return y >= 6 ? true : (x - cx) ** 2 + (y - 6) ** 2 <= rr * rr; };
+    for (let y = 0; y < H2; y++) for (let x = 0; x < W2; x++) {
+      if (!inside(x, y)) continue;
+      const edge = !inside(x - 1, y) || !inside(x + 1, y) || !inside(x, y - 1) || y === H2 - 1;
+      let col = edge ? '#3a3f4b' : (x % 3 === 0 ? '#45281a' : '#5a3520');
+      if (!edge && (y === 9 || y === 19)) col = '#2a1a10';
+      if (!edge && (y === 9 || y === 19) && (x === 2 || x === 9)) col = '#8e99a8';
+      if (x === 9 && y === 14) col = '#f1cd6a';
+      if (edge && y < 4 && x < 6) col = '#5b6273';
+      r.push(`<rect x="${x}" y="${y}" width="1" height="1" fill="${col}"/>`);
+    }
+    return `<svg viewBox="0 0 12 25" preserveAspectRatio="none" shape-rendering="crispEdges" aria-hidden="true">${r.join('')}</svg>`;
+  };
+  const vecDoor = () => `<svg viewBox="0 0 48 100" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="dw" x1="0" x2="1"><stop offset="0" stop-color="#6b4426"/><stop offset=".5" stop-color="#4e2f19"/><stop offset="1" stop-color="#2a170b"/></linearGradient>
+    <linearGradient id="db" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f6dc8c"/><stop offset=".5" stop-color="#c99a3e"/><stop offset="1" stop-color="#5a3f12"/></linearGradient></defs>
+    <path d="M3 99V24a21 21 0 0 1 42 0v75Z" fill="url(#dw)" stroke="url(#db)" stroke-width="3"/>
+    <path d="M12 98V28M20 98V22M28 98V22M36 98V28" stroke="rgba(0,0,0,.35)" stroke-width="1.2"/>
+    <path d="M5 40h38M5 78h38" stroke="url(#db)" stroke-width="2.4" opacity=".85"/>
+    <circle cx="37" cy="60" r="2.6" fill="#f1cd6a"/><circle cx="24" cy="24" r="7" fill="#0b1014" stroke="url(#db)" stroke-width="1.6"/>
+    <circle cx="24" cy="24" r="4.4" fill="#ff6ad5" opacity=".45"/></svg>`;
+  const d = document.createElement('button');
+  d.type = 'button'; d.className = 'lab-door'; d.dataset.next = name;
+  d.setAttribute('aria-label', 'Passer au labo suivant : ' + name); d.title = 'Labo suivant : ' + name;
+  d.innerHTML = (C.theme === 'hd' ? vecDoor() : pixelDoor()) + `<span class="door-plate" aria-hidden="true">→ ${esc(name)}</span>`;
+  d.addEventListener('click', () => window.dispatchEvent(new CustomEvent('lab:door')));
+  document.body.appendChild(d);
+})();
 window.addEventListener('lab:door', () => {
   const C = window.LAB || {}, ids = LAB_ORDER.filter(id => C.themes && C.themes[id]);
   const next = ids[(ids.indexOf(C.theme) + 1) % ids.length];
@@ -434,7 +469,7 @@ const THEME_DESC = { pixel: 'Étagère de fioles, bobine Tesla et petit chimiste
 const MOTIONS = [['full', 'Vivantes', 'Tout bouge, avec les incidents du labo.'], ['calm', 'Calmes', 'Moins d\'éclairs, pas d\'incidents.'], ['off', 'Figées', 'Une image fixe du labo.']];
 function buildSettings() {
   const C = window.LAB || {};
-  $('.set-ico').innerHTML = pix('potion', document.documentElement.dataset.theme === 'hd' ? '#f0c46a' : '#c9993a', document.documentElement.dataset.theme === 'hd' ? 16 : 14);
+  $('.set-ico').innerHTML = pix('potion', document.documentElement.dataset.lab === 'hd' ? '#f0c46a' : '#c9993a', document.documentElement.dataset.lab === 'hd' ? 16 : 14);
   setPanel.innerHTML = `
     <p class="set-h" id="set-h1">Thème du labo</p>
     <div class="set-list" role="radiogroup" aria-labelledby="set-h1">
