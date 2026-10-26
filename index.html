@@ -25,15 +25,15 @@
       pixel: { label: 'Le labo', universe: 'pixel', scene: 'js/scene.js' },
       alchimie: { label: 'La paillasse', universe: 'pixel', scene: 'js/scene-alchimie.js' },
       hd: { label: 'Le grand labo', universe: 'vecto', scene: 'js/scene-hd.js' },
-      observatoire: { label: 'L\'observatoire', universe: 'vecto', scene: 'js/scene-observatoire.js', kit: true },
-      station: { label: 'La station', universe: 'orbital', scene: 'js/scene-station.js', kit: true },
+      observatoire: { label: 'L\'observatoire', universe: 'vecto', scene: 'js/scene-observatoire.js', kit: true, explore: true },
+      station: { label: 'La station', universe: 'orbital', scene: 'js/scene-station.js', kit: true, explore: true },
       avantposte: { label: 'L\'avant-poste', universe: 'orbital', scene: 'js/scene-avantposte.js', kit: true }
     };
     var UNIVERSES = {
       pro: { label: 'Vitrine', desc: 'Sobre et lisible : l\'essentiel, sans décor.', rooms: ['pro'] },
       pixel: { label: 'Labo pixel', desc: 'Fioles, bobine Tesla et petit chimiste, façon vieux jeux.', rooms: ['pixel', 'alchimie'] },
-      vecto: { label: 'Labo vectoriel', desc: 'Grand laboratoire d\'alchimie, puis l\'observatoire sous la coupole.', rooms: ['hd', 'observatoire'] },
-      orbital: { label: 'Univers orbital', desc: 'Une station en apesanteur, puis un avant-poste sur une planète habitée.', rooms: ['station', 'avantposte'] }
+      vecto: { label: 'Labo vectoriel', desc: 'Grand laboratoire d\'alchimie, puis l\'observatoire sous la coupole, à explorer librement.', rooms: ['hd', 'observatoire'] },
+      orbital: { label: 'Univers orbital', desc: 'Un avant-poste sur une planète habitée, puis une station en apesanteur à explorer librement.', rooms: ['avantposte', 'station'] }
     };
     var theme = q.get('theme') || get('lab.theme') || 'pro';
     if (!THEMES[theme]) theme = 'pro';
@@ -58,7 +58,10 @@
     root.dataset.lab = theme; root.dataset.universe = universe; root.dataset.motion = motion;
     applyScheme(); mq.addEventListener('change', applyScheme);
     if (hw) root.classList.add('halloween');
-    return { halloween: hw, theme: theme, themes: THEMES, universe: universe, universes: UNIVERSES, scheme: scheme, motion: motion, motionExplicit: explicit };
+    // salle libre : on y entre sans écran, pour explorer ; les projets restent à un bouton
+    var explore = !!THEMES[theme].explore;
+    if (explore) { root.classList.add('explore'); if (!/^#\/?[a-z]/.test(location.hash)) root.classList.add('panel-away'); }
+    return { halloween: hw, theme: theme, themes: THEMES, universe: universe, universes: UNIVERSES, scheme: scheme, motion: motion, motionExplicit: explicit, explore: explore };
   })();
 </script>
 </head>

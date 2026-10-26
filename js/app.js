@@ -86,8 +86,8 @@ const ROOM_TEXT = {
   pixel: { kicker: '<p class="kicker"><span class="prompt">&gt;</span> ouverture du labo… ok <span class="caret"></span></p>', hint: hw => hw ? '🎃 Saison d\'Halloween : la bobine Tesla semble… agitée. Trois décharges rapprochées, et qui sait ?' : '⚡ Astuce : la bobine Tesla, à gauche, réagit aux clics. Les fioles de l\'étagère aussi.' },
   alchimie: { kicker: '<p class="kicker"><span class="prompt">&gt;</span> paillasse sous tension… ok <span class="caret"></span></p>', hint: hw => hw ? '🎃 Saison d\'Halloween : la bobine Tesla semble… agitée. Trois décharges rapprochées, et qui sait ?' : '⚗ Astuce : la bobine Tesla réagit aux clics, et le ballon de réaction aime les gouttes de réactif.' },
   hd: { kicker: '<p class="kicker">Codex Mental · Laboratoire d\'alchimie</p>', hint: () => '⚗ Astuce : cliquez sur la grande cuve… si vous osez. Le bouton ⤓ range l\'écran pour admirer le labo.' },
-  observatoire: { kicker: '<p class="kicker">Codex Mental · L\'observatoire</p>', hint: () => '🔭 Astuce : cliquez sur le télescope pour viser un astre, et sur le ciel pour une étoile filante.' },
-  station: { kicker: '<p class="kicker">Station orbitale · Module de recherche</p>', hint: () => '🛰 Astuce : attrapez une bulle de liquide qui flotte, ou faites tourner la planète derrière le hublot.' },
+  observatoire: { kicker: '<p class="kicker">Codex Mental · L\'observatoire</p>', hint: () => '🔭 Salle libre : rangez l\'écran (⤓) et cliquez partout. Le télescope vise un astre, le ciel lâche des étoiles filantes.' },
+  station: { kicker: '<p class="kicker">Station orbitale · Module de recherche</p>', hint: () => '🛰 Salle libre : rangez l\'écran et explorez. Le réacteur, la console, le soleil et les bulles réagissent aux clics.' },
   avantposte: { kicker: '<p class="kicker">Avant-poste · Planète Kepler-C</p>', hint: () => '👽 Astuce : tapotez la vitre du dôme. Ils finissent toujours par venir voir.' }
 };
 function roomText() { return ROOM_TEXT[(window.LAB || {}).theme] || ROOM_TEXT.pixel; }
@@ -699,8 +699,16 @@ if (window.LAB && window.LAB.universe !== 'pro') {
   away.innerHTML = '<span aria-hidden="true">⤓</span>';
   head.insertBefore(away, $('.settings'));
   const call = document.createElement('button');
-  call.type = 'button'; call.className = 'call-btn'; call.textContent = 'Rouvrir l\'écran';
+  const EXP = !!(window.LAB && window.LAB.explore);
+  call.type = 'button'; call.className = 'call-btn'; call.textContent = EXP ? 'Consulter les projets' : 'Rouvrir l\'écran';
   document.body.appendChild(call);
+  // hors de l'écran, toujours un chemin vers la Vitrine
+  const fx = document.createElement('button');
+  fx.type = 'button'; fx.className = 'float-exit'; fx.dataset.go = 'pro'; fx.title = 'Quitter le labo et revenir à la Vitrine';
+  fx.innerHTML = '<span aria-hidden="true">←</span> Vitrine';
+  document.body.appendChild(fx);
+  // salle libre : un lien vers une fiche rouvre l'écran
+  if (EXP) window.addEventListener('hashchange', () => { if (/^#\/?[a-z]/.test(location.hash)) document.documentElement.classList.remove('panel-away'); });
   const setAway = on => { document.documentElement.classList.toggle('panel-away', on); (on ? call : away).focus({ preventScroll: true }); };
   away.addEventListener('click', () => setAway(true));
   call.addEventListener('click', () => setAway(false));
