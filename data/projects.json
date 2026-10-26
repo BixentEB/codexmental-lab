@@ -84,16 +84,16 @@
     }
    ],
    "features": [
-    "🧠 IA conversationnelle — dialogue, raisonnement et assistance contextuelle",
-    "💬 Discord — interactions, commandes et notifications via un bot dédié",
-    "😊 Personnalité — son propre pack d'émojis Discord, utilisé selon ses besoins",
-    "⚙️ Automatisation — exécution de scripts, routines et tâches répétitives",
-    "📅 Tâches planifiées — veilles informationnelles et recherches automatisées",
-    "🖥️ Environnement numérique — interaction avec des fichiers, logiciels et services",
-    "🔍 Analyse et synthèse — traitement de documents, informations et données",
-    "🎙️ Interaction vocale — reconnaissance et synthèse vocale personnalisables",
-    "🧩 Architecture modulaire — ajout progressif de nouvelles compétences",
-    "🔒 Exécution locale — fonctionnement hors ligne pour les fonctions compatibles"
+    "IA conversationnelle — dialogue, raisonnement et assistance contextuelle",
+    "Discord — interactions, commandes et notifications via un bot dédié",
+    "Personnalité — son propre pack d'émojis Discord, utilisé selon ses besoins",
+    "Automatisation — exécution de scripts, routines et tâches répétitives",
+    "Tâches planifiées — veilles informationnelles et recherches automatisées",
+    "Environnement numérique — interaction avec des fichiers, logiciels et services",
+    "Analyse et synthèse — traitement de documents, informations et données",
+    "Interaction vocale — reconnaissance et synthèse vocale personnalisables",
+    "Architecture modulaire — ajout progressif de nouvelles compétences",
+    "Exécution locale — fonctionnement hors ligne pour les fonctions compatibles"
    ],
    "sections": [
     {
