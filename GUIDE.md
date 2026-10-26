@@ -60,7 +60,7 @@ Chaque projet ressemble à ceci :
 | Champ | Ce qu'il affiche |
 |---|---|
 | `name` | le nom du projet |
-| `cat` | l'étagère : `applications`, `logiciels`, `web` ou `jeux` |
+| `cat` | l'étagère : `applications`, `logiciels`, `web`, `jeux` ou `ia` (Outils IA) |
 | `status` | `cours` (en cours) ou `reflexion` (en réflexion) |
 | `platform` | sous le titre (Windows, Android…) |
 | `tagline` | la petite phrase entre guillemets, sous le titre |

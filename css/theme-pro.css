@@ -253,3 +253,4 @@
 [data-lab="pro"] .btn-main, [data-lab="pro"] .btn-main:hover, [data-lab="pro"] .play-btn, [data-lab="pro"] .steps li::before { color: var(--on-brand); }
 [data-lab="pro"] .play-btn .vec { color: var(--on-brand); }
 [data-lab="pro"] ::selection { color: var(--on-brand); }
+@media (min-width: 900px) { [data-lab="pro"] .shelves { grid-template-columns: repeat(3, 1fr); } }

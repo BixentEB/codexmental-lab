@@ -35,7 +35,7 @@ Les fichiers partagés vivent dans `files/`, les captures dans `img/lab/`.
 
 ## Ajouter un projet
 
-Ajouter une entrée dans `data/projects.json` avec `cat` parmi `applications`, `logiciels`, `web`, `jeux`.
+Ajouter une entrée dans `data/projects.json` avec `cat` parmi `applications`, `logiciels`, `web`, `jeux`, `ia`.
 
 ## Ajouter un article à l'Atelier
 

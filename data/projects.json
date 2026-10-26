@@ -505,6 +505,13 @@
    "icon": "potion",
    "color": "#ffb050",
    "desc": "Prototypes ludiques, pixel art et donjons en devenir."
+  },
+  {
+   "id": "ia",
+   "label": "Outils IA",
+   "icon": "chip",
+   "color": "#ffe36b",
+   "desc": "IA locales, assistants et petits outils intelligents : ce qui tourne déjà sur la paillasse, et ce qui mijote encore."
   }
  ],
  "statuses": [
