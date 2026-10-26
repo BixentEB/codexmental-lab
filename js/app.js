@@ -18,6 +18,9 @@ const ICONS = {
   beaker: ['o......o', 'oo....oo', '.o....o.', '.o####o.', '.o####o.', '.o####o.', '.o####o.', '.oooooo.'],
   potion: ['...cc...', '...cc...', '..o##o..', '.o####o.', 'o######o', 'o######o', 'o######o', '.oooooo.'],
   book: ['.oooooo.', 'o######o', 'o#oooo#o', 'o######o', 'o#ooo##o', 'o######o', 'o######o', 'oooooooo'],
+  door: ['.oooooo.', 'o######o', 'o#oooo#o', 'o#o..o#o', 'o#o..o#o', 'o#o..oco', 'o#o..o#o', 'o#oooo#o', 'o######o', 'oooooooo'],
+  speaker: ['....o...', '...oo..#', 'oooo#.#.', 'o###o.#.', 'o###o.#.', 'oooo#.#.', '...oo..#', '....o...'],
+  mute: ['....o...', '...oo...', 'oooo#.#.#', 'o###o..#.', 'o###o..#.', 'oooo#.#.#', '...oo...', '....o...'],
   bolt: ['....##..', '...##...', '..##....', '.######.', '....##..', '...##...', '..##....', '.##.....']
 };
 function pix(name, color, size = 32) {
@@ -37,7 +40,7 @@ async function load() {
   DATA = p; ATELIER = a;
   TABS = [{ id: 'accueil', label: 'Accueil', color: '#ffb347', href: '#/' }]
     .concat(DATA.categories.map(c => ({ id: c.id, label: c.label, color: c.color, href: '#/c/' + c.id })))
-    .concat([{ id: 'atelier', label: 'Atelier', color: '#c9a6ff', href: '#/atelier' }]);
+    .concat([{ id: 'atelier', label: 'Atelier', color: '#c9a6ff', href: '#/atelier' }, { id: 'salle', label: 'Expérience', color: '#ff6ad5', href: '#/salle' }]);
   $('.brand-ico').innerHTML = pix('flask', window.LAB && window.LAB.halloween ? '#ff8c1a' : '#9dff5c', 16);
   tabsEl.innerHTML = TABS.map(t => `<a class="tab" role="tab" href="${t.href}" data-id="${t.id}" style="--c:${t.color}">${esc(t.label)}</a>`).join('');
 }
@@ -80,7 +83,7 @@ function pageHome() {
       <b>${esc(c.label)}</b>
       <small>${n1} en cours${n2 ? ` · ${n2} en réflexion` : ''}</small>
     </a>`;
-  }).join('') + `<a class="shelf" href="#/atelier" style="--c:#c9a6ff">${pix('book', '#c9a6ff', 30)}<b>Atelier</b><small>${ATELIER.sections.reduce((s, x) => s + x.items.length, 0)} dossiers d'idées</small></a>`;
+  }).join('') + `<a class="shelf" href="#/salle" style="--c:#ff6ad5">${pix('door', '#ff6ad5', 26)}<b>Salle d'expérience</b><small>Le labo en grand, à explorer</small></a><a class="shelf" href="#/atelier" style="--c:#c9a6ff">${pix('book', '#c9a6ff', 30)}<b>Atelier</b><small>${ATELIER.sections.reduce((s, x) => s + x.items.length, 0)} dossiers d'idées</small></a>`;
   const now = DATA.projects.filter(p => p.status === 'cours').slice(0, 3).map(card).join('');
   return `<section class="hero">
       <p class="kicker"><span class="prompt">&gt;</span> ouverture du labo… ok <span class="caret"></span></p>
@@ -194,10 +197,50 @@ function page404() {
   return `<section class="hero"><p class="kicker">Erreur 404</p><h1 class="px-title">Fiole introuvable</h1><p class="lead">Cette expérience a dû s'évaporer. <a href="#/">Retour à l'accueil du labo</a>.</p></section>`;
 }
 
+/* ---------- la salle d'expérience (plein écran, sans texte) ---------- */
+let salleOn = false, salleEl = null, lastRoute = '#/', salleLoading = null;
+function loadSalle() {
+  if (window.Salle) return Promise.resolve();
+  if (!salleLoading) salleLoading = new Promise((ok, ko) => { const s = document.createElement('script'); s.src = 'js/salle.js'; s.onload = ok; s.onerror = ko; document.body.appendChild(s); });
+  return salleLoading;
+}
+function enterSalle() {
+  if (!salleEl) {
+    salleEl = document.createElement('div');
+    salleEl.className = 'salle'; salleEl.id = 'salle';
+    salleEl.innerHTML = `<div class="salle-stage"><canvas id="salle-cvs" role="img" aria-label="Salle d'expérience : le laboratoire du savant fou, à explorer en cliquant sur les objets."></canvas></div>
+      <a class="salle-btn salle-exit" href="#/" aria-label="Retour au laboratoire" title="Retour au laboratoire">${pix('door', '#ffb347', 18)}</a>
+      <button class="salle-btn salle-sound" type="button" aria-pressed="false" aria-label="Activer le son" title="Son">${pix('mute', '#cfe9f2', 18)}</button>`;
+    document.body.appendChild(salleEl);
+    salleEl.querySelector('.salle-exit').addEventListener('click', e => { e.preventDefault(); location.hash = lastRoute === '#/salle' ? '#/' : lastRoute; });
+    salleEl.querySelector('.salle-sound').addEventListener('click', () => { if (window.Salle) window.Salle.toggleSound(); });
+    window.addEventListener('salle:sound', e => {
+      const b = salleEl.querySelector('.salle-sound');
+      b.setAttribute('aria-pressed', e.detail); b.setAttribute('aria-label', e.detail ? 'Couper le son' : 'Activer le son');
+      b.innerHTML = pix(e.detail ? 'speaker' : 'mute', e.detail ? '#9dff5c' : '#cfe9f2', 18);
+    });
+  }
+  salleOn = true; window.LAB = window.LAB || {}; window.LAB.paused = true;
+  document.documentElement.classList.add('in-salle');
+  document.title = 'Salle d\'expérience · Codex Mental · Laboratoire';
+  loadSalle().then(() => { if (salleOn) window.Salle.start(document.getElementById('salle-cvs')); salleEl.querySelector('.salle-exit').focus({ preventScroll: true }); })
+    .catch(() => say('La salle est fermée pour le moment : impossible de charger la scène.', 4000));
+}
+function exitSalle() {
+  salleOn = false; if (window.Salle) window.Salle.stop();
+  window.LAB.paused = false;
+  document.documentElement.classList.remove('in-salle');
+}
+document.addEventListener('keydown', e => { if (salleOn && e.key === 'Escape') location.hash = lastRoute === '#/salle' ? '#/' : lastRoute; });
+window.addEventListener('lab:door', () => { say('🚪 Une porte grince… vous entrez dans la salle d\'expérience.', 2600); location.hash = '#/salle'; });
+
 /* ---------- routeur ---------- */
 let firstRender = true;
 async function route() {
   const parts = (location.hash.replace(/^#\/?/, '') || '').split('/').filter(Boolean);
+  if (parts[0] === 'salle') { enterSalle(); return; }
+  if (salleOn) exitSalle();
+  lastRoute = location.hash || '#/';
   let tab = 'accueil', html;
   try {
     if (!parts.length) html = pageHome();

@@ -267,7 +267,7 @@ let shelf = [], lamps = [], bench = [], stars = [], coil = {}, col = {}, alem = 
 let arcs = [], smoke = [], bats = [], sparks = [];
 let flash = 0, dim = 0, dimTarget = 0, nextZap = 6, nextBat = 4, shoot = null;
 let ev = null, clicks = [];
-let accent = C.violet;
+let accent = C.violet, door = null, doorHov = false;
 
 /* ---------- mise en page ---------- */
 function layout() {
@@ -302,6 +302,7 @@ function layout() {
   // zone des bocaux
   L.jx0 = mobile ? 3 : SIDE + 1;
   L.jx1 = mobile ? w - 22 : w - SIDE - 1;
+  door = L.mobile ? null : { x: 18, y: L.shelfY - 13, w: 8, h: 13 };
   genShelf(); genLamps(); genBench(); genStars();
   if (!chem) chem = { x: F((L.benchX0 + L.benchX1) / 2), dir: 1, mode: 'idle', timer: 40, bub: null, jump: 0, target: null };
   chem.x = clamp(chem.x, L.benchX0 + 4, L.benchX1 - 14);
@@ -461,6 +462,21 @@ function drawAlembic() {
 }
 function it2(a) { return a.ci * 1.7; }
 
+
+function drawDoorStatic(c, d) {
+  if (!d) return;
+  R(c, d.x - 1, d.y - 1, d.w + 2, d.h + 1, '#3a3f4b'); R(c, d.x - 1, d.y - 1, d.w + 2, 1, '#5b6273');
+  R(c, d.x, d.y, d.w, d.h, '#5a3520'); for (let i = 1; i < d.w; i += 3) R(c, d.x + i, d.y, 1, d.h, '#45281a');
+  R(c, d.x, d.y + 3, d.w, 1, '#3b2213'); R(c, d.x, d.y + d.h - 4, d.w, 1, '#3b2213');
+  P(c, d.x + d.w - 2, d.y + F(d.h / 2), '#f1cd6a');
+}
+function drawDoorLive(d, hov) {
+  if (!d) return;
+  const k = .5 + Math.sin(t * 3) * .2 + (hov ? .4 : 0);
+  R(x, d.x, d.y + d.h - 1, d.w, 1, `rgba(255,${hov ? 120 : 90},220,${k})`);
+  if (hov) glow(x, d.x + d.w / 2, d.y + d.h, 7, '#ff6ad5', .35);
+}
+
 /* ---------- couche statique (murs, meubles) ---------- */
 function buildBack() {
   back.width = w; back.height = h;
@@ -547,6 +563,7 @@ function buildBack() {
     }
   }
   drawCoilStatic(c);
+  drawDoorStatic(c, door);
 }
 
 /* ---------- bobine Tesla ---------- */
@@ -930,6 +947,7 @@ function draw() {
   drawPorthole();
   drawLamps();
   drawLeftWall();
+  drawDoorLive(door, doorHov);
   for (const it of shelf) drawItemShelf(it);
   drawColumn();
   drawCoilLive();
@@ -952,7 +970,7 @@ function draw() {
 /* ---------- boucle ---------- */
 function loop(now) {
   requestAnimationFrame(loop);
-  if (document.hidden) return;
+  if (document.hidden || (window.LAB && window.LAB.paused)) return;
   if (reduce && !ev) return;
   const step = 1000 / FPS;
   if (now - last < step) return;
@@ -966,13 +984,16 @@ function toLogical(e) { const r = cvs.getBoundingClientRect(); return [(e.client
 function hitCoil(lx, ly) { return Math.abs(lx - coil.cx) < (coil.small ? 7 : 13) && ly > coil.top - 6 && ly < coil.base; }
 function hitShelf(lx, ly) { return shelf.find(it => lx >= it.x && lx < it.x + it.w && ly >= it.y && ly < it.y + it.h); }
 function hitChem(lx, ly) { return chem && lx >= chem.x && lx < chem.x + 10 && ly > L.floorY - 16 && ly < L.floorY; }
+function hitDoor(lx, ly) { return door && lx >= door.x - 1 && lx < door.x + door.w + 1 && ly >= door.y - 1 && ly < door.y + door.h; }
 function hitPort(lx, ly) { const p = porthole(); return Math.hypot(lx - p.cx, ly - p.cy) <= p.r + 2; }
 cvs.addEventListener('pointermove', e => {
   const [lx, ly] = toLogical(e);
-  cvs.style.cursor = (hitCoil(lx, ly) || hitShelf(lx, ly) || hitChem(lx, ly) || hitPort(lx, ly)) ? 'pointer' : 'default';
+  doorHov = !!hitDoor(lx, ly);
+  cvs.style.cursor = (doorHov || hitCoil(lx, ly) || hitShelf(lx, ly) || hitChem(lx, ly) || hitPort(lx, ly)) ? 'pointer' : 'default';
 });
 cvs.addEventListener('click', e => {
   const [lx, ly] = toLogical(e);
+  if (hitDoor(lx, ly)) { window.dispatchEvent(new CustomEvent('lab:door')); return; }
   if (hitCoil(lx, ly)) {
     zap(true);
     const now = performance.now();

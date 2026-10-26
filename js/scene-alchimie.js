@@ -434,6 +434,8 @@ function build() {
   G.lamps = [];
   if (!c) { const r0 = L.SL + 30, r1 = V.R.X - 20; const n = r1 - r0 > 260 ? 3 : 2; for (let i = 0; i < n; i++) G.lamps.push({ x: F(r0 + (r1 - r0) * (i + .5) / n), k: 1, off: 0 }); }
 
+  G.door = c ? null : { x: 31, y: L.TOP + 6, w: 9, h: 14 };
+
   /* scientifique */
   sci = { x: F((G.bx0 + G.bx1) / 2), dir: 1, mode: 'idle', timer: 60, task: null, bub: null, jump: 0, frame: 'stand', note: 0 };
 }
@@ -441,6 +443,21 @@ function setOutAt(Lk, idx, tb) {
   // ce qui est déjà passé plus loin dans la rampe tombe dans la nouvelle éprouvette
   for (let i = idx + 1; i < Lk.cells.length; i++) if (Lk.cells[i]) { addTo(tb, Lk.q, Lk.cells[i]); Lk.cells[i] = null; Lk.count--; }
   Lk.outAt = idx;
+}
+
+
+function drawDoorStatic(c, d) {
+  if (!d) return;
+  R(c, d.x - 1, d.y - 1, d.w + 2, d.h + 1, '#3a3f4b'); R(c, d.x - 1, d.y - 1, d.w + 2, 1, '#5b6273');
+  R(c, d.x, d.y, d.w, d.h, '#5a3520'); for (let i = 1; i < d.w; i += 3) R(c, d.x + i, d.y, 1, d.h, '#45281a');
+  R(c, d.x, d.y + 3, d.w, 1, '#3b2213'); R(c, d.x, d.y + d.h - 4, d.w, 1, '#3b2213');
+  P(c, d.x + d.w - 2, d.y + F(d.h / 2), '#f1cd6a');
+}
+function drawDoorLive(d, hov) {
+  if (!d) return;
+  const k = .5 + Math.sin(t * 3) * .2 + (hov ? .4 : 0);
+  R(x, d.x, d.y + d.h - 1, d.w, 1, `rgba(255,${hov ? 120 : 90},220,${k})`);
+  if (hov) glow(x, d.x + d.w / 2, d.y + d.h, 7, [255, 106, 213], .35);
 }
 
 /* ---------- décor fixe ---------- */
@@ -524,6 +541,7 @@ function buildBack() {
   line(c, ax - 7, yB - 1, ax - 5, ab, K.ironHi); line(c, ax + 7, yB - 1, ax + 5, ab, K.ironHi); R(c, ax - 6, ab, 13, 1, K.steel);
   // bobine Tesla
   bakeTesla(c);
+  drawDoorStatic(c, G.door);
   // réservoir : colliers
   if (V.R) { const Rv = V.R; for (const X of [Rv.X + 14, Rv.X + Rv.shape.w - 15]) { R(c, X, 4, 1, Rv.Y - 3, K.ironHi); R(c, X - 1, Rv.Y - 1, 3, 1, K.brass); } }
   // colonne : socle
@@ -932,6 +950,7 @@ function draw() {
   x.drawImage(back, 0, 0);
   drawLamps();
   drawTeslaLive();
+  drawDoorLive(G.door, doorHov);
   drawEventBack();
   drawLiquids();
   drawJacket();
@@ -975,7 +994,7 @@ function update() {
 /* ---------- boucle ---------- */
 function loop(now) {
   requestAnimationFrame(loop);
-  if (document.hidden || STATIC) return;
+  if (document.hidden || (window.LAB && window.LAB.paused) || STATIC) return;
   const step = 1000 / FPS;
   if (now - last < step) return;
   last = now - ((now - last) % step);
@@ -987,10 +1006,13 @@ function loop(now) {
 function toLogical(e) { const r = cvs.getBoundingClientRect(); return [(e.clientX - r.left) / S, (e.clientY - r.top) / S]; }
 function hitTesla(lx, ly) { const T = G.tesla; return Math.hypot(lx - T.cx, ly - T.sy) <= T.r + 3 || (Math.abs(lx - T.cx) < (T.small ? 5 : 11) && ly > T.sy && ly < T.base); }
 function hitVessel(lx, ly) { for (const k in V) { const v = V[k]; if (lx >= v.X && lx < v.X + v.shape.w && ly >= v.Y && ly < v.Y + v.shape.h) return v; } return null; }
+let doorHov = false;
+function hitDoor(lx, ly) { const d = G.door; return d && lx >= d.x - 1 && lx < d.x + d.w + 1 && ly >= d.y - 1 && ly < d.y + d.h; }
 function hitSci(lx, ly) { return sci && lx >= sci.x && lx < sci.x + 14 && ly > L.floor - sciH() && ly < L.floor; }
-cvs.addEventListener('pointermove', e => { const [lx, ly] = toLogical(e); cvs.style.cursor = (hitTesla(lx, ly) || hitVessel(lx, ly) || hitSci(lx, ly)) ? 'pointer' : 'default'; });
+cvs.addEventListener('pointermove', e => { const [lx, ly] = toLogical(e); doorHov = !!hitDoor(lx, ly); cvs.style.cursor = (doorHov || hitTesla(lx, ly) || hitVessel(lx, ly) || hitSci(lx, ly)) ? 'pointer' : 'default'; });
 cvs.addEventListener('click', e => {
   const [lx, ly] = toLogical(e);
+  if (hitDoor(lx, ly)) { window.dispatchEvent(new CustomEvent('lab:door')); return; }
   if (hitTesla(lx, ly)) {
     zap(true);
     const now = performance.now(); clicks = clicks.filter(c => now - c < 1500); clicks.push(now);

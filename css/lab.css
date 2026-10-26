@@ -330,3 +330,28 @@ a { color: var(--accent); }
   .set-txt { display: none; }
   .set-btn { padding: 4px 6px; }
 }
+
+/* ---------- salle d'expérience (plein écran) ---------- */
+.salle { display: none; }
+.in-salle .lab, .in-salle #scene, .in-salle .toast:not(.on) { display: none; }
+.in-salle .salle {
+  display: block; position: fixed; inset: 0; z-index: 10; background: #050608;
+  background-image: radial-gradient(80% 60% at 50% 50%, #0d1018 0%, #050608 70%);
+}
+.salle-stage { position: absolute; inset: 0; display: grid; place-items: center; padding: max(8px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left)); }
+#salle-cvs { image-rendering: pixelated; image-rendering: crisp-edges; display: block; box-shadow: 0 0 0 3px #17120a, 0 0 0 5px #6e5216, 0 20px 60px rgba(0,0,0,.8); touch-action: manipulation; }
+.salle-btn {
+  position: absolute; top: max(12px, env(safe-area-inset-top)); z-index: 2; width: 42px; height: 42px; display: grid; place-items: center; cursor: pointer;
+  background: rgba(10,14,18,.82); border: 2px solid #3a3f4b; color: #cfe9f2; padding: 0;
+}
+.salle-btn:hover { border-color: #ffb347; }
+.salle-btn:focus-visible { outline: 2px dashed #ffb347; outline-offset: 3px; }
+.salle-exit { left: max(12px, env(safe-area-inset-left)); }
+.salle-sound { left: calc(max(12px, env(safe-area-inset-left)) + 52px); }
+.in-salle .toast { z-index: 11; top: 70px; }
+@media (max-width: 759px) and (orientation: portrait) {
+  .salle-stage::after {
+    content: '↻'; position: absolute; bottom: max(18px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%);
+    font-family: var(--f-vt); font-size: 28px; color: #8aa09a; opacity: .7;
+  }
+}
