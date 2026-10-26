@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Codex Mental · Laboratoire</title>
+<meta name="description" content="Le laboratoire du Codex Mental : applications, logiciels, expériences CSS et idées de l'Atelier, dans un labo de savant fou en pixel art.">
+<meta name="theme-color" content="#07080b">
+<link rel="preload" href="fonts/PressStart2P-Regular.woff" as="font" type="font/woff" crossorigin>
+<link rel="preload" href="fonts/VT323-Regular.woff" as="font" type="font/woff" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/lab.css">
+<script>
+  // Saison d'Halloween : du 20 octobre au 2 novembre (forçable avec ?halloween=1 ou ?halloween=0)
+  window.LAB = (function () {
+    var q = new URLSearchParams(location.search), f = q.get('halloween'), d = new Date(), m = d.getMonth(), day = d.getDate();
+    var season = (m === 9 && day >= 20) || (m === 10 && day <= 2);
+    var on = f === null ? season : f === '1';
+    if (on) document.documentElement.classList.add('halloween');
+    return { halloween: on };
+  })();
+</script>
+</head>
+<body>
+<canvas id="scene" aria-hidden="true"></canvas>
+
+<div class="lab" id="lab">
+  <header class="lab-head">
+    <a class="brand" href="#/" aria-label="Accueil du laboratoire">
+      <span class="brand-ico" aria-hidden="true"></span>
+      <span class="brand-name">CODEX<b>MENTAL</b><i>.lab</i></span>
+    </a>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Étagères du laboratoire"></nav>
+  </header>
+  <div class="lab-body">
+    <main class="view" id="view" tabindex="-1" aria-live="polite">
+      <p class="loading">Préchauffage des fioles…</p>
+    </main>
+    <div class="tube" id="tube" aria-hidden="true">
+      <div class="tube-cork"></div>
+      <div class="tube-glass" id="tube-glass">
+        <div class="tube-thumb" id="tube-thumb"><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="crt" aria-hidden="true"></div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/scene.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

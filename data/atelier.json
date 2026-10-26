@@ -1,0 +1,52 @@
+{
+ "intro": "content/atelier/intro.html",
+ "sections": [
+  {
+   "label": "Projets en cours",
+   "color": "#ffb050",
+   "items": [
+    {
+     "id": "projets/nox",
+     "title": "NOX Electron Lab"
+    }
+   ]
+  },
+  {
+   "label": "Exploration futuriste",
+   "color": "#7fd8ff",
+   "items": [
+    {
+     "id": "explo/modelexplo",
+     "title": "Modèle d'exploration"
+    },
+    {
+     "id": "explo/cryodynamic",
+     "title": "Cryodynamique"
+    },
+    {
+     "id": "explo/polaris",
+     "title": "POLARIS",
+     "cover": "img/articles/polaris-1.webp"
+    },
+    {
+     "id": "explo/solunar",
+     "title": "SOLUNAR"
+    }
+   ]
+  },
+  {
+   "label": "Évolutions de l'IA",
+   "color": "#c9a6ff",
+   "items": [
+    {
+     "id": "aievo/b12",
+     "title": "B-12, assistant IA personnel"
+    },
+    {
+     "id": "projets/ia1",
+     "title": "IA & outils"
+    }
+   ]
+  }
+ ]
+}
