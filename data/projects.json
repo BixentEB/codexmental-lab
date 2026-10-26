@@ -43,6 +43,11 @@
  "projects": [
   {
    "id": "nox",
+   "icon": "img/projets/nox/icone.png",
+   "emojis": [
+    { "src": "img/projets/nox/nox_thinking.png", "label": "Quand NOX réfléchit" },
+    { "src": "img/projets/nox/nox_starry.png", "label": "Quand NOX est émerveillé" }
+   ],
    "name": "NOX — Assistant IA personnel",
    "cat": "ia",
    "status": "cours",

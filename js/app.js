@@ -191,7 +191,9 @@ function pageProject(id) {
   const todo = '<span class="todo">à renseigner</span>';
   const specs = [['État', p.state, 1], ['Plateforme', p.platform, 1], ['Logiciels et technologies', p.tech, 1], ['Licence', p.license, 1], ['Accès', p.access, 1], ['Diffusion', p.diffusion, 0], ['Prochaines étapes', p.next, 0], ['Objectif', p.goal, 0], ['Lien', p.link, 0]]
     .filter(r => r[1] || r[2]).map(r => `<dt>${r[0]}</dt><dd>${r[1] ? esc(r[1]) : todo}</dd>`).join('');
-  const list = (title, arr) => arr && arr.length ? `<section class="box"><h2>${title}</h2><ul class="px-list">${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>` : '';
+  // « Libellé — explication » : le libellé passe en gras, plus facile à parcourir
+  const item = x => { const m = /^(.{2,40}?) — (.+)$/.exec(x); return m ? `<b>${esc(m[1])}</b> — ${esc(m[2])}` : esc(x); };
+  const list = (title, arr) => arr && arr.length ? `<section class="box"><h2>${title}</h2><ul class="px-list">${arr.map(x => `<li>${item(x)}</li>`).join('')}</ul></section>` : '';
   const prev = sibs[i - 1], next = sibs[i + 1];
   return `<nav class="crumbs"><a href="#/c/${c.id}">← ${esc(c.label)}</a></nav>
     <div class="banner-slot" data-banner="${esc(p.id)}">${p.banner ? `<img class="banner" src="${esc(p.banner)}" alt="">` : ''}</div>
@@ -279,7 +281,7 @@ async function fillBrand(p) {
   if (bs && B.banner && !bs.firstChild) bs.innerHTML = `<img class="banner" src="${esc(B.banner)}" alt="">`;
   if (B.icon) view.querySelectorAll('.detail .mark.big').forEach(m => { m.classList.add('mark-img'); m.innerHTML = `<img src="${esc(B.icon)}" alt="">`; });
   const es = view.querySelector(`[data-emojis="${CSS.escape(p.id)}"]`);
-  if (es && B.emojis.length) { es.querySelector('.emojis').innerHTML = B.emojis.map(src => `<img src="${esc(src)}" alt="" loading="lazy">`).join(''); es.hidden = false; }
+  if (es && B.emojis.length) { es.querySelector('.emojis').innerHTML = B.emojis.map(e => typeof e === 'string' ? `<img src="${esc(e)}" alt="" loading="lazy">` : `<figure class="emo"><img src="${esc(e.src)}" alt="${esc(e.label || '')}" loading="lazy">${e.label ? `<figcaption>${esc(e.label)}</figcaption>` : ''}</figure>`).join(''); es.hidden = false; }
   updateTube();
 }
 async function fillShots(p) {

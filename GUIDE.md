@@ -88,8 +88,8 @@ Déposez dans le dossier du projet (`img/projets/<identifiant>/`) :
 | Fichier | Où il apparaît |
 |---|---|
 | `icone.png` (ou `.webp`, `.svg`) | remplace le symbole à côté du titre de la fiche ; carré, 256 px suffit |
-| `banniere.png` (ou `.webp`, `.jpg`) | grande image en haut de la fiche ; format allongé, environ 1600 × 400 px |
-| `emoji-1.png`, `emoji-2.png`… | section « Son univers visuel », en rangée ; fond transparent, 128 px suffit |
+| `banniere.png` (ou `.webp`, `.jpg`) | grande image en haut de la fiche, affichée en entier ; format allongé, 1600 px de large suffisent |
+| `emoji-1.png`, `emoji-2.png`… | section « Son univers visuel », en rangée ; fond transparent, 128 px suffit. Pour leur donner une légende (« Quand NOX réfléchit »), voir le champ `emojis` de la fiche NOX |
 
 Pour que le logo apparaisse aussi sur la petite carte du projet (dans les étagères), ajoutez dans `data/projects.json` : `"icon": "img/projets/<identifiant>/icone.png"`.
 
