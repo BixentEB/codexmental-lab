@@ -422,3 +422,10 @@ a { color: var(--accent); }
 [data-theme="hd"] .steps li::before { border-radius: 50%; }
 [data-theme="hd"] .lightbox img { border-radius: 10px; }
 [data-theme="pixel"] .tool b, [data-theme="pixel"] .file-head b, [data-theme="pixel"] .step-box h3 { font-family: var(--f-px); font-size: 11px; font-weight: 400; line-height: 1.6; }
+
+/* passage d'un labo à l'autre */
+html::after { content: ''; position: fixed; inset: 0; z-index: 50; background: #000; opacity: 0; pointer-events: none; transition: opacity .6s ease; }
+html.leaving::after { opacity: 1; }
+html:not(.leaving)::after { animation: arrive .7s ease-out 1; }
+@keyframes arrive { from { opacity: 1; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { html::after { transition: none; animation: none; } }

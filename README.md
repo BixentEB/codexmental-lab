@@ -14,9 +14,13 @@ Le bouton **Thème** (en haut à droite) permet de choisir le labo et le niveau 
 
 Pour ajouter un thème : une scène dans `js/`, une entrée dans `THEMES` (script en tête de `index.html`), un CSS limité à `[data-theme="nom"]`, et une description dans `THEME_DESC` (`js/app.js`).
 
+## Les portes
+
+Chaque décor a une petite porte (filet de lumière rose dessous) : elle mène au labo suivant, Labo pixel → Alchimie → Grand labo → Labo pixel, en gardant la page en cours.
+
 ## Salle d'expérience
 
-L'onglet **Expérience** (ou la petite porte cachée dans le décor des thèmes) ouvre une pièce entière en plein écran, sans texte : on clique sur les objets, on clique au sol pour déplacer le savant. Fichier : `js/salle.js`, chargé seulement à l'ouverture.
+La fiche **La salle d'expérience** (étagère Jeux) ouvre une pièce entière en plein écran, sans texte : on clique sur les objets, on clique au sol pour déplacer le savant. Fichier : `js/salle.js`, chargé seulement à l'ouverture.
 
 - Ciel de la fenêtre selon l'heure réelle (aube, jour, crépuscule, nuit), orage, pluie.
 - Son coupé par défaut (bouton haut-parleur) ; la radio l'active.

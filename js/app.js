@@ -312,7 +312,19 @@ function exitSalle() {
   document.documentElement.classList.remove('in-salle');
 }
 document.addEventListener('keydown', e => { if (salleOn && e.key === 'Escape') location.hash = lastRoute === '#/salle' ? '#/' : lastRoute; });
-window.addEventListener('lab:door', () => { say('🚪 Une porte grince… vous entrez dans la salle d\'expérience.', 2600); location.hash = '#/salle'; });
+// la porte du décor mène au labo suivant : pixel → alchimie → grand labo → pixel
+const LAB_ORDER = ['pixel', 'alchimie', 'hd'];
+window.addEventListener('lab:door', () => {
+  const C = window.LAB || {}, ids = LAB_ORDER.filter(id => C.themes && C.themes[id]);
+  const next = ids[(ids.indexOf(C.theme) + 1) % ids.length];
+  say('🚪 La porte grince… direction : ' + C.themes[next].label + '.', 2000);
+  try { localStorage.setItem('lab.theme', next); } catch (err) { /* sans stockage, on passe par l'adresse */ }
+  const u = new URL(location.href); u.searchParams.delete('theme');
+  let ok = null; try { ok = localStorage.getItem('lab.theme'); } catch (err) { ok = null; }
+  if (ok !== next) u.searchParams.set('theme', next);
+  document.documentElement.classList.add('leaving');
+  setTimeout(() => { location.href = u.toString(); if (u.pathname === location.pathname && u.search === location.search) location.reload(); }, 650);
+});
 
 /* ---------- routeur ---------- */
 let firstRender = true;
