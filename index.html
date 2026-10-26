@@ -4,28 +4,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Codex Mental · Laboratoire</title>
-<meta name="description" content="Le laboratoire du Codex Mental : applications, logiciels, expériences CSS et idées de l'Atelier, dans un labo de savant fou en pixel art.">
+<meta name="description" content="Le laboratoire du Codex Mental : applications, logiciels, expériences CSS et idées de l'Atelier. Une vitrine sobre, et des labos de savant fou à explorer.">
 <meta name="theme-color" content="#07080b">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preload" href="fonts/PressStart2P-Regular.woff" as="font" type="font/woff" crossorigin>
-<link rel="preload" href="fonts/VT323-Regular.woff" as="font" type="font/woff" crossorigin>
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="css/lab.css">
 <link rel="stylesheet" href="css/theme-alchimie.css">
 <link rel="stylesheet" href="css/theme-hd.css">
+<link rel="stylesheet" href="css/theme-pro.css">
 <script>
-  // Réglages du labo : thème, animations, saison d'Halloween.
-  // ?theme=alchimie, ?anim=calm|off|full et ?halloween=1|0 forcent un réglage.
+  // Réglages du labo : univers, salle, apparence, animations, saison d'Halloween.
+  // Raccourcis d'adresse : ?theme=pro|pixel|alchimie|hd, ?scheme=dark|light, ?anim=full|calm|off, ?halloween=1|0
   window.LAB = (function () {
     var q = new URLSearchParams(location.search), d = new Date(), m = d.getMonth(), day = d.getDate();
     function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+    // chaque salle appartient à un univers ; les portes font passer d'une salle à l'autre dans le même univers
     var THEMES = {
-      pixel: { label: 'Labo pixel', scene: 'js/scene.js' },
-      alchimie: { label: 'Alchimie', scene: 'js/scene-alchimie.js' },
-      hd: { label: 'Grand labo', scene: 'js/scene-hd.js' }
+      pro: { label: 'Vitrine', universe: 'pro', scene: null },
+      pixel: { label: 'Le labo', universe: 'pixel', scene: 'js/scene.js' },
+      alchimie: { label: 'La paillasse', universe: 'pixel', scene: 'js/scene-alchimie.js' },
+      hd: { label: 'Le grand labo', universe: 'vecto', scene: 'js/scene-hd.js' }
     };
-    var theme = q.get('theme') || get('lab.theme') || 'pixel';
-    if (!THEMES[theme]) theme = 'pixel';
+    var UNIVERSES = {
+      pro: { label: 'Vitrine', desc: 'Sobre et lisible : l\'essentiel, sans décor.', rooms: ['pro'] },
+      pixel: { label: 'Labo pixel', desc: 'Fioles, bobine Tesla et petit chimiste, façon vieux jeux.', rooms: ['pixel', 'alchimie'] },
+      vecto: { label: 'Labo vectoriel', desc: 'Grand laboratoire d\'alchimie en plusieurs plans.', rooms: ['hd'] },
+      orbital: { label: 'Station orbitale', desc: 'En préparation : apesanteur et visiteurs à la vitre.', rooms: [], soon: true }
+    };
+    var theme = q.get('theme') || get('lab.theme') || 'pro';
+    if (!THEMES[theme]) theme = 'pro';
+    var universe = THEMES[theme].universe;
+    var scheme = q.get('scheme') || get('lab.scheme') || 'auto';
+    if (['auto', 'dark', 'light'].indexOf(scheme) < 0) scheme = 'auto';
     var motion = q.get('anim') || get('lab.motion');
     var explicit = !!motion;
     if (['full', 'calm', 'off'].indexOf(motion) < 0) {
@@ -34,10 +44,17 @@
     }
     var f = q.get('halloween'), season = (m === 9 && day >= 20) || (m === 10 && day <= 2);
     var hw = f === null ? season : f === '1';
-    var root = document.documentElement;
-    root.dataset.lab = theme; root.dataset.motion = motion;
+    var root = document.documentElement, mq = matchMedia('(prefers-color-scheme: light)');
+    function applyScheme() {
+      var s = scheme === 'auto' ? (mq.matches ? 'light' : 'dark') : scheme;
+      root.dataset.scheme = s;
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = universe !== 'pro' ? '#07080b' : (s === 'light' ? '#f4f6fa' : '#0f1521');
+    }
+    root.dataset.lab = theme; root.dataset.universe = universe; root.dataset.motion = motion;
+    applyScheme(); mq.addEventListener('change', applyScheme);
     if (hw) root.classList.add('halloween');
-    return { halloween: hw, theme: theme, themes: THEMES, motion: motion, motionExplicit: explicit };
+    return { halloween: hw, theme: theme, themes: THEMES, universe: universe, universes: UNIVERSES, scheme: scheme, motion: motion, motionExplicit: explicit };
   })();
 </script>
 </head>
@@ -52,7 +69,7 @@
     </a>
     <nav class="tabs" id="tabs" role="tablist" aria-label="Étagères du laboratoire"></nav>
     <div class="settings">
-      <button class="set-btn" id="set-btn" type="button" aria-expanded="false" aria-controls="set-panel" title="Thème et animations"><span class="set-ico" aria-hidden="true"></span><span class="set-txt">Thème</span></button>
+      <button class="set-btn" id="set-btn" type="button" aria-expanded="false" aria-controls="set-panel" title="Univers, apparence et animations"><span class="set-ico" aria-hidden="true"></span><span class="set-txt">Univers</span></button>
       <div class="set-panel" id="set-panel" hidden></div>
     </div>
   </header>
@@ -72,7 +89,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script>document.write('<script src="' + LAB.themes[LAB.theme].scene + '"><\/script>');</script>
+<script>if (LAB.themes[LAB.theme].scene) document.write('<script src="' + LAB.themes[LAB.theme].scene + '"><\/script>');</script>
 <script src="js/app.js"></script>
 </body>
 </html>

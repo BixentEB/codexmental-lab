@@ -25,16 +25,16 @@ const ICONS = {
 };
 /* icônes vectorielles pour les thèmes non pixel : même famille, verrerie fine */
 const VEC = {
-  flask: c => `<path d="M9.5 3h5M10 3v6.2L4.6 18.4A1.7 1.7 0 0 0 6.1 21h11.8a1.7 1.7 0 0 0 1.5-2.6L14 9.2V3" fill="none" stroke="#e6f3f7" stroke-width="1.3" stroke-linejoin="round"/><path d="M7.2 14h9.6l2.6 4.4a1.7 1.7 0 0 1-1.5 2.6H6.1a1.7 1.7 0 0 1-1.5-2.6Z" fill="${c}" opacity=".9"/><circle cx="10.5" cy="17" r=".9" fill="#fff" opacity=".8"/><circle cx="13.6" cy="15.6" r=".6" fill="#fff" opacity=".7"/>`,
-  tube: c => `<path d="M8.5 2.5h7M9.5 2.5v15.5a2.5 2.5 0 0 0 5 0V2.5" fill="none" stroke="#e6f3f7" stroke-width="1.3" stroke-linejoin="round"/><path d="M9.5 11h5v7a2.5 2.5 0 0 1-5 0Z" fill="${c}" opacity=".9"/><circle cx="11.4" cy="15.5" r=".7" fill="#fff" opacity=".8"/>`,
-  beaker: c => `<path d="M4.5 3.5h15M6 3.5v15.5A2 2 0 0 0 8 21h8a2 2 0 0 0 2-2V3.5M18 7h-2M18 10.5h-2" fill="none" stroke="#e6f3f7" stroke-width="1.3" stroke-linejoin="round"/><path d="M6 12.5h12V19a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2Z" fill="${c}" opacity=".9"/><circle cx="9.5" cy="16" r=".8" fill="#fff" opacity=".8"/>`,
-  potion: c => `<path d="M10 2.5h4M10.5 2.5v4.6a6.6 6.6 0 1 0 3 0V2.5" fill="none" stroke="#e6f3f7" stroke-width="1.3" stroke-linejoin="round"/><path d="M5.6 14.5h12.8a6.6 6.6 0 0 1-12.8 0Z" fill="${c}" opacity=".9"/><rect x="10" y="1" width="4" height="2" rx=".6" fill="#b8763a"/><circle cx="9.4" cy="16.6" r=".8" fill="#fff" opacity=".8"/>`,
-  book: c => `<path d="M12 6.2C9.8 4.6 6.6 4.2 3.5 4.6v14c3.1-.4 6.3 0 8.5 1.6 2.2-1.6 5.4-2 8.5-1.6v-14c-3.1-.4-6.3 0-8.5 1.6Zm0 0v14" fill="none" stroke="#e6f3f7" stroke-width="1.3" stroke-linejoin="round"/><path d="M14.5 9.2l1.2 2.2 2.3.4-1.7 1.6.4 2.3-2.2-1.1-2.1 1.1" fill="${c}" opacity=".95"/><path d="M5.8 8.3c1.5-.1 3 .1 4.3.7M5.8 11.3c1.5-.1 3 .1 4.3.7M5.8 14.3c1.5-.1 3 .1 4.3.7" stroke="${c}" stroke-width="1" fill="none" opacity=".75"/>`,
+  flask: c => `<path d="M9.5 3h5M10 3v6.2L4.6 18.4A1.7 1.7 0 0 0 6.1 21h11.8a1.7 1.7 0 0 0 1.5-2.6L14 9.2V3" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M7.2 14h9.6l2.6 4.4a1.7 1.7 0 0 1-1.5 2.6H6.1a1.7 1.7 0 0 1-1.5-2.6Z" fill="${c}" opacity=".9"/><circle cx="10.5" cy="17" r=".9" fill="#fff" opacity=".8"/><circle cx="13.6" cy="15.6" r=".6" fill="#fff" opacity=".7"/>`,
+  tube: c => `<path d="M8.5 2.5h7M9.5 2.5v15.5a2.5 2.5 0 0 0 5 0V2.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M9.5 11h5v7a2.5 2.5 0 0 1-5 0Z" fill="${c}" opacity=".9"/><circle cx="11.4" cy="15.5" r=".7" fill="#fff" opacity=".8"/>`,
+  beaker: c => `<path d="M4.5 3.5h15M6 3.5v15.5A2 2 0 0 0 8 21h8a2 2 0 0 0 2-2V3.5M18 7h-2M18 10.5h-2" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M6 12.5h12V19a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2Z" fill="${c}" opacity=".9"/><circle cx="9.5" cy="16" r=".8" fill="#fff" opacity=".8"/>`,
+  potion: c => `<path d="M10 2.5h4M10.5 2.5v4.6a6.6 6.6 0 1 0 3 0V2.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M5.6 14.5h12.8a6.6 6.6 0 0 1-12.8 0Z" fill="${c}" opacity=".9"/><rect x="10" y="1" width="4" height="2" rx=".6" fill="#b8763a"/><circle cx="9.4" cy="16.6" r=".8" fill="#fff" opacity=".8"/>`,
+  book: c => `<path d="M12 6.2C9.8 4.6 6.6 4.2 3.5 4.6v14c3.1-.4 6.3 0 8.5 1.6 2.2-1.6 5.4-2 8.5-1.6v-14c-3.1-.4-6.3 0-8.5 1.6Zm0 0v14" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M14.5 9.2l1.2 2.2 2.3.4-1.7 1.6.4 2.3-2.2-1.1-2.1 1.1" fill="${c}" opacity=".95"/><path d="M5.8 8.3c1.5-.1 3 .1 4.3.7M5.8 11.3c1.5-.1 3 .1 4.3.7M5.8 14.3c1.5-.1 3 .1 4.3.7" stroke="${c}" stroke-width="1" fill="none" opacity=".75"/>`,
   bolt: c => `<path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6.2Z" fill="${c}" stroke="${c}" stroke-width="1" stroke-linejoin="round"/>`,
   door: c => `<path d="M5.5 21V9.5a6.5 6.5 0 0 1 13 0V21Z" fill="none" stroke="${c}" stroke-width="1.4" stroke-linejoin="round"/><path d="M3.5 21h17M9 21V11M12 21V9M15 21V11" stroke="${c}" stroke-width="1" opacity=".55"/><circle cx="15.8" cy="15" r="1" fill="${c}"/>`
 };
 function pix(name, color, size = 32, forcePixel) {
-  if (!forcePixel && document.documentElement.dataset.lab === 'hd' && VEC[name]) {
+  if (!forcePixel && document.documentElement.dataset.universe !== 'pixel' && VEC[name]) {
     return `<svg class="vec" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true">${VEC[name](color)}</svg>`;
   }
   const rows = ICONS[name] || ICONS.flask, wd = Math.max(...rows.map(r => r.length)), ht = rows.length;
@@ -81,6 +81,10 @@ function card(p) {
 }
 function footer() {
   const hw = window.LAB && window.LAB.halloween;
+  if (window.LAB && window.LAB.universe === 'pro') return `<footer class="lab-foot">
+    <p class="hint">Envie d'explorer ? Le labo cache deux univers : <a href="#" data-universe="pixel">en pixel</a> et <a href="#" data-universe="vecto">en vectoriel</a>.</p>
+    <p>Codex Mental · Laboratoire <span class="sep">/</span> <a href="https://codexmental.com">retour au Codex</a></p>
+  </footer>`;
   return `<footer class="lab-foot">
     <p class="hint">${hw ? '🎃 Saison d\'Halloween : la bobine Tesla semble… agitée. Trois décharges rapprochées, et qui sait ?' : (document.documentElement.dataset.lab === 'alchimie' ? '⚗ Astuce : la bobine Tesla réagit aux clics, et le ballon de réaction aime les gouttes de réactif.' : '⚡ Astuce : la bobine Tesla, à gauche, réagit aux clics. Les fioles de l\'étagère aussi.')}</p>
     <p>Codex Mental · Laboratoire <span class="sep">/</span> <a href="https://codexmental.com">retour au Codex</a></p>
@@ -88,6 +92,27 @@ function footer() {
 }
 
 /* ---------- pages ---------- */
+function heroFlask() {
+  // une grande fiole : le liquide ondule et prend la couleur des réactifs, quelques bulles montent
+  const bub = [[92, 0], [118, 1.2], [104, 2.3], [130, .6], [80, 1.8]].map(([cx, d], i) => `<circle class="hb" cx="${cx}" cy="250" r="${3 + (i % 3)}" style="animation-delay:${d}s"/>`).join('');
+  return `<svg viewBox="0 0 220 280" width="220" height="280">
+    <defs>
+      <linearGradient id="hl" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#7cf29a"/><stop offset=".5" stop-color="#7fd8ff"/><stop offset="1" stop-color="#c9a6ff"/></linearGradient>
+      <clipPath id="hc"><path d="M88 30v72L30 226a20 20 0 0 0 18 30h124a20 20 0 0 0 18-30L132 102V30Z"/></clipPath>
+      <radialGradient id="hg" cx=".5" cy=".7" r=".6"><stop offset="0" stop-color="#7fd8ff" stop-opacity=".45"/><stop offset="1" stop-color="#7fd8ff" stop-opacity="0"/></radialGradient>
+    </defs>
+    <ellipse cx="110" cy="200" rx="110" ry="80" fill="url(#hg)"/>
+    <g clip-path="url(#hc)">
+      <g class="hw"><path d="M-110 150q27-10 55 0t55 0 55 0 55 0 55 0 55 0 55 0V280H-110Z" fill="url(#hl)" opacity=".9"/></g>
+      <g class="hw hw2"><path d="M-110 156q27-8 55 0t55 0 55 0 55 0 55 0 55 0 55 0V280H-110Z" fill="#fff" opacity=".12"/></g>
+      <g class="hbs">${bub}</g>
+    </g>
+    <path class="glass" d="M88 30v72L30 226a20 20 0 0 0 18 30h124a20 20 0 0 0 18-30L132 102V30" fill="none" stroke-width="3" stroke-linejoin="round"/>
+    <path class="glass" d="M80 30h60" stroke-width="3" stroke-linecap="round"/>
+    <path d="M52 220l40-74" stroke="#fff" stroke-opacity=".35" stroke-width="5" stroke-linecap="round"/>
+    <rect x="96" y="12" width="28" height="18" rx="4" fill="#9a6a40"/>
+  </svg>`;
+}
 function pageHome() {
   const inv = DATA.categories.map(c => {
     const ps = projectsOf(c.id), n1 = ps.filter(p => p.status === 'cours').length, n2 = ps.length - n1;
@@ -98,6 +123,27 @@ function pageHome() {
     </a>`;
   }).join('') + `<a class="shelf" href="#/atelier" style="--c:#c9a6ff">${pix('book', '#c9a6ff', 30)}<b>Atelier</b><small>${ATELIER.sections.reduce((s, x) => s + x.items.length, 0)} dossiers d'idées</small></a>`;
   const now = DATA.projects.filter(p => p.status === 'cours').slice(0, 3).map(card).join('');
+  if (window.LAB && window.LAB.universe === 'pro') {
+    const nApps = DATA.projects.length, nCours = DATA.projects.filter(p => p.status === 'cours').length, nIdeas = ATELIER.sections.reduce((s2, x) => s2 + x.items.length, 0);
+    return `<section class="pro-hero">
+      <div class="pro-hero-txt">
+        <p class="kicker">Codex Mental · Laboratoire</p>
+        <h1 class="px-title">Des idées qui passent de la fiole à l'éprouvette.</h1>
+        <p class="lead">Applications, logiciels, styles pour le navigateur, prototypes de jeux… et les concepts qui mijotent dans l'Atelier. Tout ce que je fabrique, au même endroit.</p>
+        <div class="cta">
+          <a class="btn btn-main" href="#/c/applications">Voir les projets</a>
+          <button type="button" class="btn btn-lab" data-universe="pixel">${pix('potion', '#ff8ad8', 18)} Entrer dans le labo</button>
+        </div>
+        <dl class="pro-stats"><div><dt>Projets</dt><dd>${nApps}</dd></div><div><dt>En cours</dt><dd>${nCours}</dd></div><div><dt>Idées dans l'Atelier</dt><dd>${nIdeas}</dd></div></dl>
+      </div>
+      <div class="pro-flask" aria-hidden="true">${heroFlask()}</div>
+    </section>
+    <h2 class="sec">Les étagères</h2>
+    <div class="shelves">${inv}</div>
+    <h2 class="sec">En cours</h2>
+    <div class="grid">${now}</div>
+    ${footer()}`;
+  }
   return `<section class="hero">
       ${document.documentElement.dataset.lab === 'hd' ? '<p class="kicker">Codex Mental · Laboratoire d\'alchimie</p>' : '<p class="kicker"><span class="prompt">&gt;</span> ouverture du labo… ok <span class="caret"></span></p>'}
       <h1 class="px-title">Le Laboratoire</h1>
@@ -312,13 +358,25 @@ function exitSalle() {
   document.documentElement.classList.remove('in-salle');
 }
 document.addEventListener('keydown', e => { if (salleOn && e.key === 'Escape') location.hash = lastRoute === '#/salle' ? '#/' : lastRoute; });
-// la porte du décor mène au labo suivant : pixel → alchimie → grand labo → pixel
-const LAB_ORDER = ['pixel', 'alchimie', 'hd'];
-/* la porte commune : un vrai bouton, même place et même taille dans tous les labos */
+/* ---------- univers, salles et portes ---------- */
+// change un réglage mémorisé (salle, apparence, animations) puis recharge la page au même endroit
+function switchTo(key, val, msg) {
+  const K = { theme: ['lab.theme', 'theme'], scheme: ['lab.scheme', 'scheme'], motion: ['lab.motion', 'anim'] }[key];
+  try { localStorage.setItem(K[0], val); } catch (err) { /* sans stockage, on passe par l'adresse */ }
+  const u = new URL(location.href); u.searchParams.delete(K[1]);
+  let ok = null; try { ok = localStorage.getItem(K[0]); } catch (err) { ok = null; }
+  if (ok !== val) u.searchParams.set(K[1], val);
+  if (msg) say(msg, 1800);
+  document.documentElement.classList.add('leaving');
+  setTimeout(() => { location.href = u.toString(); if (u.pathname === location.pathname && u.search === location.search) location.reload(); }, key === 'theme' ? 650 : 250);
+}
+function roomsHere() { const C = window.LAB || {}, U = C.universes && C.universes[C.universe]; return U ? U.rooms.filter(id => C.themes[id]) : []; }
+function nextRoom() { const r = roomsHere(), C = window.LAB || {}; return r.length > 1 ? r[(r.indexOf(C.theme) + 1) % r.length] : null; }
+/* la porte : un vrai bouton, même place et même taille dans toutes les salles d'un univers */
 (function () {
-  const C = window.LAB || {}, ids = LAB_ORDER.filter(id => C.themes && C.themes[id]);
-  if (!ids.length) return;
-  const next = ids[(ids.indexOf(C.theme) + 1) % ids.length], name = C.themes[next].label;
+  const C = window.LAB || {}, next = nextRoom();
+  if (!next) return;
+  const name = C.themes[next].label;
   const pixelDoor = () => {
     const W2 = 12, H2 = 25, r = [];
     const inside = (x, y) => { const cx = 5.5, rr = 6; return y >= 6 ? true : (x - cx) ** 2 + (y - 6) ** 2 <= rr * rr; };
@@ -344,21 +402,14 @@ const LAB_ORDER = ['pixel', 'alchimie', 'hd'];
     <circle cx="24" cy="24" r="4.4" fill="#ff6ad5" opacity=".45"/></svg>`;
   const d = document.createElement('button');
   d.type = 'button'; d.className = 'lab-door'; d.dataset.next = name;
-  d.setAttribute('aria-label', 'Passer au labo suivant : ' + name); d.title = 'Labo suivant : ' + name;
-  d.innerHTML = (C.theme === 'hd' ? vecDoor() : pixelDoor()) + `<span class="door-plate" aria-hidden="true">→ ${esc(name)}</span>`;
+  d.setAttribute('aria-label', 'Passer à la salle suivante : ' + name); d.title = 'Salle suivante : ' + name;
+  d.innerHTML = (C.universe === 'pixel' ? pixelDoor() : vecDoor()) + `<span class="door-plate" aria-hidden="true">→ ${esc(name)}</span>`;
   d.addEventListener('click', () => window.dispatchEvent(new CustomEvent('lab:door')));
   document.body.appendChild(d);
 })();
 window.addEventListener('lab:door', () => {
-  const C = window.LAB || {}, ids = LAB_ORDER.filter(id => C.themes && C.themes[id]);
-  const next = ids[(ids.indexOf(C.theme) + 1) % ids.length];
-  say('🚪 La porte grince… direction : ' + C.themes[next].label + '.', 2000);
-  try { localStorage.setItem('lab.theme', next); } catch (err) { /* sans stockage, on passe par l'adresse */ }
-  const u = new URL(location.href); u.searchParams.delete('theme');
-  let ok = null; try { ok = localStorage.getItem('lab.theme'); } catch (err) { ok = null; }
-  if (ok !== next) u.searchParams.set('theme', next);
-  document.documentElement.classList.add('leaving');
-  setTimeout(() => { location.href = u.toString(); if (u.pathname === location.pathname && u.search === location.search) location.reload(); }, 650);
+  const next = nextRoom(); if (!next) return;
+  switchTo('theme', next, '🚪 La porte grince… direction : ' + window.LAB.themes[next].label + '.');
 });
 
 /* ---------- routeur ---------- */
@@ -463,23 +514,29 @@ window.addEventListener('lab:creature', e => {
   if (e.detail.phase === 'alive') { say('🧟 Sujet réanimé avec succès. Il s\'est échappé par la droite… le chimiste le poursuit !', 5200); setTimeout(() => lab.classList.remove('storm'), 4000); }
 });
 
-/* ---------- réglages : thème et animations ---------- */
+/* ---------- réglages : univers, apparence, animations ---------- */
 const setBtn = $('#set-btn'), setPanel = $('#set-panel');
-const THEME_DESC = { pixel: 'Étagère de fioles, bobine Tesla et petit chimiste.', alchimie: 'Paillasse et circuit de fluides qui tourne en boucle.', hd: 'Prototype HD : grand laboratoire d\'alchimie, plusieurs plans.' };
 const MOTIONS = [['full', 'Vivantes', 'Tout bouge, avec les incidents du labo.'], ['calm', 'Calmes', 'Moins d\'éclairs, pas d\'incidents.'], ['off', 'Figées', 'Une image fixe du labo.']];
+const SCHEMES = [['auto', 'Auto', 'Suit le réglage de votre appareil.'], ['dark', 'Sombre', 'Bleu nuit, doux pour les yeux.'], ['light', 'Clair', 'Fond clair, pour la lecture en plein jour.']];
 function buildSettings() {
-  const C = window.LAB || {};
-  $('.set-ico').innerHTML = pix('potion', document.documentElement.dataset.lab === 'hd' ? '#f0c46a' : '#c9993a', document.documentElement.dataset.lab === 'hd' ? 16 : 14);
+  const C = window.LAB || {}, U = C.universes || {}, pro = C.universe === 'pro';
+  $('.set-ico').innerHTML = pix(pro ? 'flask' : 'potion', pro ? '#8b9cff' : (C.universe === 'vecto' ? '#f0c46a' : '#c9993a'), pro || C.universe === 'vecto' ? 16 : 14);
+  const rooms = roomsHere();
   setPanel.innerHTML = `
-    <p class="set-h" id="set-h1">Thème du labo</p>
+    <p class="set-h" id="set-h1">Univers</p>
     <div class="set-list" role="radiogroup" aria-labelledby="set-h1">
-      ${Object.entries(C.themes || {}).map(([id, th]) => `<button type="button" class="opt" role="radio" aria-checked="${id === C.theme}" data-set="theme" data-val="${id}"><span class="sw sw-${id}" aria-hidden="true"></span><span><b>${esc(th.label)}</b><small>${esc(THEME_DESC[id] || '')}</small></span></button>`).join('')}
+      ${Object.entries(U).map(([id, un]) => `<button type="button" class="opt${un.soon ? ' soon' : ''}" role="radio" aria-checked="${id === C.universe}" ${un.soon ? 'aria-disabled="true"' : ''} data-set="universe" data-val="${id}"><span class="sw sw-${id}" aria-hidden="true"></span><span><b>${esc(un.label)}${un.soon ? ' <em>bientôt</em>' : ''}</b><small>${esc(un.desc)}${!un.soon && un.rooms.length > 1 ? ` · ${un.rooms.length} salles` : ''}</small></span></button>`).join('')}
     </div>
-    <p class="set-h" id="set-h2">Animations</p>
+    ${rooms.length > 1 ? `<p class="set-h" id="set-h3">Salles</p><div class="set-row set-rooms" role="radiogroup" aria-labelledby="set-h3">${rooms.map(id => `<button type="button" class="opt opt-s" role="radio" aria-checked="${id === C.theme}" data-set="theme" data-val="${id}">${esc(C.themes[id].label)}</button>`).join('')}</div>` : ''}
+    ${pro ? `<p class="set-h" id="set-h2">Apparence</p>
+    <div class="set-row" role="radiogroup" aria-labelledby="set-h2">
+      ${SCHEMES.map(([id, label, d]) => `<button type="button" class="opt opt-s" role="radio" aria-checked="${id === C.scheme}" data-set="scheme" data-val="${id}" title="${esc(d)}">${label}</button>`).join('')}
+    </div>
+    <p class="set-note">${esc((SCHEMES.find(m => m[0] === C.scheme) || SCHEMES[0])[2])}</p>` : `<p class="set-h" id="set-h2">Animations</p>
     <div class="set-row" role="radiogroup" aria-labelledby="set-h2">
       ${MOTIONS.map(([id, label, d]) => `<button type="button" class="opt opt-s" role="radio" aria-checked="${id === C.motion}" data-set="motion" data-val="${id}" title="${esc(d)}">${label}</button>`).join('')}
     </div>
-    <p class="set-note">${esc((MOTIONS.find(m => m[0] === C.motion) || MOTIONS[0])[2])}</p>`;
+    <p class="set-note">${esc((MOTIONS.find(m => m[0] === C.motion) || MOTIONS[0])[2])}</p>`}`;
 }
 function openSettings(open) {
   setPanel.hidden = !open; setBtn.setAttribute('aria-expanded', open);
@@ -488,18 +545,27 @@ function openSettings(open) {
 setBtn.addEventListener('click', e => { e.stopPropagation(); openSettings(setPanel.hidden); });
 document.addEventListener('click', e => { if (!setPanel.hidden && !e.target.closest('.settings')) openSettings(false); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !setPanel.hidden) { openSettings(false); setBtn.focus(); } });
+function goUniverse(id) {
+  const C = window.LAB || {}, U = C.universes[id];
+  if (!U || U.soon) { say('🛰 La station orbitale est encore en construction. Revenez bientôt !', 2600); return; }
+  if (id === C.universe) { openSettings(false); return; }
+  switchTo('theme', U.rooms[0], id === 'pro' ? '✦ Retour à la vitrine…' : '⚗ Ouverture du ' + U.label.toLowerCase() + '…');
+}
 setPanel.addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b) return;
   const key = b.dataset.set, val = b.dataset.val, C = window.LAB || {};
-  if ((key === 'theme' && val === C.theme) || (key === 'motion' && val === C.motion)) { openSettings(false); return; }
-  try { localStorage.setItem(key === 'theme' ? 'lab.theme' : 'lab.motion', val); } catch (err) { /* stockage indisponible : on passe par l'adresse */ }
-  const u = new URL(location.href);
-  u.searchParams.delete('theme'); u.searchParams.delete('anim');
-  let stored = null; try { stored = localStorage.getItem(key === 'theme' ? 'lab.theme' : 'lab.motion'); } catch (err) { stored = null; }
-  if (stored !== val) u.searchParams.set(key === 'theme' ? 'theme' : 'anim', val);
-  say(key === 'theme' ? '⚗ Changement de laboratoire…' : '⚙ Réglage des machines…', 1500);
-  setTimeout(() => { location.href = u.toString(); if (u.pathname === location.pathname && u.search === location.search) location.reload(); }, 250);
+  if (key === 'universe') { goUniverse(val); return; }
+  if ((key === 'theme' && val === C.theme) || (key === 'motion' && val === C.motion) || (key === 'scheme' && val === C.scheme)) { openSettings(false); return; }
+  if (key === 'scheme') {   // l'apparence change sans recharger
+    try { localStorage.setItem('lab.scheme', val); } catch (err) { /* rien */ }
+    C.scheme = val; const light = val === 'auto' ? matchMedia('(prefers-color-scheme: light)').matches : val === 'light';
+    document.documentElement.dataset.scheme = light ? 'light' : 'dark';
+    const meta = document.querySelector('meta[name="theme-color"]'); if (meta) meta.content = light ? '#f4f6fa' : '#0f1521';
+    buildSettings(); openSettings(true); return;
+  }
+  switchTo(key, val, key === 'theme' ? '🚪 Changement de salle…' : '⚙ Réglage des machines…');
 });
+view.addEventListener('click', e => { const b = e.target.closest('[data-universe]'); if (b) { e.preventDefault(); goUniverse(b.dataset.universe); } });
 buildSettings();
 
 /* ---------- ranger l'écran pour admirer le labo (thème Grand labo) ---------- */

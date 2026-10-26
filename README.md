@@ -2,39 +2,22 @@
 
 Site statique de **lab.codexmental.com** : un labo de savant fou en pixel art, animé en canvas autour d'un écran central.
 
-## Thèmes
+## Univers et salles
 
-Le bouton **Thème** (en haut à droite) permet de choisir le labo et le niveau d'animation. Le choix est mémorisé dans le navigateur.
+Le site s'ouvre sur la **Vitrine**, sobre et lisible, en sombre ou en clair (réglage automatique selon l'appareil, ou au choix dans le menu **Univers**). De là, on peut entrer dans les labos :
 
-- **Labo pixel** (`js/scene.js`) : le premier prototype, thème par défaut.
-- **Alchimie** (`js/scene-alchimie.js` + `css/theme-alchimie.css`) : une installation de chimie qui tourne en boucle autour de l'interface.
-- **Grand labo** (`js/scene-hd.js` + `css/theme-hd.css`) : laboratoire d'alchimie dessiné en vectoriel, plusieurs plans en parallaxe, interface en verre dépoli avec icônes vectorielles. Le bouton ⤓ range l'écran pour admirer le labo.
-- Animations : Vivantes, Calmes (moins d'éclairs, pas d'incidents) ou Figées (image fixe). Par défaut, « Figées » si le système demande moins d'animations.
-- Raccourcis d'adresse : `?theme=alchimie`, `?anim=calm`, `?halloween=1`.
+| Univers | Salles (on passe de l'une à l'autre par la porte en bas à gauche) |
+|---|---|
+| Vitrine (`css/theme-pro.css`) | aucune, pas de décor |
+| Labo pixel | Le labo (`js/scene.js`) → La paillasse (`js/scene-alchimie.js` + `css/theme-alchimie.css`) |
+| Labo vectoriel | Le grand labo (`js/scene-hd.js` + `css/theme-hd.css`) |
+| Station orbitale | en préparation |
 
-Pour ajouter un thème : une scène dans `js/`, une entrée dans `THEMES` (script en tête de `index.html`), un CSS limité à `[data-theme="nom"]`, et une description dans `THEME_DESC` (`js/app.js`).
+- Le menu **Univers** change d'univers ; la porte change de salle dans l'univers en cours.
+- Dans les labos, le menu règle les animations : Vivantes, Calmes ou Figées.
+- Les choix sont mémorisés dans le navigateur. Raccourcis d'adresse : `?theme=pro|pixel|alchimie|hd`, `?scheme=dark|light`, `?anim=calm`, `?halloween=1`.
 
-## Les portes
-
-Chaque décor a une petite porte (filet de lumière rose dessous) : elle mène au labo suivant, Labo pixel → Alchimie → Grand labo → Labo pixel, en gardant la page en cours.
-
-## Salle d'expérience
-
-La fiche **La salle d'expérience** (étagère Jeux) ouvre une pièce entière en plein écran, sans texte : on clique sur les objets, on clique au sol pour déplacer le savant. Fichier : `js/salle.js`, chargé seulement à l'ouverture.
-
-- Ciel de la fenêtre selon l'heure réelle (aube, jour, crépuscule, nuit), orage, pluie.
-- Son coupé par défaut (bouton haut-parleur) ; la radio l'active.
-- 7 secrets à trouver (étoiles en haut à droite), mémorisés dans le navigateur.
-
-## Structure
-
-- `index.html` : la page unique (navigation par `#/…`)
-- `js/scene.js` : le décor animé (étagère, alambic, bobine Tesla, chimiste, easter egg Halloween)
-- `js/app.js` : onglets, fiches projets, Atelier, barre de défilement en éprouvette
-- `css/lab.css` : l'habillage
-- `data/projects.json` : les projets (champ `cat` = étagère, `status` = `cours` ou `reflexion`)
-- `data/atelier.json` + `content/atelier/` : les articles de l'Atelier
-- `fonts/` : polices auto-hébergées (SIL OFL)
+Ajouter une salle : une scène dans `js/`, une entrée dans `THEMES` et dans la liste `rooms` de son univers (script en tête de `index.html`), et un CSS limité à `[data-lab="nom"]`.
 
 ## Fiches enrichies
 
