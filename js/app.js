@@ -40,7 +40,7 @@ async function load() {
   DATA = p; ATELIER = a;
   TABS = [{ id: 'accueil', label: 'Accueil', color: '#ffb347', href: '#/' }]
     .concat(DATA.categories.map(c => ({ id: c.id, label: c.label, color: c.color, href: '#/c/' + c.id })))
-    .concat([{ id: 'atelier', label: 'Atelier', color: '#c9a6ff', href: '#/atelier' }, { id: 'salle', label: 'Expérience', color: '#ff6ad5', href: '#/salle' }]);
+    .concat([{ id: 'atelier', label: 'Atelier', color: '#c9a6ff', href: '#/atelier' }]);
   $('.brand-ico').innerHTML = pix('flask', window.LAB && window.LAB.halloween ? '#ff8c1a' : '#9dff5c', 16);
   tabsEl.innerHTML = TABS.map(t => `<a class="tab" role="tab" href="${t.href}" data-id="${t.id}" style="--c:${t.color}">${esc(t.label)}</a>`).join('');
 }
@@ -83,7 +83,7 @@ function pageHome() {
       <b>${esc(c.label)}</b>
       <small>${n1} en cours${n2 ? ` · ${n2} en réflexion` : ''}</small>
     </a>`;
-  }).join('') + `<a class="shelf" href="#/salle" style="--c:#ff6ad5">${pix('door', '#ff6ad5', 26)}<b>Salle d'expérience</b><small>Le labo en grand, à explorer</small></a><a class="shelf" href="#/atelier" style="--c:#c9a6ff">${pix('book', '#c9a6ff', 30)}<b>Atelier</b><small>${ATELIER.sections.reduce((s, x) => s + x.items.length, 0)} dossiers d'idées</small></a>`;
+  }).join('') + `<a class="shelf" href="#/atelier" style="--c:#c9a6ff">${pix('book', '#c9a6ff', 30)}<b>Atelier</b><small>${ATELIER.sections.reduce((s, x) => s + x.items.length, 0)} dossiers d'idées</small></a>`;
   const now = DATA.projects.filter(p => p.status === 'cours').slice(0, 3).map(card).join('');
   return `<section class="hero">
       <p class="kicker"><span class="prompt">&gt;</span> ouverture du labo… ok <span class="caret"></span></p>
@@ -140,6 +140,7 @@ function pageProject(id) {
         ${specs ? `<section class="box"><h2>Fiche technique</h2><dl class="specs">${specs}</dl></section>` : ''}
       </div>
       ${list('Pistes de développement', p.dev)}
+      ${p.play ? `<p class="play"><a class="play-btn" href="${esc(p.play)}">${pix('door', '#ffb347', 18)} Entrer dans la salle</a></p>` : ''}
       ${tags(p.tags)}
     </article>
     <nav class="pager">${prev ? `<a href="#/p/${prev.id}">← ${esc(prev.name)}</a>` : '<span></span>'}${next ? `<a href="#/p/${next.id}">${esc(next.name)} →</a>` : '<span></span>'}</nav>

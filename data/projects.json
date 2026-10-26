@@ -347,6 +347,36 @@
    "tab": "reflexion",
    "cat": "jeux",
    "status": "reflexion"
+  },
+  {
+   "id": "salle-experience",
+   "name": "La salle d'expérience",
+   "mark": "⚡",
+   "accent": "#ff6ad5",
+   "platform": "Navigateur, ordinateur et mobile",
+   "tagline": "Un labo de savant fou à explorer, sans mode d'emploi.",
+   "summary": "Mini-jeu d'exploration en pixel art : on clique sur les objets du laboratoire, on dirige le savant et on cherche les sept secrets.",
+   "detail": "Une pièce entière, sans texte : cuve géante, orage à la fenêtre selon l'heure réelle, bobine Tesla et son levier, table d'opération, mélanges de couleurs, radio et chat. Jouable directement dans le labo.",
+   "features": [
+    "Objets cliquables et savant qu'on déplace",
+    "Sept secrets à découvrir, mémorisés dans le navigateur",
+    "Ciel jour / nuit selon l'heure réelle",
+    "Sons optionnels et petite musique originale"
+   ],
+   "tech": "JavaScript, Canvas, Web Audio",
+   "state": "Prototype jouable",
+   "access": "Public",
+   "diffusion": "Dans le labo",
+   "tags": [
+    "Jeu",
+    "Navigateur",
+    "Création",
+    "Prototype"
+   ],
+   "tab": "cours",
+   "cat": "jeux",
+   "status": "cours",
+   "play": "#/salle"
   }
  ],
  "categories": [

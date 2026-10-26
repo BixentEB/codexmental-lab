@@ -355,3 +355,14 @@ a { color: var(--accent); }
     font-family: var(--f-vt); font-size: 28px; color: #8aa09a; opacity: .7;
   }
 }
+
+/* bouton « jouer » sur une fiche */
+.play { margin: 22px 3px; }
+.play-btn {
+  display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+  font-family: var(--f-vt); font-size: 22px; color: #07080b; background: var(--accent); padding: 9px 16px;
+  box-shadow: 0 0 0 3px #07080b, 0 0 0 5px var(--accent), 0 0 24px color-mix(in srgb, var(--accent) 50%, transparent);
+}
+.play-btn:hover { filter: brightness(1.1); }
+.play-btn:focus-visible { outline: 2px dashed var(--accent); outline-offset: 8px; }
+.play-btn .pix { filter: brightness(.25); }
