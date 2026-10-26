@@ -74,7 +74,7 @@ function tags(list) {
 function card(p) {
   const sum = p.summary || p.tagline || p.concept || '';
   return `<a class="card" href="#/p/${esc(p.id)}" style="--c:${esc(p.accent || cat(p.cat).color)}">
-    <div class="card-top"><span class="mark">${esc(p.mark || '✦')}</span>${statusBadge(p)}</div>
+    <div class="card-top">${markHTML(p, '')}${statusBadge(p)}</div>
     <h3>${esc(p.name)}</h3>
     <p class="plat">${esc(p.platform || '')}</p>
     <p class="sum">${esc(sum.length > 150 ? sum.slice(0, 147).trim() + '…' : sum)}</p>
@@ -194,9 +194,10 @@ function pageProject(id) {
   const list = (title, arr) => arr && arr.length ? `<section class="box"><h2>${title}</h2><ul class="px-list">${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>` : '';
   const prev = sibs[i - 1], next = sibs[i + 1];
   return `<nav class="crumbs"><a href="#/c/${c.id}">← ${esc(c.label)}</a></nav>
+    <div class="banner-slot" data-banner="${esc(p.id)}">${p.banner ? `<img class="banner" src="${esc(p.banner)}" alt="">` : ''}</div>
     <article class="detail" style="--c:${esc(p.accent || c.color)}">
       <header class="d-head">
-        <span class="mark big">${esc(p.mark || '✦')}</span>
+        ${markHTML(p, 'big')}
         <div>
           <p class="kicker">${esc(c.label)} · ${p.status === 'cours' ? 'en cours' : 'en réflexion'}</p>
           <h1 class="px-title">${esc(p.name)}</h1>
@@ -208,6 +209,7 @@ function pageProject(id) {
       ${p.concept ? `<p class="lead">${esc(p.concept)}</p>` : ''}
       ${p.detail ? `<p>${esc(p.detail)}</p>` : ''}
       ${stagesBlock(p)}
+      <section class="block emoji-block" data-emojis="${esc(p.id)}" hidden><h2 class="sec"><span class="dot"></span>Son univers visuel</h2><div class="emojis"></div></section>
       ${gallery(p)}
       ${p.shot ? `<figure class="shot"><img src="${esc(p.shot)}" alt="${esc(p.shotAlt || '')}" loading="lazy"><figcaption>${esc(p.shotAlt || '')}</figcaption></figure>` : ''}
       <div class="d-cols">
@@ -262,6 +264,23 @@ async function findShots(p) {
     found.push({ src: hit, alt: `Capture ${n} : ${p.name}`, caption: `Capture ${n}` });
   }
   p._auto = found;
+}
+// logo (« mark » en image), bannière et émojis : dans projects.json, ou déposés dans img/projets/<id>/
+function markHTML(p, size) { return p.icon ? `<span class="mark ${size} mark-img"><img src="${esc(p.icon)}" alt=""></span>` : `<span class="mark ${size}">${esc(p.mark || '✦')}</span>`; }
+async function firstHit(base) { for (const ext of ['webp', 'png', 'jpg', 'svg']) { if (await probe(`${base}.${ext}`)) return `${base}.${ext}`; } return null; }
+async function fillBrand(p) {
+  const dir = `img/projets/${p.id}/`;
+  if (p._brand === undefined) {
+    p._brand = { banner: p.banner || await firstHit(dir + 'banniere'), icon: p.icon || await firstHit(dir + 'icone'), emojis: p.emojis || [] };
+    if (!p.emojis) for (let n = 1; n <= 40; n++) { const h = await firstHit(dir + 'emoji-' + n); if (!h) break; p._brand.emojis.push(h); }
+  }
+  const B = p._brand;
+  const bs = view.querySelector(`[data-banner="${CSS.escape(p.id)}"]`);
+  if (bs && B.banner && !bs.firstChild) bs.innerHTML = `<img class="banner" src="${esc(B.banner)}" alt="">`;
+  if (B.icon) view.querySelectorAll('.detail .mark.big').forEach(m => { m.classList.add('mark-img'); m.innerHTML = `<img src="${esc(B.icon)}" alt="">`; });
+  const es = view.querySelector(`[data-emojis="${CSS.escape(p.id)}"]`);
+  if (es && B.emojis.length) { es.querySelector('.emojis').innerHTML = B.emojis.map(src => `<img src="${esc(src)}" alt="" loading="lazy">`).join(''); es.hidden = false; }
+  updateTube();
 }
 async function fillShots(p) {
   await findShots(p);
@@ -516,7 +535,7 @@ async function route() {
   }
   view.innerHTML = html;
   view.scrollTop = 0;
-  if (parts[0] === 'p') { const pp = DATA.projects.find(x => x.id === parts[1]); if (pp) fillShots(pp); }
+  if (parts[0] === 'p') { const pp = DATA.projects.find(x => x.id === parts[1]); if (pp) { fillShots(pp); fillBrand(pp); } }
   const t = TABS.find(x => x.id === tab) || TABS[0];
   tabsEl.querySelectorAll('.tab').forEach(a => a.setAttribute('aria-selected', a.dataset.id === t.id));
   lab.style.setProperty('--accent', t.color);

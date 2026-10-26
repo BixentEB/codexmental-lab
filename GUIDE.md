@@ -80,6 +80,20 @@ Un champ laissé vide (`""`) s'affiche « à renseigner » dans la fiche techniq
 
 Attention aux virgules : chaque ligne se termine par une virgule, sauf la dernière avant `}`. Les guillemets droits `"` sont obligatoires. Si la page affiche « Explosion mineure » après une modification, c'est presque toujours une virgule ou un guillemet en trop ou en moins.
 
+## Logo, bannière et émojis d'un projet
+
+Déposez dans le dossier du projet (`img/projets/<identifiant>/`) :
+
+| Fichier | Où il apparaît |
+|---|---|
+| `icone.png` (ou `.webp`, `.svg`) | remplace le symbole à côté du titre de la fiche ; carré, 256 px suffit |
+| `banniere.png` (ou `.webp`, `.jpg`) | grande image en haut de la fiche ; format allongé, environ 1600 × 400 px |
+| `emoji-1.png`, `emoji-2.png`… | section « Son univers visuel », en rangée ; fond transparent, 128 px suffit |
+
+Pour que le logo apparaisse aussi sur la petite carte du projet (dans les étagères), ajoutez dans `data/projects.json` : `"icon": "img/projets/<identifiant>/icone.png"`.
+
+Une planche avec plusieurs émojis sur la même image ? Envoyez-la dans la conversation : je la découpe et je range chaque émoji.
+
 ## Étapes du projet et sections libres (facultatif)
 
 Pour montrer où en est un projet, en trois colonnes colorées :
