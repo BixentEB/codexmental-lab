@@ -10,14 +10,16 @@ Le site s'ouvre sur la **Vitrine**, sobre et lisible, en sombre ou en clair (ré
 |---|---|
 | Vitrine (`css/theme-pro.css`) | aucune, pas de décor |
 | Labo pixel | Le labo (`js/scene.js`) → La paillasse (`js/scene-alchimie.js` + `css/theme-alchimie.css`) |
-| Labo vectoriel | Le grand labo (`js/scene-hd.js` + `css/theme-hd.css`) |
-| Station orbitale | en préparation |
+| Labo vectoriel | Le grand labo (`js/scene-hd.js` + `css/theme-hd.css`) → L'observatoire (`js/scene-observatoire.js`) |
+| Univers orbital | La station (`js/scene-station.js`) → L'avant-poste (`js/scene-avantposte.js`), interface `css/theme-orbital.css` |
+
+Les nouvelles salles vectorielles et orbitales partagent `js/vec-kit.js` (toile haute définition, halos, savant dessiné, boucle d'animation).
 
 - Le menu **Univers** change d'univers ; la porte change de salle dans l'univers en cours.
 - Dans les labos, le menu règle les animations : Vivantes, Calmes ou Figées.
 - Les choix sont mémorisés dans le navigateur. Raccourcis d'adresse : `?theme=pro|pixel|alchimie|hd`, `?scheme=dark|light`, `?anim=calm`, `?halloween=1`.
 
-Ajouter une salle : une scène dans `js/`, une entrée dans `THEMES` et dans la liste `rooms` de son univers (script en tête de `index.html`), et un CSS limité à `[data-lab="nom"]`.
+Ajouter une salle : une scène dans `js/` (avec `kit: true` si elle utilise `VK.room`), une entrée dans `THEMES` et dans la liste `rooms` de son univers (script en tête de `index.html`), et un CSS limité à `[data-lab="nom"]`.
 
 **Pour mettre à jour les fiches, les captures et les téléchargements, voir [GUIDE.md](GUIDE.md).**
 

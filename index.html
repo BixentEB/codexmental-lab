@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/theme-alchimie.css">
 <link rel="stylesheet" href="css/theme-hd.css">
 <link rel="stylesheet" href="css/theme-pro.css">
+<link rel="stylesheet" href="css/theme-orbital.css">
 <script>
   // Réglages du labo : univers, salle, apparence, animations, saison d'Halloween.
   // Raccourcis d'adresse : ?theme=pro|pixel|alchimie|hd, ?scheme=dark|light, ?anim=full|calm|off, ?halloween=1|0
@@ -23,13 +24,16 @@
       pro: { label: 'Vitrine', universe: 'pro', scene: null },
       pixel: { label: 'Le labo', universe: 'pixel', scene: 'js/scene.js' },
       alchimie: { label: 'La paillasse', universe: 'pixel', scene: 'js/scene-alchimie.js' },
-      hd: { label: 'Le grand labo', universe: 'vecto', scene: 'js/scene-hd.js' }
+      hd: { label: 'Le grand labo', universe: 'vecto', scene: 'js/scene-hd.js' },
+      observatoire: { label: 'L\'observatoire', universe: 'vecto', scene: 'js/scene-observatoire.js', kit: true },
+      station: { label: 'La station', universe: 'orbital', scene: 'js/scene-station.js', kit: true },
+      avantposte: { label: 'L\'avant-poste', universe: 'orbital', scene: 'js/scene-avantposte.js', kit: true }
     };
     var UNIVERSES = {
       pro: { label: 'Vitrine', desc: 'Sobre et lisible : l\'essentiel, sans décor.', rooms: ['pro'] },
       pixel: { label: 'Labo pixel', desc: 'Fioles, bobine Tesla et petit chimiste, façon vieux jeux.', rooms: ['pixel', 'alchimie'] },
-      vecto: { label: 'Labo vectoriel', desc: 'Grand laboratoire d\'alchimie en plusieurs plans.', rooms: ['hd'] },
-      orbital: { label: 'Station orbitale', desc: 'En préparation : apesanteur et visiteurs à la vitre.', rooms: [], soon: true }
+      vecto: { label: 'Labo vectoriel', desc: 'Grand laboratoire d\'alchimie, puis l\'observatoire sous la coupole.', rooms: ['hd', 'observatoire'] },
+      orbital: { label: 'Univers orbital', desc: 'Une station en apesanteur, puis un avant-poste sur une planète habitée.', rooms: ['station', 'avantposte'] }
     };
     var theme = q.get('theme') || get('lab.theme') || 'pro';
     if (!THEMES[theme]) theme = 'pro';
@@ -89,7 +93,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script>if (LAB.themes[LAB.theme].scene) document.write('<script src="' + LAB.themes[LAB.theme].scene + '"><\/script>');</script>
+<script>(function (th) { if (!th.scene) return; if (th.kit) document.write('<script src="js/vec-kit.js"><\/script>'); document.write('<script src="' + th.scene + '"><\/script>'); })(LAB.themes[LAB.theme]);</script>
 <script src="js/app.js"></script>
 </body>
 </html>

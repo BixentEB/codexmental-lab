@@ -1,0 +1,104 @@
+/* ==========================================================================
+   CODEX MENTAL · LAB — univers orbital
+   Un écran de bord en verre teinté, bordé de cyan, posé dans la station.
+   Titres en Michroma (police du Codex), textes en IBM Plex Sans.
+   ========================================================================== */
+[data-universe="orbital"] {
+  --bg: #050a14;
+  --panel: rgba(6, 14, 26, .72);
+  --card: rgba(120, 220, 255, .045);
+  --line: rgba(95, 242, 255, .16);
+  --edge: rgba(95, 242, 255, .22);
+  --ink: #e2f2f7;
+  --soft: #b4cad3;
+  --mute: #7f97a3;
+  --accent: #5ff2ff;
+  --f-title: 'Michroma', 'Sora', system-ui, sans-serif;
+  --f-body: 'IBM Plex Sans', system-ui, 'Segoe UI', sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+[data-universe="orbital"] #scene { image-rendering: auto; }
+[data-universe="orbital"] .lab {
+  border: 0; outline: 0; border-radius: 22px; overflow: hidden; font-family: var(--f-body);
+  background: linear-gradient(180deg, rgba(95,242,255,.06), transparent 30%), var(--panel);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3); backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: 0 0 0 1px rgba(95,242,255,.45), 0 0 0 6px rgba(10,22,36,.85), 0 0 0 7px rgba(95,242,255,.25), 0 0 60px rgba(95,242,255,.12), 0 30px 80px rgba(0,0,0,.6);
+  transition: transform .7s cubic-bezier(.7,0,.2,1), opacity .5s ease;
+}
+[data-universe="orbital"] .lab::before { display: none; }
+[data-universe="orbital"] .crt { background: repeating-linear-gradient(0deg, rgba(95,242,255,.025) 0 1px, transparent 1px 4px), radial-gradient(140% 100% at 50% 0%, transparent 60%, rgba(0,0,0,.25) 100%); }
+[data-universe="orbital"] .lab.zap { animation: none; }
+[data-universe="orbital"] .lab-head { background: linear-gradient(180deg, rgba(95,242,255,.07), transparent); border-bottom: 1px solid var(--line); box-shadow: none; padding: 14px 20px 0; }
+[data-universe="orbital"] .brand-name { font-family: var(--f-title); font-size: 14px; letter-spacing: 2px; text-transform: uppercase; }
+[data-universe="orbital"] .brand-name b { font-weight: 400; }
+[data-universe="orbital"] .brand-name i { font-family: var(--f-body); text-transform: none; letter-spacing: 0; font-size: 12px; }
+[data-universe="orbital"] .tab { font-family: var(--f-body); font-weight: 500; font-size: 14px; color: var(--mute); background: transparent; border: 0; margin: 0; padding: 9px 13px 14px; }
+[data-universe="orbital"] .tab::after { left: 13px; right: 13px; bottom: 5px; height: 2px; border-radius: 2px; transform: scaleX(0); transition: transform .35s ease; opacity: 1; }
+[data-universe="orbital"] .tab:hover { color: var(--ink); }
+[data-universe="orbital"] .tab:hover::after { transform: scaleX(.4); }
+[data-universe="orbital"] .tab[aria-selected="true"] { color: #fff; background: transparent; border: 0; }
+[data-universe="orbital"] .tab[aria-selected="true"]::after { transform: scaleX(1); box-shadow: 0 0 12px var(--c); }
+[data-universe="orbital"] .set-btn, [data-universe="orbital"] .away-btn { font-family: var(--f-body); font-size: 13px; border: 1px solid var(--edge); border-radius: 10px; background: rgba(95,242,255,.05); color: var(--soft); padding: 6px 10px; }
+[data-universe="orbital"] .away-btn { display: inline-grid; place-items: center; align-self: center; margin: 0 6px 8px 0; width: 34px; height: 32px; padding: 0; cursor: pointer; font-size: 16px; }
+[data-universe="orbital"] .set-btn:hover, [data-universe="orbital"] .away-btn:hover { border-color: var(--accent); color: #fff; }
+[data-universe="orbital"] .set-panel { background: rgba(6,14,26,.96); border-radius: 14px; box-shadow: 0 0 0 1px rgba(95,242,255,.4), 0 20px 50px rgba(0,0,0,.6); }
+[data-universe="orbital"] .set-h { font-family: var(--f-title); font-size: 10px; letter-spacing: 2px; color: var(--accent); }
+[data-universe="orbital"] .opt { border: 1px solid var(--edge); border-radius: 10px; background: rgba(95,242,255,.03); }
+[data-universe="orbital"] .opt b { font-family: var(--f-body); font-size: 15px; font-weight: 600; }
+[data-universe="orbital"] .opt-s { font-family: var(--f-body); font-size: 13px; }
+[data-universe="orbital"].panel-away .lab { transform: translateY(calc(-100% - var(--in-t) - 40px)); opacity: 0; pointer-events: none; }
+[data-universe="orbital"].panel-away .call-btn {
+  display: block; position: fixed; z-index: 6; left: 50%; top: max(18px, env(safe-area-inset-top)); transform: translateX(-50%);
+  font-family: var(--f-title); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #031018; cursor: pointer;
+  background: linear-gradient(180deg, #a6fbff, #3fd8ff); border: 0; border-radius: 999px; padding: 11px 22px; box-shadow: 0 0 30px rgba(95,242,255,.5);
+}
+[data-universe="orbital"] .px-title { font-family: var(--f-title); font-weight: 400; font-size: clamp(22px, 2.4vw, 36px); line-height: 1.25; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; text-shadow: 0 0 26px rgba(95,242,255,.45); text-wrap: balance; }
+[data-universe="orbital"] .kicker { font-family: var(--f-mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+[data-universe="orbital"] .prompt, [data-universe="orbital"] .caret { display: none; }
+[data-universe="orbital"] .lead { font-size: 17px; line-height: 1.7; }
+[data-universe="orbital"] .warn { font-family: var(--f-body); font-size: 14px; border-radius: 10px; background: rgba(95,242,255,.06); box-shadow: inset 0 0 0 1px rgba(95,242,255,.3); color: #bff6ff; }
+[data-universe="orbital"] .sec { font-family: var(--f-title); font-weight: 400; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; }
+[data-universe="orbital"] .sec::after { height: 1px; background: linear-gradient(90deg, var(--line), transparent); }
+[data-universe="orbital"] .card, [data-universe="orbital"] .shelf, [data-universe="orbital"] .box, [data-universe="orbital"] .chip, [data-universe="orbital"] .crumbs a, [data-universe="orbital"] .pager a, [data-universe="orbital"] .tool, [data-universe="orbital"] .g-open { box-shadow: inset 0 0 0 1px var(--e, var(--edge)); border-radius: 14px; }
+[data-universe="orbital"] .card { background: linear-gradient(180deg, color-mix(in srgb, var(--c) 7%, rgba(255,255,255,.03)), rgba(255,255,255,.01)); transition: transform .3s ease, box-shadow .3s ease; }
+[data-universe="orbital"] .card:hover, [data-universe="orbital"] .card:focus-visible { --e: color-mix(in srgb, var(--c) 65%, transparent); transform: translateY(-3px); box-shadow: inset 0 0 0 1px var(--e), 0 0 30px -10px color-mix(in srgb, var(--c) 60%, transparent); }
+[data-universe="orbital"] .card h3 { font-family: var(--f-body); font-weight: 600; font-size: 18px; }
+[data-universe="orbital"] .plat, [data-universe="orbital"] .tags li, [data-universe="orbital"] .status, [data-universe="orbital"] .specs dt { font-family: var(--f-mono); font-size: 12px; }
+[data-universe="orbital"] .tags li, [data-universe="orbital"] .status { border-radius: 999px; }
+[data-universe="orbital"] .status { border-width: 1px; padding: 4px 10px; }
+[data-universe="orbital"] .mark { border-radius: 12px; }
+[data-universe="orbital"] .shelf { background: rgba(95,242,255,.04); }
+[data-universe="orbital"] .shelf b, [data-universe="orbital"] .tool b, [data-universe="orbital"] .file-head b, [data-universe="orbital"] .step-box h3 { font-family: var(--f-body); font-weight: 600; font-size: 15px; }
+[data-universe="orbital"] .shelf small { font-family: var(--f-body); font-size: 13px; }
+[data-universe="orbital"] .shelf .vec { grid-row: span 2; }
+[data-universe="orbital"] .chip { font-family: var(--f-body); font-size: 13.5px; border-radius: 999px; padding: 7px 14px; background: rgba(95,242,255,.04); }
+[data-universe="orbital"] .chip[aria-pressed="true"] { color: #031018; background: var(--accent); }
+[data-universe="orbital"] .box { background: rgba(95,242,255,.035); }
+[data-universe="orbital"] .box h2 { font-family: var(--f-title); font-size: 11px; font-weight: 400; letter-spacing: 2px; text-transform: uppercase; }
+[data-universe="orbital"] .cat-ico { border-radius: 50%; background: rgba(95,242,255,.05); box-shadow: 0 0 0 1px var(--edge), 0 0 30px -6px var(--c); padding: 18px; }
+[data-universe="orbital"] .crumbs, [data-universe="orbital"] .pager a { font-family: var(--f-body); font-size: 14px; }
+[data-universe="orbital"] .d-cols { align-items: start; }
+[data-universe="orbital"] .tagline { font-family: var(--f-body); font-size: 18px; }
+[data-universe="orbital"] .btn { border-radius: 999px; padding: 8px 16px; font-family: var(--f-body); }
+[data-universe="orbital"] .btn-main { color: #031018; }
+[data-universe="orbital"] .steps li::before { border-radius: 50%; color: #031018; }
+[data-universe="orbital"] .prose { font-size: 16.5px; line-height: 1.8; }
+[data-universe="orbital"] .prose h1 { font-family: var(--f-title); font-weight: 400; font-size: clamp(20px, 2.2vw, 30px); letter-spacing: 1px; text-transform: uppercase; line-height: 1.3; }
+[data-universe="orbital"] .prose h2 { font-family: var(--f-title); font-weight: 400; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; background: linear-gradient(90deg, var(--line), transparent) bottom / 100% 1px no-repeat; }
+[data-universe="orbital"] .prose h3 { font-family: var(--f-body); font-weight: 600; font-size: 19px; }
+[data-universe="orbital"] .prose blockquote, [data-universe="orbital"] .prose img, [data-universe="orbital"] .code pre { border-radius: 10px; }
+[data-universe="orbital"] .lab-foot { font-family: var(--f-body); font-size: 13.5px; background: linear-gradient(90deg, var(--line), transparent) top / 100% 1px no-repeat; }
+[data-universe="orbital"] .lab-foot .hint { color: #9ff0ff; }
+[data-universe="orbital"] .tube { flex-basis: 26px; padding: 14px 10px 14px 4px; }
+[data-universe="orbital"] .tube-cork { display: none; }
+[data-universe="orbital"] .tube-glass { width: 4px; border-radius: 4px; background: rgba(95,242,255,.12); box-shadow: none; clip-path: none; }
+[data-universe="orbital"] .tube-thumb { left: -2px; right: -2px; border-radius: 6px; background: linear-gradient(180deg, #a6fbff, #3fd8ff); box-shadow: 0 0 14px rgba(95,242,255,.7); }
+[data-universe="orbital"] .tube-thumb i { display: none; }
+[data-universe="orbital"] .toast { font-family: var(--f-body); font-size: 15px; color: #e8fbff; background: rgba(6,14,26,.92); border-radius: 12px; box-shadow: 0 0 0 1px rgba(95,242,255,.5), 0 0 30px rgba(95,242,255,.2); }
+[data-universe="orbital"] .door-plate { font-family: var(--f-title); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 999px; padding: 7px 12px; color: #031018; background: linear-gradient(#a6fbff, #3fd8ff); box-shadow: 0 0 0 1px #0a5a66, 0 6px 16px rgba(0,0,0,.5); }
+@media (max-width: 819px) {
+  [data-universe="orbital"] .lab { border-radius: 14px; }
+  [data-universe="orbital"] .lab-head { padding: 10px 12px 0; }
+  [data-universe="orbital"] .brand-name { font-size: 11px; }
+  [data-universe="orbital"] .away-btn { display: none; }
+}

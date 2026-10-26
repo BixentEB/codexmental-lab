@@ -446,7 +446,13 @@ function nextRoom() { const r = roomsHere(), C = window.LAB || {}; return r.leng
   const d = document.createElement('button');
   d.type = 'button'; d.className = 'lab-door'; d.dataset.next = name;
   d.setAttribute('aria-label', 'Passer à la salle suivante : ' + name); d.title = 'Salle suivante : ' + name;
-  d.innerHTML = (C.universe === 'pixel' ? pixelDoor() : vecDoor()) + `<span class="door-plate" aria-hidden="true">→ ${esc(name)}</span>`;
+  const sciDoor = () => `<svg viewBox="0 0 48 100" preserveAspectRatio="none" aria-hidden="true">
+    <defs><linearGradient id="sd" x1="0" x2="1"><stop offset="0" stop-color="#dfe6ee"/><stop offset=".5" stop-color="#a7b2bf"/><stop offset="1" stop-color="#59636f"/></linearGradient></defs>
+    <path d="M4 99V14q0-10 10-10h20q10 0 10 10v85Z" fill="#1b2433" stroke="url(#sd)" stroke-width="3"/>
+    <path d="M8 97V16q0-8 8-8h7v89Z" fill="url(#sd)"/><path d="M25 97V8h7q8 0 8 8v81Z" fill="url(#sd)"/>
+    <path d="M23.5 10v86" stroke="#0b1018" stroke-width="2"/><rect x="10" y="44" width="11" height="4" rx="2" fill="#5ff2ff"/><rect x="27" y="44" width="11" height="4" rx="2" fill="#5ff2ff"/>
+    <path d="M10 88h28" stroke="#ffcf4a" stroke-width="3" stroke-dasharray="4 3"/></svg>`;
+  d.innerHTML = (C.universe === 'pixel' ? pixelDoor() : C.universe === 'orbital' ? sciDoor() : vecDoor()) + `<span class="door-plate" aria-hidden="true">→ ${esc(name)}</span>`;
   d.addEventListener('click', () => window.dispatchEvent(new CustomEvent('lab:door')));
   document.body.appendChild(d);
 })();
@@ -546,6 +552,16 @@ window.addEventListener('lab:event', e => {
   if (d.type === 'blackout' && d.phase === 'end') say('💡 Courant rétabli.', 2200);
   if (d.type === 'runaway' && d.phase === 'start') say('💥 Réaction incontrôlée dans le ballon !', 3600);
   if (d.type === 'runaway' && d.phase === 'end') say('🧯 Situation maîtrisée. Presque.', 2600);
+  if (d.type === 'shower' && d.phase === 'start') say('✦ Pluie d\'étoiles filantes ! Faites un vœu…', 3600);
+  if (d.type === 'comet' && d.phase === 'start') say('☄ Une comète traverse le ciel de la coupole.', 3600);
+  if (d.type === 'ufo' && d.phase === 'start') say('🛸 Euh… ça, ce n\'est pas dans le catalogue.', 3200);
+  if (d.type === 'alert' && d.phase === 'start') say('🚨 Alerte : champ de débris en approche ! Le savant sécurise le module.', 3800);
+  if (d.type === 'alert' && d.phase === 'end') say('✅ Débris évités. On respire.', 2400);
+  if (d.type === 'flare' && d.phase === 'start') say('☀ Éruption solaire : boucliers du hublot activés.', 3400);
+  if (d.type === 'merge' && d.phase === 'start') say('💧 Les bulles ont fusionné en une goutte géante…', 3000);
+  if (d.type === 'beam' && d.phase === 'start') say('🛸 Rayon tracteur ! Ils emmènent le professeur…', 3600);
+  if (d.type === 'beam' && d.phase === 'end') say('😵 Le professeur est revenu. Un peu décoiffé.', 3000);
+  if (d.type === 'storm' && d.phase === 'start') say('🌪 Tempête de poussière sur l\'avant-poste.', 3400);
   if (d.type === 'surge' && d.phase === 'start') say('⚡ Surtension ! La bobine Tesla s\'emballe…', 3600);
   if (d.type === 'surge' && d.phase === 'end') say('🔧 Le savant a coupé le circuit. Ouf.', 2600);
   if (d.type === 'overflow' && d.phase === 'start') say('💥 Le mélange déborde du ballon !', 3400);

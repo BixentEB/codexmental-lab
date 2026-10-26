@@ -468,3 +468,8 @@ html:not(.leaving)::after { animation: arrive .7s ease-out 1; }
 .dl-list small { opacity: .75; font-weight: 400; margin-left: 4px; }
 .dl-empty p { margin: 0; font-size: 14px; color: var(--soft); line-height: 1.6; }
 .shots-block .gallery { margin-top: 0; }
+@media (max-width: 1700px) { .exit-btn .set-txt { display: none; } .exit-btn { padding-inline: 10px; } }
+
+/* le menu Univers passe toujours au-dessus du décor et défile s'il est trop long */
+.lab:has(.set-panel:not([hidden])) { overflow: visible; z-index: 8; }
+.set-panel { max-height: min(78vh, 640px); overflow-y: auto; overscroll-behavior: contain; }
