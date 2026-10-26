@@ -35,9 +35,113 @@
   "Science": "#9fe3e8",
   "Physique": "#9fe3e8",
   "Recherche": "#9fe3e8",
-  "JavaScript": "#a6d9f5"
+  "JavaScript": "#a6d9f5",
+  "IA locale": "#ffe36b",
+  "Ollama": "#ffe36b",
+  "Discord": "#ffe36b"
  },
  "projects": [
+  {
+   "id": "nox",
+   "name": "NOX — Assistant IA personnel",
+   "cat": "ia",
+   "status": "cours",
+   "mark": "◈",
+   "accent": "#ffe36b",
+   "platform": "IA locale (Ollama) · Discord",
+   "tagline": "Une intelligence artificielle qui ne se contente pas de répondre, mais apprend à agir dans son environnement.",
+   "summary": "Une intelligence artificielle locale, modulaire et évolutive, conçue pour dépasser le simple dialogue et devenir un véritable compagnon de travail numérique.",
+   "detail": "Nox explore l'association entre modèles de langage, automatisation, communication et outils connectés, avec pour objectif de développer un assistant polyvalent, personnalisable et progressivement autonome. Il dispose de son propre serveur Discord et d'un bot dédié.",
+   "stages": [
+    {
+     "level": "ok",
+     "label": "Fonctionne déjà",
+     "items": [
+      "IA exécutée en local avec Ollama et Qwen 3.5",
+      "Dialogue, raisonnement et assistance contextuelle"
+     ]
+    },
+    {
+     "level": "wip",
+     "label": "En cours d'intégration",
+     "items": [
+      "Serveur Discord et bot dédié : interactions, commandes et notifications",
+      "Modules Python : scripts et premières automatisations",
+      "Connexions à des services par API"
+     ]
+    },
+    {
+     "level": "idea",
+     "label": "Envisagé",
+     "items": [
+      "Voix : reconnaissance et synthèse vocale personnalisables",
+      "Automatisation avancée : routines et tâches répétitives",
+      "Interaction avec les fichiers, logiciels et services",
+      "Analyse et synthèse de documents et de données"
+     ]
+    }
+   ],
+   "features": [
+    "🧠 IA conversationnelle — dialogue, raisonnement et assistance contextuelle",
+    "💬 Discord — interactions, commandes et notifications via un bot dédié",
+    "⚙️ Automatisation — exécution de scripts, routines et tâches répétitives",
+    "🖥️ Environnement numérique — interaction avec des fichiers, logiciels et services",
+    "🔍 Analyse et synthèse — traitement de documents, informations et données",
+    "🎙️ Interaction vocale — reconnaissance et synthèse vocale personnalisables",
+    "🧩 Architecture modulaire — ajout progressif de nouvelles compétences",
+    "🔒 Exécution locale — fonctionnement hors ligne pour les fonctions compatibles"
+   ],
+   "sections": [
+    {
+     "title": "Expérimentation vocale",
+     "text": "Objectif : développer une interface conversationnelle naturelle, capable de produire des réponses vocales expressives avec une latence minimale, pour que Nox puisse répondre à voix haute aux questions qu'on lui pose.",
+     "tags": [
+      "Chatterbox",
+      "F5-TTS",
+      "F5-FR",
+      "XTTS-v2",
+      "Qwen3-TTS",
+      "ElevenLabs",
+      "FFmpeg",
+      "Python"
+     ],
+     "list": [
+      "Comparaison de plusieurs moteurs de synthèse vocale",
+      "Expérimentation du clonage vocal à partir d'échantillons audio",
+      "Évaluation du naturel, du timbre et de la rapidité de génération",
+      "Optimisation envisagée pour une conversation en temps réel",
+      "Intégration future à l'assistant Nox et à ses interfaces de communication"
+     ],
+     "note": "Enjeu technique : concilier fidélité vocale, expressivité et faible latence sur du matériel grand public."
+    },
+    {
+     "title": "Domaines d'application",
+     "tags": [
+      "Productivité numérique",
+      "Développement logiciel",
+      "Automatisation",
+      "Gestion documentaire",
+      "Communautés Discord",
+      "Création de contenu",
+      "Expérimentation IA"
+     ]
+    }
+   ],
+   "tech": "Ollama, Qwen 3.5, Python, Discord (bot), API et intégrations",
+   "state": "Prototype fonctionnel — développement évolutif",
+   "access": "",
+   "diffusion": "",
+   "license": "",
+   "download": "",
+   "downloads": [],
+   "tags": [
+    "IA locale",
+    "Ollama",
+    "Python",
+    "Discord",
+    "Prototype"
+   ]
+  },
   {
    "id": "noxdl",
    "name": "NoxDL",

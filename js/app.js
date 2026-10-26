@@ -207,6 +207,7 @@ function pageProject(id) {
       ${p.summary ? `<p class="lead">${esc(p.summary)}</p>` : ''}
       ${p.concept ? `<p class="lead">${esc(p.concept)}</p>` : ''}
       ${p.detail ? `<p>${esc(p.detail)}</p>` : ''}
+      ${stagesBlock(p)}
       ${gallery(p)}
       ${p.shot ? `<figure class="shot"><img src="${esc(p.shot)}" alt="${esc(p.shotAlt || '')}" loading="lazy"><figcaption>${esc(p.shotAlt || '')}</figcaption></figure>` : ''}
       <div class="d-cols">
@@ -214,6 +215,7 @@ function pageProject(id) {
         ${specs ? `<section class="box"><h2>Fiche technique</h2><dl class="specs">${specs}</dl></section>` : ''}
       </div>
       ${list('Pistes de développement', p.dev)}
+      ${sectionsBlock(p)}
       ${downloadsBlock(p)}
       ${toolsBlock(p)}
       ${filesBlock(p)}
@@ -226,6 +228,20 @@ function pageProject(id) {
 }
 
 /* ---------- fiche : galerie, outils, fichiers, mode d'emploi ---------- */
+// où en est le projet : ce qui marche, ce qui s'intègre, ce qui est envisagé
+function stagesBlock(p) {
+  if (!p.stages || !p.stages.length) return '';
+  return `<section class="block"><h2 class="sec"><span class="dot"></span>Où en est le projet</h2><div class="stages">${p.stages.map(st => `<div class="box stage st-${esc(st.level || 'idea')}"><h3><span class="st-dot" aria-hidden="true"></span>${esc(st.label)}</h3><ul class="px-list">${(st.items || []).map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`).join('')}</div></section>`;
+}
+// sections libres : un titre, un texte, une liste, des étiquettes, une note
+function sectionsBlock(p) {
+  if (!p.sections || !p.sections.length) return '';
+  return p.sections.map(sc => `<section class="block"><h2 class="sec"><span class="dot"></span>${esc(sc.title)}</h2>
+    ${sc.text ? `<p class="sc-text">${esc(sc.text)}</p>` : ''}
+    ${sc.tags && sc.tags.length ? `<ul class="tags sc-tags">${sc.tags.map(t => `<li style="--t:${tagColor(t)}">${esc(t)}</li>`).join('')}</ul>` : ''}
+    ${sc.list && sc.list.length ? `<div class="box"><ul class="px-list">${sc.list.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
+    ${sc.note ? `<p class="sc-note">${esc(sc.note)}</p>` : ''}</section>`).join('');
+}
 // captures : celles décrites dans projects.json, plus celles déposées dans img/projets/<id>/ (1.png, 2.jpg, 3.webp…)
 function galleryItems(p) { return (p.gallery || []).concat(p._auto || []); }
 function galleryHTML(p) {

@@ -80,6 +80,28 @@ Un champ laissé vide (`""`) s'affiche « à renseigner » dans la fiche techniq
 
 Attention aux virgules : chaque ligne se termine par une virgule, sauf la dernière avant `}`. Les guillemets droits `"` sont obligatoires. Si la page affiche « Explosion mineure » après une modification, c'est presque toujours une virgule ou un guillemet en trop ou en moins.
 
+## Étapes du projet et sections libres (facultatif)
+
+Pour montrer où en est un projet, en trois colonnes colorées :
+
+```json
+"stages": [
+ { "level": "ok", "label": "Fonctionne déjà", "items": ["…", "…"] },
+ { "level": "wip", "label": "En cours d'intégration", "items": ["…"] },
+ { "level": "idea", "label": "Envisagé", "items": ["…"] }
+]
+```
+
+Pour ajouter des blocs à la fiche (une expérimentation, des domaines d'application…) :
+
+```json
+"sections": [
+ { "title": "Expérimentation vocale", "text": "Un paragraphe.", "tags": ["F5-TTS", "XTTS-v2"], "list": ["Un point", "Un autre"], "note": "Une remarque mise en avant." }
+]
+```
+
+Chaque élément d'une section est facultatif. La fiche de Nox (`"id": "nox"`) sert d'exemple complet.
+
 ## Ajouter un bouton de téléchargement
 
 Dans le champ `downloads` du projet :
