@@ -66,7 +66,7 @@ function card(p) {
 function footer() {
   const hw = window.LAB && window.LAB.halloween;
   return `<footer class="lab-foot">
-    <p class="hint">${hw ? '🎃 Saison d\'Halloween : la bobine Tesla semble… agitée. Trois décharges rapprochées, et qui sait ?' : '⚡ Astuce : la bobine Tesla, à gauche, réagit aux clics. Les fioles de l\'étagère aussi.'}</p>
+    <p class="hint">${hw ? '🎃 Saison d\'Halloween : la bobine Tesla semble… agitée. Trois décharges rapprochées, et qui sait ?' : (document.documentElement.dataset.theme === 'alchimie' ? '⚗ Astuce : la bobine Tesla réagit aux clics, et le ballon de réaction aime les gouttes de réactif.' : '⚡ Astuce : la bobine Tesla, à gauche, réagit aux clics. Les fioles de l\'étagère aussi.')}</p>
     <p>Codex Mental · Laboratoire <span class="sep">/</span> <a href="https://codexmental.com">retour au Codex</a></p>
   </footer>`;
 }
@@ -275,10 +275,56 @@ function say(msg, ms = 4200) {
   clearTimeout(say.t); say.t = setTimeout(() => toast.classList.remove('on'), ms);
 }
 window.addEventListener('lab:zap', () => { lab.classList.remove('zap'); void lab.offsetWidth; lab.classList.add('zap'); });
+window.addEventListener('lab:event', e => {
+  const d = e.detail;
+  if (d.type === 'blackout' && d.phase === 'start') say('🔌 Panne de courant ! Le savant cherche le disjoncteur…', 4000);
+  if (d.type === 'blackout' && d.phase === 'end') say('💡 Courant rétabli.', 2200);
+  if (d.type === 'runaway' && d.phase === 'start') say('💥 Réaction incontrôlée dans le ballon !', 3600);
+  if (d.type === 'runaway' && d.phase === 'end') say('🧯 Situation maîtrisée. Presque.', 2600);
+});
 window.addEventListener('lab:creature', e => {
   if (e.detail.phase === 'start') { lab.classList.add('storm'); say('⚡ Expérience n°31 en cours… reculez de la paillasse !', 3800); }
   if (e.detail.phase === 'alive') { say('🧟 Sujet réanimé avec succès. Il s\'est échappé par la droite… le chimiste le poursuit !', 5200); setTimeout(() => lab.classList.remove('storm'), 4000); }
 });
+
+/* ---------- réglages : thème et animations ---------- */
+const setBtn = $('#set-btn'), setPanel = $('#set-panel');
+const THEME_DESC = { pixel: 'Étagère de fioles, bobine Tesla et petit chimiste.', alchimie: 'Paillasse et circuit de fluides qui tourne en boucle.' };
+const MOTIONS = [['full', 'Vivantes', 'Tout bouge, avec les incidents du labo.'], ['calm', 'Calmes', 'Moins d\'éclairs, pas d\'incidents.'], ['off', 'Figées', 'Une image fixe du labo.']];
+function buildSettings() {
+  const C = window.LAB || {};
+  $('.set-ico').innerHTML = pix('potion', '#c9993a', 14);
+  setPanel.innerHTML = `
+    <p class="set-h" id="set-h1">Thème du labo</p>
+    <div class="set-list" role="radiogroup" aria-labelledby="set-h1">
+      ${Object.entries(C.themes || {}).map(([id, th]) => `<button type="button" class="opt" role="radio" aria-checked="${id === C.theme}" data-set="theme" data-val="${id}"><span class="sw sw-${id}" aria-hidden="true"></span><span><b>${esc(th.label)}</b><small>${esc(THEME_DESC[id] || '')}</small></span></button>`).join('')}
+    </div>
+    <p class="set-h" id="set-h2">Animations</p>
+    <div class="set-row" role="radiogroup" aria-labelledby="set-h2">
+      ${MOTIONS.map(([id, label, d]) => `<button type="button" class="opt opt-s" role="radio" aria-checked="${id === C.motion}" data-set="motion" data-val="${id}" title="${esc(d)}">${label}</button>`).join('')}
+    </div>
+    <p class="set-note">${esc((MOTIONS.find(m => m[0] === C.motion) || MOTIONS[0])[2])}</p>`;
+}
+function openSettings(open) {
+  setPanel.hidden = !open; setBtn.setAttribute('aria-expanded', open);
+  if (open) { const cur = setPanel.querySelector('[aria-checked="true"]'); if (cur) cur.focus(); }
+}
+setBtn.addEventListener('click', e => { e.stopPropagation(); openSettings(setPanel.hidden); });
+document.addEventListener('click', e => { if (!setPanel.hidden && !e.target.closest('.settings')) openSettings(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !setPanel.hidden) { openSettings(false); setBtn.focus(); } });
+setPanel.addEventListener('click', e => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  const key = b.dataset.set, val = b.dataset.val, C = window.LAB || {};
+  if ((key === 'theme' && val === C.theme) || (key === 'motion' && val === C.motion)) { openSettings(false); return; }
+  try { localStorage.setItem(key === 'theme' ? 'lab.theme' : 'lab.motion', val); } catch (err) { /* stockage indisponible : on passe par l'adresse */ }
+  const u = new URL(location.href);
+  u.searchParams.delete('theme'); u.searchParams.delete('anim');
+  let stored = null; try { stored = localStorage.getItem(key === 'theme' ? 'lab.theme' : 'lab.motion'); } catch (err) { stored = null; }
+  if (stored !== val) u.searchParams.set(key === 'theme' ? 'theme' : 'anim', val);
+  say(key === 'theme' ? '⚗ Changement de laboratoire…' : '⚙ Réglage des machines…', 1500);
+  setTimeout(() => { location.href = u.toString(); if (u.pathname === location.pathname && u.search === location.search) location.reload(); }, 250);
+});
+buildSettings();
 
 /* ---------- démarrage ---------- */
 window.addEventListener('hashchange', route);

@@ -13,9 +13,11 @@ const back = document.createElement('canvas');
 const bx = back.getContext('2d');
 
 const mq = matchMedia('(prefers-reduced-motion: reduce)');
-let reduce = mq.matches;
+const MOTION = (window.LAB && window.LAB.motion) || (mq.matches ? 'off' : 'full');
+const EXPLICIT = !!(window.LAB && window.LAB.motionExplicit);
+let reduce = MOTION === 'off';
 const HALLOWEEN = !!(window.LAB && window.LAB.halloween);
-const FPS = 24;
+const FPS = MOTION === 'calm' ? 12 : 24;
 
 /* ---------- outils ---------- */
 const F = Math.floor;
@@ -600,12 +602,12 @@ function zapTargets() {
 function zap(strong = true) {
   const [tx, ty] = coilTip();
   for (const [a, b] of zapTargets()) arcs.push(makeArc(tx, ty, a, b, strong ? ri(4, 6) : 3, true));
-  if (!reduce) flash = strong ? .24 : .12;
+  if (!reduce && MOTION === 'full') flash = strong ? .24 : .12;
   for (const l of lamps) l.off = ri(2, 8);
   if (chem && chem.mode !== 'chase') { chem.jump = 6; chem.bub = { s: '!', t: 30 }; }
   for (let i = 0; i < 10; i++) sparks.push({ x: tx, y: ty, vx: rnd(-1.2, 1.2), vy: rnd(-1.4, .3), life: ri(6, 14) });
   window.dispatchEvent(new CustomEvent('lab:zap'));
-  nextZap = t + rnd(9, 16);
+  nextZap = t + (MOTION === 'calm' ? rnd(25, 40) : rnd(9, 16));
 }
 
 /* ---------- l'expérience secrète d'Halloween ---------- */
@@ -995,7 +997,7 @@ window.addEventListener('keydown', e => {
   typed = (typed + e.key.toLowerCase()).slice(-6);
   if (typed.endsWith('igor')) { typed = ''; startCreature(); }
 });
-mq.addEventListener('change', () => { reduce = mq.matches; if (reduce) draw(); });
+mq.addEventListener('change', () => { if (EXPLICIT) return; reduce = mq.matches; if (reduce) draw(); });
 let rz = 0;
 window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(layout, 120); });
 

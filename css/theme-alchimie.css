@@ -1,0 +1,155 @@
+/* ==========================================================================
+   CODEX MENTAL · LAB — thème « Alchimie »
+   Une vitre de laboratoire cerclée de laiton, posée au-dessus de la paillasse.
+   Titres en caractères pixel fins, textes en sans-serif lisible, instruments
+   en police d'afficheur.
+   ========================================================================== */
+[data-theme="alchimie"] {
+  --bg: #08090c;
+  --panel: #0b1013;
+  --card: #10171b;
+  --line: #24343a;
+  --edge: #2b3b41;
+  --ink: #dbe6e2;
+  --soft: #b9c8c4;
+  --mute: #8aa09a;
+  --accent: #45e6ff;
+  --brass: #c9993a; --brassHi: #f1cd6a; --brassLo: #6e5216;
+  --f-title: 'Silkscreen', 'VT323', ui-monospace, monospace;
+  --f-body: 'IBM Plex Sans', system-ui, 'Segoe UI', sans-serif;
+}
+
+/* vitre centrale */
+[data-theme="alchimie"] .lab {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.035), transparent 18%),
+    radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--accent) 7%, #0e1619) 0%, var(--panel) 62%);
+  border: 2px solid var(--brass);
+  outline: 1px solid #120c04;
+  box-shadow: 0 0 0 4px #17120a, 0 0 0 5px var(--brassLo), 0 22px 60px rgba(0,0,0,.75), inset 0 0 0 1px rgba(241,205,106,.25), inset 0 0 70px rgba(0,0,0,.5);
+  font-family: var(--f-body);
+}
+[data-theme="alchimie"] .lab::before {   /* équerres de laiton aux quatre coins */
+  inset: -7px;
+  --c: linear-gradient(var(--brassHi), var(--brass));
+  background:
+    var(--c) 0 0 / 22px 4px no-repeat, var(--c) 0 0 / 4px 22px no-repeat,
+    var(--c) 100% 0 / 22px 4px no-repeat, var(--c) 100% 0 / 4px 22px no-repeat,
+    var(--c) 0 100% / 22px 4px no-repeat, var(--c) 0 100% / 4px 22px no-repeat,
+    var(--c) 100% 100% / 22px 4px no-repeat, var(--c) 100% 100% / 4px 22px no-repeat;
+}
+[data-theme="alchimie"] .crt { background: radial-gradient(130% 100% at 50% 50%, transparent 70%, rgba(0,0,0,.4) 100%); }
+[data-theme="alchimie"] .lab.zap .crt { animation: zap-a .5s ease-out 1; }
+@keyframes zap-a { 0% { background-color: rgba(160,240,255,.10); } 100% { background-color: transparent; } }
+
+/* en-tête : plaque de laiton et étiquettes d'instruments */
+[data-theme="alchimie"] .lab-head { background: linear-gradient(#10181b, #0c1316); border-bottom: 1px solid var(--edge); box-shadow: 0 1px 0 rgba(241,205,106,.12); padding-top: 12px; }
+[data-theme="alchimie"] .brand-name { font-family: var(--f-title); font-size: 16px; letter-spacing: 0; }
+[data-theme="alchimie"] .tab {
+  font-family: var(--f-vt); font-size: 21px; color: var(--mute); background: transparent; border: 0; margin-bottom: 0;
+  padding: 7px 12px 12px;
+}
+[data-theme="alchimie"] .tab::after { left: 12px; right: 12px; bottom: 4px; height: 2px; transform: scaleX(0); transition: transform .3s ease; opacity: 1; }
+[data-theme="alchimie"] .tab:hover::after, [data-theme="alchimie"] .tab:focus-visible::after { transform: scaleX(.5); }
+[data-theme="alchimie"] .tab[aria-selected="true"] { background: transparent; border: 0; color: #fff; }
+[data-theme="alchimie"] .tab[aria-selected="true"]::after { transform: scaleX(1); box-shadow: 0 0 10px var(--c); }
+[data-theme="alchimie"] .tab[aria-selected="true"]::before {   /* petite fiole allumée au-dessus de l'onglet */
+  content: ''; position: absolute; left: 50%; top: 0; width: 4px; height: 4px; margin-left: -2px; background: var(--c); box-shadow: 0 0 8px var(--c);
+  animation: drip 2.4s ease-in infinite;
+}
+@keyframes drip { 0%, 60% { transform: translateY(0); opacity: 1; } 85% { transform: translateY(6px); opacity: 0; } 100% { opacity: 0; } }
+[data-theme="alchimie"] .set-btn { background: transparent; border: 1px solid var(--edge); }
+[data-theme="alchimie"] .set-panel { background: #0d1417; box-shadow: 0 0 0 1px var(--brass), 0 0 0 4px #17120a, 0 18px 40px rgba(0,0,0,.6); }
+[data-theme="alchimie"] .set-h { font-family: var(--f-title); font-size: 12px; color: var(--brassHi); }
+[data-theme="alchimie"] .opt { border-width: 1px; background: #10181b; }
+
+/* typographie */
+[data-theme="alchimie"] .px-title {
+  font-family: var(--f-title); font-weight: 400; font-size: clamp(24px, 2.6vw, 40px); line-height: 1.15; letter-spacing: .5px;
+  text-shadow: 0 0 24px color-mix(in srgb, var(--accent) 45%, transparent), 2px 2px 0 #000;
+  text-wrap: balance;
+}
+[data-theme="alchimie"] .lead { font-size: 16.5px; line-height: 1.7; }
+[data-theme="alchimie"] .sec { font-family: var(--f-title); font-size: 16px; font-weight: 400; letter-spacing: .5px; }
+[data-theme="alchimie"] .sec::after { height: 1px; background: linear-gradient(90deg, var(--line), transparent); }
+[data-theme="alchimie"] .warn { font-family: var(--f-body); font-size: 14px; box-shadow: inset 0 0 0 1px rgba(255,179,71,.35); }
+[data-theme="alchimie"] .caret { width: 8px; }
+
+/* cartes : verrerie fine, un ménisque se remplit au survol */
+[data-theme="alchimie"] .card, [data-theme="alchimie"] .shelf, [data-theme="alchimie"] .box,
+[data-theme="alchimie"] .chip, [data-theme="alchimie"] .crumbs a, [data-theme="alchimie"] .pager a {
+  box-shadow: inset 0 0 0 1px var(--e); border-radius: 3px;
+}
+[data-theme="alchimie"] .card {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--c) 5%, #121a1e), #0f1619 70%);
+  overflow: hidden; transition: transform .25s ease, box-shadow .25s ease;
+}
+[data-theme="alchimie"] .card::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--c), transparent); opacity: .35;
+  transform: scaleX(.3); transition: transform .45s ease, opacity .3s;
+}
+[data-theme="alchimie"] .card:hover, [data-theme="alchimie"] .card:focus-visible {
+  --e: color-mix(in srgb, var(--c) 70%, transparent); transform: translateY(-2px);
+  box-shadow: inset 0 0 0 1px var(--e), 0 12px 30px -12px color-mix(in srgb, var(--c) 60%, transparent);
+}
+[data-theme="alchimie"] .card:hover::after, [data-theme="alchimie"] .card:focus-visible::after { transform: scaleX(1); opacity: 1; }
+[data-theme="alchimie"] .card h3 { font-family: var(--f-body); font-weight: 600; font-size: 17px; line-height: 1.35; margin-top: 4px; }
+[data-theme="alchimie"] .sum { font-size: 14.5px; line-height: 1.6; }
+[data-theme="alchimie"] .mark { border-radius: 50%; width: 38px; height: 38px; box-shadow: inset -3px -4px 0 rgba(0,0,0,.25), inset 2px 2px 0 rgba(255,255,255,.45), 0 0 18px color-mix(in srgb, var(--c) 50%, transparent); }
+[data-theme="alchimie"] .mark.big { width: 66px; height: 66px; }
+[data-theme="alchimie"] .status { border-width: 1px; border-radius: 2px; }
+[data-theme="alchimie"] .tags li { border-radius: 2px; }
+[data-theme="alchimie"] .shelf { background: #10181b; transition: transform .25s ease, box-shadow .25s; }
+[data-theme="alchimie"] .shelf b { font-family: var(--f-body); font-weight: 600; font-size: 15px; }
+[data-theme="alchimie"] .shelf:hover, [data-theme="alchimie"] .shelf:focus-visible { --e: var(--c); transform: translateY(-2px); }
+[data-theme="alchimie"] .box { background: #10181b; }
+[data-theme="alchimie"] .box h2 { font-family: var(--f-title); font-size: 14px; font-weight: 400; }
+[data-theme="alchimie"] .px-list li { font-size: 15px; }
+[data-theme="alchimie"] .px-list li::before { border-radius: 50%; }
+[data-theme="alchimie"] .specs { font-size: 14.5px; }
+[data-theme="alchimie"] .detail > p { font-size: 15.5px; }
+[data-theme="alchimie"] .cat-ico { border-radius: 50%; box-shadow: 0 0 0 1px var(--brass), 0 0 30px -6px var(--c); }
+[data-theme="alchimie"] .cover { border-bottom: 1px solid var(--e); }
+
+/* articles de l'Atelier */
+[data-theme="alchimie"] .prose { font-size: 16.5px; line-height: 1.8; }
+[data-theme="alchimie"] .prose h1 { font-family: var(--f-title); font-size: clamp(22px, 2.4vw, 34px); line-height: 1.2; }
+[data-theme="alchimie"] .prose h2 { font-family: var(--f-title); font-size: 18px; line-height: 1.4; background: linear-gradient(90deg, var(--line), transparent) bottom / 100% 1px no-repeat; }
+[data-theme="alchimie"] .prose h3 { font-family: var(--f-body); font-weight: 600; font-size: 19px; }
+[data-theme="alchimie"] .prose blockquote { border-radius: 3px; }
+[data-theme="alchimie"] .lab-foot { font-family: var(--f-body); font-size: 13.5px; background: linear-gradient(90deg, var(--line), transparent) top / 100% 1px no-repeat; }
+
+/* barre de défilement : une burette graduée */
+[data-theme="alchimie"] .tube { flex-basis: 34px; padding: 10px 10px 12px 2px; }
+[data-theme="alchimie"] .tube-cork { width: 14px; height: 5px; background: linear-gradient(var(--brassHi), var(--brass)); box-shadow: 0 0 0 1px #2a1c08; border-radius: 1px; }
+[data-theme="alchimie"] .tube-glass {
+  width: 12px; margin-top: 1px; border-radius: 0 0 4px 4px;
+  background:
+    repeating-linear-gradient(to bottom, rgba(220,240,245,.45) 0 1px, transparent 1px 10px) 0 0 / 4px 100% no-repeat,
+    repeating-linear-gradient(to bottom, rgba(220,240,245,.6) 0 1px, transparent 1px 50px) 0 0 / 7px 100% no-repeat,
+    rgba(120,180,200,.06);
+  box-shadow: inset 0 0 0 1px rgba(170,220,235,.45), inset 2px 0 0 rgba(230,250,255,.12);
+  clip-path: none;
+}
+[data-theme="alchimie"] .tube-thumb {
+  left: 3px; right: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 55%, #fff) 0 2px, var(--accent) 2px);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent), inset 0 2px 0 rgba(255,255,255,.55);
+}
+[data-theme="alchimie"] .tube-thumb i { width: 2px; height: 2px; border-radius: 50%; }
+
+/* bulle d'information */
+[data-theme="alchimie"] .toast {
+  font-family: var(--f-body); font-size: 15px; color: #e8fbff; background: rgba(10,22,26,.96); border-radius: 3px;
+  box-shadow: inset 0 0 0 1px var(--brass), 0 0 0 4px #17120a, 0 0 30px rgba(69,230,255,.18);
+}
+
+@media (max-width: 759px) {
+  [data-theme="alchimie"] .lab { border-width: 1px; box-shadow: 0 0 0 3px #17120a, 0 0 0 4px var(--brassLo), inset 0 0 40px rgba(0,0,0,.5); }
+  [data-theme="alchimie"] .lab::before { inset: -5px; background-size: 14px 3px, 3px 14px, 14px 3px, 3px 14px, 14px 3px, 3px 14px, 14px 3px, 3px 14px; }
+  [data-theme="alchimie"] .brand-name { font-size: 13px; }
+  [data-theme="alchimie"] .tab { font-size: 19px; padding: 6px 9px 10px; }
+  [data-theme="alchimie"] .tube { flex-basis: 22px; padding: 8px 6px 10px 2px; }
+  [data-theme="alchimie"] .tube-glass { width: 9px; }
+}

@@ -2,6 +2,17 @@
 
 Site statique de **lab.codexmental.com** : un labo de savant fou en pixel art, animé en canvas autour d'un écran central.
 
+## Thèmes
+
+Le bouton **Thème** (en haut à droite) permet de choisir le labo et le niveau d'animation. Le choix est mémorisé dans le navigateur.
+
+- **Labo pixel** (`js/scene.js`) : le premier prototype, thème par défaut.
+- **Alchimie** (`js/scene-alchimie.js` + `css/theme-alchimie.css`) : une installation de chimie qui tourne en boucle autour de l'interface.
+- Animations : Vivantes, Calmes (moins d'éclairs, pas d'incidents) ou Figées (image fixe). Par défaut, « Figées » si le système demande moins d'animations.
+- Raccourcis d'adresse : `?theme=alchimie`, `?anim=calm`, `?halloween=1`.
+
+Pour ajouter un thème : une scène dans `js/`, une entrée dans `THEMES` (script en tête de `index.html`), un CSS limité à `[data-theme="nom"]`, et une description dans `THEME_DESC` (`js/app.js`).
+
 ## Structure
 
 - `index.html` : la page unique (navigation par `#/…`)
@@ -21,6 +32,8 @@ Ajouter une entrée dans `data/projects.json` avec `cat` parmi `applications`, `
 Déposer le fichier HTML dans `content/atelier/<dossier>/<nom>.html`, puis l'ajouter dans `data/atelier.json`.
 
 ## Secrets du labo
+
+Dans le thème Alchimie, le circuit conserve réellement le liquide : bouilleur → condenseur → récepteur → pompe → ballon de réaction (le réactif change sa couleur) → rampe → éprouvettes → serpentin → colonne → réservoir → retour au bouilleur. Le savant recharge le réactif quand il est vide, et de temps en temps une panne de courant ou une réaction incontrôlée vient pimenter la journée. Changer d'onglet verse une dose de réactif à la couleur de la catégorie.
 
 - Cliquer sur la bobine Tesla déclenche une décharge ; trois clics rapprochés lancent l'expérience n°31.
 - Taper `igor` au clavier fonctionne aussi.
