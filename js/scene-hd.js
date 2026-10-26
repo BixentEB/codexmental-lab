@@ -724,22 +724,62 @@ function drawTank(ox, oy) {
   const T = G.T, v = V.T;
   ctx.save(); ctx.translate(ox, oy);
   drawVessel(v);
-  // la chose qui flotte dans la cuve
+  // le spécimen : une sorte de céphalopode endormi, rétroéclairé par le liquide
   const cr = ev && ev.type === 'creature' ? ev : null, wake = cr ? Math.min(1, (t - cr.t0) / 1.5) : 0;
-  const bx = T.cx + Math.sin(t * .4) * T.w * .15 + wake * T.w * .25, by = T.top + (T.bot - T.top) * .55 + Math.sin(t * .7) * 10 * u;
-  ctx.save(); ctx.beginPath(); ctx.rect(T.cx - T.w, surfY(v), T.w * 2, T.bot - surfY(v)); ctx.clip();
-  ctx.fillStyle = 'rgba(4,16,10,.75)';
-  ctx.beginPath(); ctx.ellipse(bx, by - 30 * u, 20 * u, 24 * u, 0, 0, 6.3); ctx.fill();
-  ctx.beginPath(); ctx.ellipse(bx, by + 6 * u, 16 * u, 30 * u, 0, 0, 6.3); ctx.fill();
-  ctx.lineWidth = 6 * u; ctx.lineCap = 'round'; ctx.strokeStyle = 'rgba(4,16,10,.7)';
-  for (let k = 0; k < 4; k++) { const sx = bx - 12 * u + k * 8 * u, ph = t * 1.4 + k; ctx.beginPath(); ctx.moveTo(sx, by + 30 * u); ctx.bezierCurveTo(sx + Math.sin(ph) * 14 * u, by + 50 * u, sx - Math.sin(ph + 1) * 14 * u, by + 70 * u, sx + Math.sin(ph + 2) * 8 * u, by + 90 * u); ctx.stroke(); }
-  if (cr && wake > .5) {
-    const hx = T.cx + T.w * .62, hy = by - 10 * u;
-    ctx.strokeStyle = 'rgba(4,16,10,.8)'; ctx.lineWidth = 7 * u; ctx.beginPath(); ctx.moveTo(bx + 12 * u, by - 6 * u); ctx.lineTo(hx, hy); ctx.stroke();
-    ctx.fillStyle = 'rgba(4,16,10,.85)'; ctx.beginPath(); ctx.ellipse(hx + 2 * u, hy, 9 * u, 12 * u, 0, 0, 6.3); ctx.fill();
+  const sy0 = surfY(v), lc = v.col;
+  const cw = T.w * .5, chh = T.w * .62, breathe = 1 + Math.sin(t * 1.1) * .045;
+  const bx = T.cx + Math.sin(t * .35) * T.w * .12 + wake * T.w * .12;
+  const by = clamp(T.top + (T.bot - T.top) * .45 + Math.sin(t * .6) * 8 * u, sy0 + chh * 1.25, T.bot - chh * 2.4);
+  ctx.save(); ctx.beginPath(); ctx.rect(T.cx - T.w, sy0 + 2 * u, T.w * 2, T.bot - sy0); ctx.clip();
+  const body = rgba(mixc([6, 18, 14], lc, .12), .92), rim = rgba(lighten(lc, .35), .55);
+  // tentacules : rubans effilés qui ondulent
+  const tent = (sx, ang, len, w0, ph, reach) => {
+    const N = 22, L = [], R = [];
+    for (let i = 0; i <= N; i++) {
+      const k = i / N, wav = Math.sin(t * 1.6 + ph + k * 4.2) * (10 + 16 * k) * u * (1 - reach * .8);
+      let x = sx + Math.sin(ang) * len * k + wav, y = by + Math.cos(ang) * len * k;
+      if (reach) { x = sx + (T.cx + T.w - 6 * u - sx) * Math.pow(k, .8) * reach + wav * .3 * (1 - reach) + x * 0; y = by + (len * .45) * k * (1 - reach) + Math.sin(k * 3) * 14 * u * reach; }
+      const w = w0 * (1 - k * .92), nx = Math.cos(ang), ny = -Math.sin(ang);
+      L.push([x - nx * w, y - ny * w]); R.push([x + nx * w, y + ny * w]);
+    }
+    ctx.beginPath(); ctx.moveTo(L[0][0], L[0][1]); for (const q of L) ctx.lineTo(q[0], q[1]); for (const q of R.reverse()) ctx.lineTo(q[0], q[1]); ctx.closePath();
+    ctx.fillStyle = body; ctx.fill(); ctx.strokeStyle = rgba(lighten(lc, .35), .22); ctx.lineWidth = 1 * u; ctx.stroke();
+    // ventouses
+    ctx.fillStyle = rgba(lighten(lc, .5), .25);
+    for (let i = 3; i < N - 4; i += 3) { const q = R[N - i]; ctx.beginPath(); ctx.arc(q[0], q[1], Math.max(.8, w0 * (1 - i / N) * .35), 0, 6.3); ctx.fill(); }
+  };
+  const nT = 7;
+  for (let i = 0; i < nT; i++) {
+    const k = i / (nT - 1) - .5, reach = cr && i === nT - 1 ? clamp((t - cr.t0 - 1.2) / 1.2, 0, 1) : 0;
+    tent(bx + k * cw * 1.3, k * .55, chh * (2.1 + Math.abs(Math.sin(i * 7.3)) * .5), 5.5 * u, i * 1.3, reach);
   }
-  const eyeK = cr ? wake : (Math.sin(t * .3) > .985 ? 1 : 0);
-  if (eyeK > 0) { const ec = HALLOWEEN ? [255, 150, 40] : [190, 255, 120]; for (const dx of [-7, 7]) { glow(ctx, bx + dx * u, by - 32 * u, 12 * u, ec, .8 * eyeK); ctx.fillStyle = rgba(lighten(ec, .5), eyeK); ctx.beginPath(); ctx.ellipse(bx + dx * u, by - 32 * u, 3 * u, 2 * u * eyeK, 0, 0, 6.3); ctx.fill(); } }
+  // manteau (la « tête »)
+  const mw = cw * breathe, mh = chh * (2 - breathe);
+  ctx.beginPath();
+  ctx.moveTo(bx - mw * .78, by + 4 * u);
+  ctx.bezierCurveTo(bx - mw * 1.02, by - mh * .55, bx - mw * .62, by - mh * 1.25, bx, by - mh * 1.3);
+  ctx.bezierCurveTo(bx + mw * .62, by - mh * 1.25, bx + mw * 1.02, by - mh * .55, bx + mw * .78, by + 4 * u);
+  for (let i = 4; i >= -4; i--) ctx.quadraticCurveTo(bx + (i + .5) * mw * .19, by + 12 * u, bx + i * mw * .19, by + 4 * u);
+  ctx.closePath();
+  const mg = ctx.createRadialGradient(bx - mw * .25, by - mh * .9, 2 * u, bx, by - mh * .4, mw * 1.4);
+  mg.addColorStop(0, rgba(mixc([30, 60, 48], lc, .25), .95)); mg.addColorStop(.6, body); mg.addColorStop(1, rgba([3, 10, 8], .95));
+  ctx.fillStyle = mg; ctx.fill(); ctx.strokeStyle = rim; ctx.lineWidth = 1.5 * u; ctx.stroke();
+  // taches bioluminescentes
+  for (let i = 0; i < 6; i++) { const a = i * 1.9, r = (.3 + (i % 3) * .18); const x = bx + Math.cos(a) * mw * r * .8, y = by - mh * .7 + Math.sin(a) * mh * r * .4; glow(ctx, x, y, 5 * u, lighten(lc, .3), .25 + Math.sin(t * 2 + i) * .12); }
+  // yeux : fermés, ils s'ouvrent parfois… ou quand on le réveille
+  const eyeK = cr ? wake : clamp((Math.sin(t * .23) - .93) * 14, 0, 1);
+  const ec = HALLOWEEN ? [255, 150, 40] : [210, 255, 140];
+  for (const dx of [-.34, .34]) {
+    const ex = bx + dx * mw, ey = by - mh * .28, look = (tmx || 0) * 2 * u;
+    ctx.fillStyle = 'rgba(0,0,0,.6)'; ctx.beginPath(); ctx.ellipse(ex, ey, 7 * u, 5 * u, dx * .5, 0, 6.3); ctx.fill();
+    if (eyeK > .02) {
+      glow(ctx, ex, ey, 18 * u, ec, .7 * eyeK);
+      ctx.fillStyle = rgba(ec, eyeK); ctx.beginPath(); ctx.ellipse(ex, ey, 6 * u, 4.5 * u * eyeK, dx * .5, 0, 6.3); ctx.fill();
+      ctx.fillStyle = 'rgba(5,8,5,.95)'; ctx.beginPath(); ctx.ellipse(ex + look, ey, 1.4 * u, 3.6 * u * eyeK, 0, 0, 6.3); ctx.fill();
+    } else { ctx.strokeStyle = rim; ctx.lineWidth = 1.2 * u; ctx.beginPath(); ctx.ellipse(ex, ey - 1 * u, 6 * u, 2.5 * u, dx * .5, .2, Math.PI - .2); ctx.stroke(); }
+  }
+  // bulles qu'il expire
+  if (Math.random() < .03) v.bub.push({ x: bx + rnd(-4, 4) * u, y: by - mh * 1.3, r: rnd(1.5, 3) * u, v: rnd(30, 60) * u });
   ctx.restore();
   ctx.restore();
 }

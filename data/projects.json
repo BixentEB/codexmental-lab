@@ -203,19 +203,19 @@
    "mark": "❏",
    "accent": "#f0a9d0",
    "platform": "Navigateur Web",
-   "summary": "Personnaliser visuellement l'interface ChatGPT avec des styles CSS adaptés à ses préférences.",
-   "detail": "Ajustements de présentation, de couleurs, d'organisation et de lisibilité d'une interface existante.",
+   "summary": "Un thème « nuit étoilée » pour ChatGPT, plus un petit script qui affiche le titre de la conversation en haut de l'écran.",
+   "detail": "Fond étoilé avec étoiles filantes, couleurs indigo, projets rangés en capsules dans la colonne de gauche, bulles et éditeur harmonisés. Le tout s'installe en deux minutes avec deux extensions gratuites, sans toucher au site d'origine.",
    "features": [
     "Couleurs et lisibilité",
     "Organisation de l'interface"
    ],
-   "tech": "CSS ; JavaScript envisagé pour une extension",
+   "tech": "CSS (Stylus), JavaScript (Tampermonkey)",
    "next": "Gestion de profils CSS/JS, activation indépendante selon les sites",
-   "state": "Personnalisation expérimentale existante ; extension non finalisée",
-   "access": "Non disponible",
-   "diffusion": "Partage éventuel du CSS après nettoyage et vérification",
+   "state": "Thème « Blue Stellar » utilisable ; extension dédiée (NoxLayer) en réflexion",
+   "access": "Public",
+   "diffusion": "Gratuit, à installer ci-dessous",
    "license": "À définir",
-   "download": "Aucun paquet public confirmé",
+   "download": "Thème CSS et script ci-dessous",
    "tags": [
     "CSS",
     "Navigateur",
@@ -225,7 +225,82 @@
    ],
    "tab": "cours",
    "cat": "web",
-   "status": "cours"
+   "status": "cours",
+   "gallery": [
+    {
+     "src": "img/lab/chatgpt/accueil.webp",
+     "mini": "img/lab/chatgpt/accueil-mini.webp",
+     "alt": "Page d'accueil de ChatGPT avec le thème Blue Stellar : fond bleu nuit étoilé et barre de saisie indigo.",
+     "caption": "L'accueil"
+    },
+    {
+     "src": "img/lab/chatgpt/discussion.webp",
+     "mini": "img/lab/chatgpt/discussion-mini.webp",
+     "alt": "Une conversation avec le thème : titre de la discussion affiché en haut à gauche, bulle utilisateur indigo.",
+     "caption": "Une discussion, avec son titre en haut"
+    },
+    {
+     "src": "img/lab/chatgpt/projets.webp",
+     "mini": "img/lab/chatgpt/projets-mini.webp",
+     "alt": "La colonne de gauche ouverte : projets épinglés en capsules et liste des conversations récentes.",
+     "caption": "Projets et conversations dans la colonne"
+    }
+   ],
+   "tools": [
+    {
+     "name": "Stylus",
+     "url": "https://chromewebstore.google.com/detail/clngdbkpkpeebahjckkjfobafhncgmne",
+     "desc": "Applique des feuilles de style (CSS) à n'importe quel site. Sert pour le thème."
+    },
+    {
+     "name": "Tampermonkey",
+     "url": "https://chromewebstore.google.com/detail/dhdgffkkebhmkfjojejmpbldmpobfkfo",
+     "desc": "Fait tourner de petits scripts (JavaScript) sur les sites. Sert pour le titre de conversation."
+    }
+   ],
+   "files": [
+    {
+     "name": "Thème Blue Stellar",
+     "kind": "CSS · Stylus",
+     "file": "files/chatgpt/blue-stellar-chatgpt.css",
+     "install": "files/chatgpt/blue-stellar-chatgpt.user.css",
+     "installLabel": "Installer avec Stylus",
+     "desc": "Toutes les couleurs, le fond étoilé, les étoiles filantes et les projets en capsules."
+    },
+    {
+     "name": "Titre de conversation",
+     "kind": "JavaScript · Tampermonkey",
+     "file": "files/chatgpt/titre-conversation.user.js",
+     "install": "files/chatgpt/titre-conversation.user.js",
+     "installLabel": "Installer avec Tampermonkey",
+     "desc": "Affiche le nom de la discussion en haut à gauche. Bien pratique quand on en a des dizaines."
+    }
+   ],
+   "guide": [
+    {
+     "title": "Le thème, avec Stylus",
+     "steps": [
+      "Installez l'extension Stylus depuis le Chrome Web Store (lien ci-dessus).",
+      "Cliquez sur « Installer avec Stylus » dans le bloc du thème : Stylus ouvre une page d'aperçu, cliquez sur « Installer ».",
+      "Ouvrez ou rechargez chatgpt.com : la nuit étoilée est là."
+     ],
+     "alt": "À la main : icône Stylus › Gérer › « Écrire un nouveau style », collez le code CSS, choisissez « URL sur le domaine » chatgpt.com, puis Enregistrer."
+    },
+    {
+     "title": "Le titre, avec Tampermonkey",
+     "steps": [
+      "Installez l'extension Tampermonkey depuis le Chrome Web Store (lien ci-dessus).",
+      "Autorisez les scripts : ouvrez chrome://extensions, cliquez sur « Détails » sous Tampermonkey et activez « Autoriser les scripts utilisateur » (sur les anciennes versions de Chrome, activez plutôt le « Mode développeur » en haut à droite).",
+      "Cliquez sur « Installer avec Tampermonkey » dans le bloc du script, puis sur « Installer » dans la page qui s'ouvre.",
+      "Rechargez ChatGPT et ouvrez une conversation : son titre s'affiche en haut à gauche."
+     ],
+     "alt": "À la main : icône Tampermonkey › « Créer un nouveau script », remplacez tout le contenu par le code JavaScript, puis Fichier › Enregistrer."
+    }
+   ],
+   "notes": [
+    "Pour désactiver le thème ou le script, cliquez sur l'icône de l'extension et décochez-le.",
+    "ChatGPT change régulièrement son interface : si un élément n'est plus coloré, c'est qu'un nom de classe a bougé. Le reste continue de fonctionner."
+   ]
   },
   {
    "id": "heures-sacrees",

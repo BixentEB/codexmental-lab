@@ -8,6 +8,7 @@ Le bouton **Thème** (en haut à droite) permet de choisir le labo et le niveau 
 
 - **Labo pixel** (`js/scene.js`) : le premier prototype, thème par défaut.
 - **Alchimie** (`js/scene-alchimie.js` + `css/theme-alchimie.css`) : une installation de chimie qui tourne en boucle autour de l'interface.
+- **Grand labo** (`js/scene-hd.js` + `css/theme-hd.css`) : laboratoire d'alchimie dessiné en vectoriel, plusieurs plans en parallaxe, interface en verre dépoli avec icônes vectorielles. Le bouton ⤓ range l'écran pour admirer le labo.
 - Animations : Vivantes, Calmes (moins d'éclairs, pas d'incidents) ou Figées (image fixe). Par défaut, « Figées » si le système demande moins d'animations.
 - Raccourcis d'adresse : `?theme=alchimie`, `?anim=calm`, `?halloween=1`.
 
@@ -30,6 +31,16 @@ L'onglet **Expérience** (ou la petite porte cachée dans le décor des thèmes)
 - `data/projects.json` : les projets (champ `cat` = étagère, `status` = `cours` ou `reflexion`)
 - `data/atelier.json` + `content/atelier/` : les articles de l'Atelier
 - `fonts/` : polices auto-hébergées (SIL OFL)
+
+## Fiches enrichies
+
+Une fiche de `data/projects.json` peut aussi contenir :
+- `gallery` : captures (`src`, `mini`, `alt`, `caption`), agrandies au clic ;
+- `tools` : liens vers les outils nécessaires ;
+- `files` : codes à partager (`file`, et `install` pour un fichier `.user.css` ou `.user.js` qui s'installe en un clic) ;
+- `guide` et `notes` : mode d'emploi pas à pas.
+
+Les fichiers partagés vivent dans `files/`, les captures dans `img/lab/`.
 
 ## Ajouter un projet
 

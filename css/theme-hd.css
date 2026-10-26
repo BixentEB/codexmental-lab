@@ -142,3 +142,16 @@
   [data-theme="hd"] .tab { font-size: 13.5px; padding: 8px 10px 12px; }
 }
 @media (prefers-reduced-motion: reduce) { [data-theme="hd"] .lab { transition: none; } }
+
+/* icônes vectorielles */
+.vec { display: block; overflow: visible; }
+[data-theme="hd"] .shelf .vec, [data-theme="hd"] .cat-ico .vec { filter: drop-shadow(0 0 8px color-mix(in srgb, var(--c) 55%, transparent)); }
+[data-theme="hd"] .brand-ico { filter: drop-shadow(0 0 6px rgba(240,196,106,.55)); }
+[data-theme="hd"] .warn .vec { flex: 0 0 auto; }
+[data-theme="hd"] .play-btn .vec { filter: none; }
+[data-theme="hd"] .play-btn .vec path, [data-theme="hd"] .play-btn .vec circle { stroke: #1a1206; }
+[data-theme="hd"] .cat-ico { padding: 18px; }
+[data-theme="hd"] .tagline { font-family: var(--f-title); font-size: 18px; font-style: normal; }
+[data-theme="hd"] .shelf .vec { grid-row: span 2; }
+[data-theme="hd"] .d-cols { align-items: start; }
+@media (max-width: 759px) { [data-theme="hd"] .shelf .vec { grid-row: auto; } }

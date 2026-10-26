@@ -23,7 +23,20 @@ const ICONS = {
   mute: ['....o...', '...oo...', 'oooo#.#.#', 'o###o..#.', 'o###o..#.', 'oooo#.#.#', '...oo...', '....o...'],
   bolt: ['....##..', '...##...', '..##....', '.######.', '....##..', '...##...', '..##....', '.##.....']
 };
-function pix(name, color, size = 32) {
+/* icônes vectorielles pour les thèmes non pixel : même famille, verrerie fine */
+const VEC = {
+  flask: c => `<path d="M9.5 3h5M10 3v6.2L4.6 18.4A1.7 1.7 0 0 0 6.1 21h11.8a1.7 1.7 0 0 0 1.5-2.6L14 9.2V3" fill="none" stroke="#e6f3f7" stroke-width="1.3" stroke-linejoin="round"/><path d="M7.2 14h9.6l2.6 4.4a1.7 1.7 0 0 1-1.5 2.6H6.1a1.7 1.7 0 0 1-1.5-2.6Z" fill="${c}" opacity=".9"/><circle cx="10.5" cy="17" r=".9" fill="#fff" opacity=".8"/><circle cx="13.6" cy="15.6" r=".6" fill="#fff" opacity=".7"/>`,
+  tube: c => `<path d="M8.5 2.5h7M9.5 2.5v15.5a2.5 2.5 0 0 0 5 0V2.5" fill="none" stroke="#e6f3f7" stroke-width="1.3" stroke-linejoin="round"/><path d="M9.5 11h5v7a2.5 2.5 0 0 1-5 0Z" fill="${c}" opacity=".9"/><circle cx="11.4" cy="15.5" r=".7" fill="#fff" opacity=".8"/>`,
+  beaker: c => `<path d="M4.5 3.5h15M6 3.5v15.5A2 2 0 0 0 8 21h8a2 2 0 0 0 2-2V3.5M18 7h-2M18 10.5h-2" fill="none" stroke="#e6f3f7" stroke-width="1.3" stroke-linejoin="round"/><path d="M6 12.5h12V19a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2Z" fill="${c}" opacity=".9"/><circle cx="9.5" cy="16" r=".8" fill="#fff" opacity=".8"/>`,
+  potion: c => `<path d="M10 2.5h4M10.5 2.5v4.6a6.6 6.6 0 1 0 3 0V2.5" fill="none" stroke="#e6f3f7" stroke-width="1.3" stroke-linejoin="round"/><path d="M5.6 14.5h12.8a6.6 6.6 0 0 1-12.8 0Z" fill="${c}" opacity=".9"/><rect x="10" y="1" width="4" height="2" rx=".6" fill="#b8763a"/><circle cx="9.4" cy="16.6" r=".8" fill="#fff" opacity=".8"/>`,
+  book: c => `<path d="M12 6.2C9.8 4.6 6.6 4.2 3.5 4.6v14c3.1-.4 6.3 0 8.5 1.6 2.2-1.6 5.4-2 8.5-1.6v-14c-3.1-.4-6.3 0-8.5 1.6Zm0 0v14" fill="none" stroke="#e6f3f7" stroke-width="1.3" stroke-linejoin="round"/><path d="M14.5 9.2l1.2 2.2 2.3.4-1.7 1.6.4 2.3-2.2-1.1-2.1 1.1" fill="${c}" opacity=".95"/><path d="M5.8 8.3c1.5-.1 3 .1 4.3.7M5.8 11.3c1.5-.1 3 .1 4.3.7M5.8 14.3c1.5-.1 3 .1 4.3.7" stroke="${c}" stroke-width="1" fill="none" opacity=".75"/>`,
+  bolt: c => `<path d="M13.5 2 5 13.5h6L9.5 22 19 9.5h-6.2Z" fill="${c}" stroke="${c}" stroke-width="1" stroke-linejoin="round"/>`,
+  door: c => `<path d="M5.5 21V9.5a6.5 6.5 0 0 1 13 0V21Z" fill="none" stroke="${c}" stroke-width="1.4" stroke-linejoin="round"/><path d="M3.5 21h17M9 21V11M12 21V9M15 21V11" stroke="${c}" stroke-width="1" opacity=".55"/><circle cx="15.8" cy="15" r="1" fill="${c}"/>`
+};
+function pix(name, color, size = 32, forcePixel) {
+  if (!forcePixel && document.documentElement.dataset.theme === 'hd' && VEC[name]) {
+    return `<svg class="vec" viewBox="0 0 24 24" width="${size}" height="${size}" aria-hidden="true">${VEC[name](color)}</svg>`;
+  }
   const rows = ICONS[name] || ICONS.flask, wd = Math.max(...rows.map(r => r.length)), ht = rows.length;
   let r = '';
   rows.forEach((row, y) => [...row].forEach((ch, x) => {
@@ -86,7 +99,7 @@ function pageHome() {
   }).join('') + `<a class="shelf" href="#/atelier" style="--c:#c9a6ff">${pix('book', '#c9a6ff', 30)}<b>Atelier</b><small>${ATELIER.sections.reduce((s, x) => s + x.items.length, 0)} dossiers d'idées</small></a>`;
   const now = DATA.projects.filter(p => p.status === 'cours').slice(0, 3).map(card).join('');
   return `<section class="hero">
-      <p class="kicker"><span class="prompt">&gt;</span> ouverture du labo… ok <span class="caret"></span></p>
+      ${document.documentElement.dataset.theme === 'hd' ? '<p class="kicker">Codex Mental · Laboratoire d\'alchimie</p>' : '<p class="kicker"><span class="prompt">&gt;</span> ouverture du labo… ok <span class="caret"></span></p>'}
       <h1 class="px-title">Le Laboratoire</h1>
       <p class="lead">Bienvenue dans l'antre du Codex Mental. Ici, les idées passent de la fiole à l'éprouvette : applications, logiciels, bidouilles CSS, prototypes de jeux, et tout ce qui mijote dans l'Atelier.</p>
       <p class="warn">${pix('bolt', '#ffb347', 14)} Certaines expériences sont encore instables. Merci de ne pas secouer les fioles.</p>
@@ -134,17 +147,83 @@ function pageProject(id) {
       ${p.summary ? `<p class="lead">${esc(p.summary)}</p>` : ''}
       ${p.concept ? `<p class="lead">${esc(p.concept)}</p>` : ''}
       ${p.detail ? `<p>${esc(p.detail)}</p>` : ''}
+      ${gallery(p)}
       ${p.shot ? `<figure class="shot"><img src="${esc(p.shot)}" alt="${esc(p.shotAlt || '')}" loading="lazy"><figcaption>${esc(p.shotAlt || '')}</figcaption></figure>` : ''}
       <div class="d-cols">
         ${list('Fonctionnalités', p.features)}
         ${specs ? `<section class="box"><h2>Fiche technique</h2><dl class="specs">${specs}</dl></section>` : ''}
       </div>
       ${list('Pistes de développement', p.dev)}
+      ${toolsBlock(p)}
+      ${filesBlock(p)}
+      ${guideBlock(p)}
       ${p.play ? `<p class="play"><a class="play-btn" href="${esc(p.play)}">${pix('door', '#ffb347', 18)} Entrer dans la salle</a></p>` : ''}
       ${tags(p.tags)}
     </article>
     <nav class="pager">${prev ? `<a href="#/p/${prev.id}">← ${esc(prev.name)}</a>` : '<span></span>'}${next ? `<a href="#/p/${next.id}">${esc(next.name)} →</a>` : '<span></span>'}</nav>
     ${footer()}`;
+}
+
+/* ---------- fiche : galerie, outils, fichiers, mode d'emploi ---------- */
+function gallery(p) {
+  if (!p.gallery || !p.gallery.length) return '';
+  return `<div class="gallery" role="list">${p.gallery.map((g, i) => `<figure role="listitem"><button type="button" class="g-open" data-g="${i}" aria-label="Agrandir : ${esc(g.caption || g.alt)}"><img src="${esc(g.mini || g.src)}" alt="${esc(g.alt)}" loading="lazy"></button><figcaption>${esc(g.caption || '')}</figcaption></figure>`).join('')}</div>`;
+}
+function toolsBlock(p) {
+  if (!p.tools || !p.tools.length) return '';
+  return `<section class="block"><h2 class="sec"><span class="dot"></span>Les outils</h2><div class="tools">${p.tools.map(tl => `<a class="tool" href="${esc(tl.url)}" target="_blank" rel="noopener"><b>${esc(tl.name)} <span aria-hidden="true">↗</span></b><span>${esc(tl.desc)}</span><small>Chrome Web Store · gratuit</small></a>`).join('')}</div></section>`;
+}
+function filesBlock(p) {
+  if (!p.files || !p.files.length) return '';
+  return `<section class="block"><h2 class="sec"><span class="dot"></span>Les codes</h2><div class="files">${p.files.map((f, i) => `<div class="file box">
+      <div class="file-head"><div><b>${esc(f.name)}</b><small>${esc(f.kind)}</small></div></div>
+      <p>${esc(f.desc)}</p>
+      <div class="file-actions">
+        ${f.install ? `<a class="btn btn-main" href="${esc(f.install)}">${esc(f.installLabel || 'Installer')}</a>` : ''}
+        <button type="button" class="btn" data-copy="${esc(f.file)}">Copier le code</button>
+        <a class="btn" href="${esc(f.file)}" download>Télécharger</a>
+      </div>
+      <details class="code" data-src="${esc(f.file)}"><summary>Voir le code</summary><pre><code>Chargement…</code></pre></details>
+    </div>`).join('')}</div></section>`;
+}
+function guideBlock(p) {
+  if (!p.guide || !p.guide.length) return '';
+  return `<section class="block"><h2 class="sec"><span class="dot"></span>Mode d'emploi express</h2><div class="guide">${p.guide.map(g => `<div class="box step-box"><h3>${esc(g.title)}</h3><ol class="steps">${g.steps.map(st => `<li>${esc(st)}</li>`).join('')}</ol>${g.alt ? `<p class="alt">${esc(g.alt)}</p>` : ''}</div>`).join('')}</div>
+    ${p.notes && p.notes.length ? `<ul class="notes">${p.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}</section>`;
+}
+const codeCache = new Map();
+function getCode(src) { if (!codeCache.has(src)) codeCache.set(src, fetch(src).then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })); return codeCache.get(src); }
+view.addEventListener('toggle', e => {
+  const d = e.target; if (!d.matches || !d.matches('details.code') || !d.open || d.dataset.loaded) return;
+  d.dataset.loaded = '1';
+  getCode(d.dataset.src).then(txt => { d.querySelector('code').textContent = txt; updateTube(); }).catch(() => { d.querySelector('code').textContent = 'Impossible de charger le fichier.'; });
+}, true);
+view.addEventListener('click', e => {
+  const b = e.target.closest('[data-copy]');
+  if (b) {
+    getCode(b.dataset.copy).then(txt => navigator.clipboard.writeText(txt)).then(() => { b.textContent = 'Copié ✓'; say('📋 Code copié dans le presse-papiers.', 2200); setTimeout(() => { b.textContent = 'Copier le code'; }, 2000); })
+      .catch(() => { const d = b.closest('.file').querySelector('details'); d.open = true; say('Copie automatique impossible : le code est affiché, sélectionnez-le à la main.', 3500); });
+    return;
+  }
+  const g = e.target.closest('.g-open');
+  if (g) openLightbox(+g.dataset.g);
+});
+let lb = null, lbItems = [], lbIdx = 0;
+function openLightbox(i) {
+  const pid = (location.hash.match(/#\/p\/([^/]+)/) || [])[1], p = DATA.projects.find(x => x.id === pid); if (!p) return;
+  lbItems = p.gallery; lbIdx = i;
+  if (!lb) {
+    lb = document.createElement('dialog'); lb.className = 'lightbox';
+    lb.innerHTML = `<figure><img alt=""><figcaption></figcaption></figure><button type="button" class="lb-x" aria-label="Fermer">×</button><button type="button" class="lb-prev" aria-label="Image précédente">‹</button><button type="button" class="lb-next" aria-label="Image suivante">›</button>`;
+    document.body.appendChild(lb);
+    lb.addEventListener('click', e => { if (e.target === lb || e.target.closest('.lb-x') || e.target.tagName === 'IMG') lb.close(); else if (e.target.closest('.lb-prev')) showLb(lbIdx - 1); else if (e.target.closest('.lb-next')) showLb(lbIdx + 1); });
+    lb.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') showLb(lbIdx - 1); if (e.key === 'ArrowRight') showLb(lbIdx + 1); });
+  }
+  showLb(i); lb.showModal();
+}
+function showLb(i) {
+  lbIdx = (i + lbItems.length) % lbItems.length; const g = lbItems[lbIdx];
+  lb.querySelector('img').src = g.src; lb.querySelector('img').alt = g.alt; lb.querySelector('figcaption').textContent = `${g.caption || ''} · ${lbIdx + 1} / ${lbItems.length}`;
 }
 
 /* ---------- Atelier ---------- */
@@ -210,15 +289,15 @@ function enterSalle() {
     salleEl = document.createElement('div');
     salleEl.className = 'salle'; salleEl.id = 'salle';
     salleEl.innerHTML = `<div class="salle-stage"><canvas id="salle-cvs" role="img" aria-label="Salle d'expérience : le laboratoire du savant fou, à explorer en cliquant sur les objets."></canvas></div>
-      <a class="salle-btn salle-exit" href="#/" aria-label="Retour au laboratoire" title="Retour au laboratoire">${pix('door', '#ffb347', 18)}</a>
-      <button class="salle-btn salle-sound" type="button" aria-pressed="false" aria-label="Activer le son" title="Son">${pix('mute', '#cfe9f2', 18)}</button>`;
+      <a class="salle-btn salle-exit" href="#/" aria-label="Retour au laboratoire" title="Retour au laboratoire">${pix('door', '#ffb347', 18, true)}</a>
+      <button class="salle-btn salle-sound" type="button" aria-pressed="false" aria-label="Activer le son" title="Son">${pix('mute', '#cfe9f2', 18, true)}</button>`;
     document.body.appendChild(salleEl);
     salleEl.querySelector('.salle-exit').addEventListener('click', e => { e.preventDefault(); location.hash = lastRoute === '#/salle' ? '#/' : lastRoute; });
     salleEl.querySelector('.salle-sound').addEventListener('click', () => { if (window.Salle) window.Salle.toggleSound(); });
     window.addEventListener('salle:sound', e => {
       const b = salleEl.querySelector('.salle-sound');
       b.setAttribute('aria-pressed', e.detail); b.setAttribute('aria-label', e.detail ? 'Couper le son' : 'Activer le son');
-      b.innerHTML = pix(e.detail ? 'speaker' : 'mute', e.detail ? '#9dff5c' : '#cfe9f2', 18);
+      b.innerHTML = pix(e.detail ? 'speaker' : 'mute', e.detail ? '#9dff5c' : '#cfe9f2', 18, true);
     });
   }
   salleOn = true; window.LAB = window.LAB || {}; window.LAB.paused = true;
@@ -343,7 +422,7 @@ const THEME_DESC = { pixel: 'Étagère de fioles, bobine Tesla et petit chimiste
 const MOTIONS = [['full', 'Vivantes', 'Tout bouge, avec les incidents du labo.'], ['calm', 'Calmes', 'Moins d\'éclairs, pas d\'incidents.'], ['off', 'Figées', 'Une image fixe du labo.']];
 function buildSettings() {
   const C = window.LAB || {};
-  $('.set-ico').innerHTML = pix('potion', '#c9993a', 14);
+  $('.set-ico').innerHTML = pix('potion', document.documentElement.dataset.theme === 'hd' ? '#f0c46a' : '#c9993a', document.documentElement.dataset.theme === 'hd' ? 16 : 14);
   setPanel.innerHTML = `
     <p class="set-h" id="set-h1">Thème du labo</p>
     <div class="set-list" role="radiogroup" aria-labelledby="set-h1">

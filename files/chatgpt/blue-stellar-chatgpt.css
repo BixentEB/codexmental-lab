@@ -1,0 +1,642 @@
+/* ==========================================
+   CHATGPT — DEEP STELLAR NIGHT
+   ========================================== */
+
+
+/* ==========================================
+   1. FOND GÉNÉRAL
+   ========================================== */
+
+body {
+    background: #05070D !important;
+    color: #E8ECF7 !important;
+}
+
+main,
+.bg-token-main-surface-primary {
+    background:
+        linear-gradient(
+            180deg,
+            #0D1428 0%,
+            #0B1122 45%,
+            #080D19 72%,
+            #05070D 100%
+        ) !important;
+}
+
+
+/* ==========================================
+   2. SIDEBAR
+   ========================================== */
+
+.sidebar,
+[class*="sidebar"],
+.bg-token-sidebar-surface-primary {
+    background: #0D1428 !important;
+}
+
+.bg-token-sidebar-surface-secondary {
+    background-color: #111A31 !important;
+}
+
+.bg-token-sidebar-surface-tertiary {
+    background-color: #17213B !important;
+}
+
+/* Pas de bordures/cases supplémentaires */
+[class*="sidebar"] a {
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* Icônes légèrement indigo */
+[class*="sidebar"] a:has(svg) svg {
+    color: #8198E8 !important;
+}
+
+/* Accent discret au survol */
+[class*="sidebar"] a:has(svg):hover {
+    box-shadow: inset 2px 0 0 #7188DC !important;
+}
+
+[class*="sidebar"] a:has(svg):hover span {
+    color: #C3CFFF !important;
+    text-shadow: 0 0 8px rgba(110, 135, 230, 0.35) !important;
+}
+
+
+/* ==========================================
+   3. TEXTE
+   ========================================== */
+
+.text-token-text-primary,
+.prose,
+.prose *,
+.markdown,
+.markdown * {
+    color: #E8ECF7 !important;
+}
+
+.text-token-text-secondary {
+    color: #A8B3CE !important;
+}
+
+
+/* ==========================================
+   4. SURFACES / BORDURES
+   ========================================== */
+
+.bg-token-main-surface-secondary {
+    background-color: #131D36 !important;
+}
+
+.border-token-border-default,
+.border-token-border-light {
+    border-color: #263451 !important;
+}
+
+
+/* ==========================================
+   5. BLOCS DE CODE
+   ========================================== */
+
+/* Bloc complet */
+main [data-markdown-copy="code-block"] {
+    background: #12152B !important;
+    border-color: #343A68 !important;
+}
+
+/* Bandeau : CSS / HTML / etc. */
+main [data-markdown-copy="code-block"] [data-markdown-copy="exclude"] {
+    background: #222342 !important;
+    border-color: #343A68 !important;
+}
+
+/* Zone de code */
+main [data-markdown-copy="code-block"] > div:last-child {
+    background: #15172E !important;
+}
+
+/* Icônes */
+main [data-markdown-copy="code-block"] [data-markdown-copy="exclude"] svg {
+    color: #AEBBEE !important;
+}
+
+/* Boutons au survol */
+main [data-markdown-copy="code-block"] [data-markdown-copy="exclude"] button:hover {
+    background: #30335A !important;
+}
+
+
+/* ==========================================
+   6. COMPOSER / ÉDITEUR
+   ========================================== */
+
+/* Coque normale dans les conversations */
+/* Coque normale dans les conversations */
+main [data-composer-dark] {
+    background: #151B30 !important;
+    border-color: rgba(105, 135, 220, 0.22) !important;
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.20),
+        inset 0 0 0 1px rgba(110, 140, 230, 0.04) !important;
+}
+
+/* Accueil uniquement :
+   supprime le rectangle violet derrière la vraie bulle */
+main [data-composer-utility-bar-variant="home"][data-composer-dark] {
+    background: transparent !important;
+    border-color: transparent !important;
+}
+
+/* Intérieur */
+main [data-composer],
+main [data-composer-input-layout],
+main [data-rich-text-input="true"] {
+    background-color: transparent !important;
+}
+
+/* Texte */
+main [data-rich-text-input="true"] {
+    color: #EDF1FF !important;
+}
+
+/* Boutons */
+main [data-composer] button {
+    background-color: transparent !important;
+}
+
+main [data-composer] button:hover {
+    background-color: #30335A !important;
+}
+
+/* Placeholder */
+main [data-rich-text-input="true"][data-placeholder]::before {
+    color: #929DC4 !important;
+}
+
+/* Capsule réelle du composer sur la page d'accueil */
+main [data-composer-utility-bar-variant="home"] [data-composer-body] {
+    background: #151B30 !important;
+    border: 1px solid rgba(105, 135, 220, 0.22) !important;
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.20),
+        inset 0 0 0 1px rgba(110, 140, 230, 0.04) !important;
+}
+
+/* ==========================================
+   7. ONGLETS
+   ========================================== */
+
+main [role="tablist"] {
+    background: #14162A !important;
+    border-color: #30365D !important;
+}
+
+main [role="tab"] {
+    background: transparent !important;
+    color: #AEB8D8 !important;
+}
+
+main [role="tab"][aria-selected="true"] {
+    background: #292D55 !important;
+    color: #F1F3FF !important;
+}
+
+
+/* ==========================================
+   8. SUPPRESSION DU BANDEAU NOIR DU BAS
+   ========================================== */
+
+[class*="composer-parent"],
+[class*="composer"] {
+    background-color: transparent !important;
+}
+
+[class*="bg-gradient"],
+[class*="from-token-main-surface-primary"] {
+    background: transparent !important;
+}
+
+main > div:last-child {
+    background-color: transparent !important;
+}
+
+[class*="from-token-main-surface-primary"] {
+    --tw-gradient-from: transparent !important;
+    --tw-gradient-to: transparent !important;
+    background-image: none !important;
+}
+
+
+/* ==========================================
+   9. SCROLLBAR
+   ========================================== */
+
+::-webkit-scrollbar-track {
+    background: #070A12;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #283755;
+    border-radius: 10px;
+}
+
+
+/* ==========================================
+   10. PROJETS — STELLAR CLEAN
+   Capsule titre + conversations libres
+   ========================================== */
+
+/* Conteneur projet :
+   pas de fond, pas de capsule imbriquée */
+[data-sidebar-project-container-id] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+/* Supprime l'ancien pseudo-trait */
+[data-sidebar-project-container-id]::before,
+[data-sidebar-project-container-id]::after {
+    content: none !important;
+}
+
+
+/* Titre du projet */
+[data-app-action-sidebar-project-row] {
+    background:
+        linear-gradient(
+            90deg,
+            #202744 0%,
+            #18213A 100%
+        ) !important;
+
+    border: 1px solid rgba(125, 148, 235, 0.38) !important;
+    border-radius: 9px !important;
+    margin: 4px 7px !important;
+
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.16) !important;
+}
+
+
+/* Survol du titre */
+[data-app-action-sidebar-project-row]:hover {
+    background:
+        linear-gradient(
+            90deg,
+            #293354 0%,
+            #202A47 100%
+        ) !important;
+
+    border-color: rgba(145, 165, 240, 0.62) !important;
+    box-shadow: 0 0 10px rgba(105, 127, 220, 0.16) !important;
+}
+
+
+/* Liste des conversations :
+   un seul repère vertical */
+[data-sidebar-project-container-id] [role="list"] {
+    position: relative !important;
+
+    margin-left: 17px !important;
+    padding-left: 10px !important;
+
+    border-left: 1px solid rgba(105, 145, 255, 0.38) !important;
+
+    background: transparent !important;
+
+    box-shadow: -1px 0 5px rgba(70, 115, 255, 0.10) !important;
+}
+
+
+/* Conversations totalement plates */
+[data-sidebar-project-container-id] [role="listitem"] {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Survol discret des conversations */
+[data-sidebar-project-container-id] [role="listitem"]:hover {
+    background:
+        linear-gradient(
+            90deg,
+            rgba(105, 125, 205, 0.10),
+            transparent 80%
+        ) !important;
+
+    border-radius: 5px !important;
+}
+
+
+/* ==========================================
+   11. FOND PRINCIPAL — CHAMP D'ÉTOILES
+   ========================================== */
+
+main,
+.bg-token-main-surface-primary {
+    background:
+        radial-gradient(
+            circle at 26% 42%,
+            rgba(155, 185, 255, 0.32) 0 0.6px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle at 61% 83%,
+            rgba(205, 215, 255, 0.25) 0 0.7px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle at 12% 18%,
+            rgba(190, 210, 255, 0.45) 0 0.7px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle at 72% 28%,
+            rgba(125, 165, 255, 0.35) 0 0.6px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle at 38% 67%,
+            rgba(210, 220, 255, 0.30) 0 0.7px,
+            transparent 1px
+        ),
+
+        radial-gradient(
+            circle at 87% 76%,
+            rgba(115, 145, 235, 0.28) 0 0.6px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            180deg,
+            #0D1428 0%,
+            #0B1122 45%,
+            #080D19 72%,
+            #05070D 100%
+        ) !important;
+
+    background-size:
+        370px 370px,
+        510px 510px,
+        310px 310px,
+        430px 430px,
+        570px 570px,
+        690px 690px,
+        100% 100% !important;
+
+    background-position:
+        41px 79px,
+        173px 211px,
+        17px 31px,
+        103px 47px,
+        61px 137px,
+        191px 83px,
+        0 0 !important;
+
+    background-color: #070B17 !important;
+}
+
+
+/* ==========================================
+   12. ÉTOILES FILANTES
+   ========================================== */
+
+main::before {
+    content: "";
+    position: fixed;
+
+    width: 70px;
+    height: 1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(180, 210, 255, 0.8),
+            transparent
+        );
+
+    animation: shooting-star 45s linear infinite;
+}
+
+@keyframes shooting-star {
+
+    /* Étoile 1 : haut droite → bas gauche */
+    0% {
+        transform: translate3d(750px, -120px, 0) rotate(-35deg);
+        opacity: 0;
+    }
+
+    1% {
+        opacity: 0.9;
+    }
+
+    4% {
+        transform: translate3d(250px, 240px, 0) rotate(-35deg);
+        opacity: 0;
+    }
+
+    /* Silence */
+    5%,
+    34% {
+        opacity: 0;
+    }
+
+
+    /* Étoile 2 : haut gauche → bas droite */
+    35% {
+        transform: translate3d(-400px, -80px, 0) rotate(35deg);
+        opacity: 0;
+    }
+
+    36% {
+        opacity: 0.8;
+    }
+
+    39% {
+        transform: translate3d(150px, 280px, 0) rotate(35deg);
+        opacity: 0;
+    }
+
+    /* Silence */
+    40%,
+    69% {
+        opacity: 0;
+    }
+
+
+    /* Étoile 3 : droite → gauche, angle faible */
+    70% {
+        transform: translate3d(800px, 180px, 0) rotate(-18deg);
+        opacity: 0;
+    }
+
+    71% {
+        opacity: 0.75;
+    }
+
+    74% {
+        transform: translate3d(200px, 370px, 0) rotate(-18deg);
+        opacity: 0;
+    }
+
+    /* Silence jusqu'au prochain cycle */
+    75%,
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/* ==========================================
+   13. MENU FLOTTANT DU +
+   ========================================== */
+
+[data-composer-overlay-floating-ui="true"] {
+    background: #0B1224 !important;
+    opacity: 1 !important;
+
+    border: 1px solid rgba(125, 148, 235, 0.42) !important;
+    border-radius: 18px !important;
+
+    box-shadow:
+        0 16px 45px rgba(0, 0, 0, 0.55),
+        0 0 20px rgba(90, 120, 220, 0.08) !important;
+}
+
+/* Options normales */
+[data-composer-overlay-floating-ui="true"] button {
+    background: transparent !important;
+}
+
+/* Survol des options */
+[data-composer-overlay-floating-ui="true"] button:hover,
+[data-composer-overlay-floating-ui="true"] button[aria-current="true"] {
+    background: rgba(80, 110, 205, 0.13) !important;
+}
+
+
+/* ==========================================
+   14. SÉLECTEUR CHAT / WORK
+   ========================================== */
+
+/* Fond général de la capsule */
+[aria-label="Mode de composition"] > span[aria-hidden="true"]:first-of-type {
+    background: rgba(24, 35, 65, 0.72) !important;
+
+    box-shadow:
+        inset 0 0 0 1px rgba(105, 135, 220, 0.20) !important;
+}
+
+/* Curseur de l'option active */
+[aria-label="Mode de composition"] > span[aria-hidden="true"]:nth-of-type(2) {
+    background: rgba(76, 103, 180, 0.22) !important;
+    box-shadow: none !important;
+}
+
+/* ==========================================
+   15. TOOLTIPS — STELLAR
+   ========================================== */
+
+[role="tooltip"] {
+    background: #151B30 !important;
+    color: #E8ECF7 !important;
+
+    border: 1px solid rgba(105, 135, 220, 0.22) !important;
+
+    box-shadow:
+        0 6px 20px rgba(0, 0, 0, 0.30),
+        0 0 10px rgba(90, 120, 220, 0.08) !important;
+}
+
+/* ==========================================
+   16. RACCOURCIS CLAVIER TOOLTIPS — STELLAR
+   ========================================== */
+
+kbd {
+    background: #293354 !important;
+    color: #C9D4FF !important;
+
+    border: 1px solid rgba(125, 148, 235, 0.35) !important;
+    border-radius: 5px !important;
+
+    box-shadow:
+        inset 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
+}
+
+[role="tooltip"] {
+    --color-background-tooltip-shortcut: #293354 !important;
+    --color-text-tooltip-shortcut: #C9D4FF !important;
+}
+
+[role="tooltip"] kbd {
+    border: 1px solid rgba(125, 148, 235, 0.35) !important;
+
+    box-shadow:
+        inset 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
+}
+
+/* ==========================================
+   17. MESSAGES UTILISATEUR — STELLAR
+   ========================================== */
+
+[data-user-message-bubble="true"] {
+    background: #243A72 !important;
+
+    border: 1px solid rgba(125, 148, 235, 0.24) !important;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.18),
+        inset 0 0 0 1px rgba(140, 165, 255, 0.035) !important;
+}
+
+/* ==========================================
+   18. MSTELLAR — SURFACES NATIVES CHATGPT
+   Neutralise les fonds noirs sous l'interface
+   ========================================== */
+
+.chatgpt-theme[data-theme="dark"],
+.chatgpt-theme [data-theme="dark"] {
+    --color-background-panel: transparent !important;
+    --app-color-background-surface: transparent !important;
+    --app-color-background-surface-under: transparent !important;
+}
+
+
+/* ==========================================
+   19. TITRE DE CONVERSATION (script Tampermonkey)
+   Habille le titre ajouté par le script
+   « ChatGPT - Titre de conversation »
+   ========================================== */
+
+#nox-conversation-title {
+    position: fixed;
+    top: 38px;
+    left: 234px;
+    z-index: 30;
+
+    max-width: 40vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+    font-size: 12px;
+    color: #5AA6E8 !important;
+    pointer-events: none;
+}
+
+#nox-conversation-title:empty {
+    display: none;
+}
+
