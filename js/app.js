@@ -325,6 +325,12 @@ window.addEventListener('lab:event', e => {
   if (d.type === 'blackout' && d.phase === 'end') say('💡 Courant rétabli.', 2200);
   if (d.type === 'runaway' && d.phase === 'start') say('💥 Réaction incontrôlée dans le ballon !', 3600);
   if (d.type === 'runaway' && d.phase === 'end') say('🧯 Situation maîtrisée. Presque.', 2600);
+  if (d.type === 'surge' && d.phase === 'start') say('⚡ Surtension ! La bobine Tesla s\'emballe…', 3600);
+  if (d.type === 'surge' && d.phase === 'end') say('🔧 Le savant a coupé le circuit. Ouf.', 2600);
+  if (d.type === 'overflow' && d.phase === 'start') say('💥 Le mélange déborde du ballon !', 3400);
+  if (d.type === 'overflow' && d.phase === 'end') say('🧯 Mousse sous contrôle.', 2400);
+  if (d.type === 'creature' && d.phase === 'start') say('👁 Quelque chose bouge dans la grande cuve…', 3600);
+  if (d.type === 'creature' && d.phase === 'end') say('🫧 Le spécimen s\'est rendormi. Pour l\'instant.', 3000);
 });
 window.addEventListener('lab:creature', e => {
   if (e.detail.phase === 'start') { lab.classList.add('storm'); say('⚡ Expérience n°31 en cours… reculez de la paillasse !', 3800); }
@@ -333,7 +339,7 @@ window.addEventListener('lab:creature', e => {
 
 /* ---------- réglages : thème et animations ---------- */
 const setBtn = $('#set-btn'), setPanel = $('#set-panel');
-const THEME_DESC = { pixel: 'Étagère de fioles, bobine Tesla et petit chimiste.', alchimie: 'Paillasse et circuit de fluides qui tourne en boucle.' };
+const THEME_DESC = { pixel: 'Étagère de fioles, bobine Tesla et petit chimiste.', alchimie: 'Paillasse et circuit de fluides qui tourne en boucle.', hd: 'Prototype HD : grand laboratoire d\'alchimie, plusieurs plans.' };
 const MOTIONS = [['full', 'Vivantes', 'Tout bouge, avec les incidents du labo.'], ['calm', 'Calmes', 'Moins d\'éclairs, pas d\'incidents.'], ['off', 'Figées', 'Une image fixe du labo.']];
 function buildSettings() {
   const C = window.LAB || {};
@@ -369,6 +375,22 @@ setPanel.addEventListener('click', e => {
   setTimeout(() => { location.href = u.toString(); if (u.pathname === location.pathname && u.search === location.search) location.reload(); }, 250);
 });
 buildSettings();
+
+/* ---------- ranger l'écran pour admirer le labo (thème Grand labo) ---------- */
+(function () {
+  const head = $('.lab-head');
+  const away = document.createElement('button');
+  away.type = 'button'; away.className = 'away-btn'; away.title = 'Ranger l\'écran pour admirer le laboratoire'; away.setAttribute('aria-label', 'Ranger l\'écran');
+  away.innerHTML = '<span aria-hidden="true">⤓</span>';
+  head.insertBefore(away, $('.settings'));
+  const call = document.createElement('button');
+  call.type = 'button'; call.className = 'call-btn'; call.textContent = 'Rouvrir l\'écran';
+  document.body.appendChild(call);
+  const setAway = on => { document.documentElement.classList.toggle('panel-away', on); (on ? call : away).focus({ preventScroll: true }); };
+  away.addEventListener('click', () => setAway(true));
+  call.addEventListener('click', () => setAway(false));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.documentElement.classList.contains('panel-away')) setAway(false); });
+})();
 
 /* ---------- démarrage ---------- */
 window.addEventListener('hashchange', route);

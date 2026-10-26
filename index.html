@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="css/lab.css">
 <link rel="stylesheet" href="css/theme-alchimie.css">
+<link rel="stylesheet" href="css/theme-hd.css">
 <script>
   // Réglages du labo : thème, animations, saison d'Halloween.
   // ?theme=alchimie, ?anim=calm|off|full et ?halloween=1|0 forcent un réglage.
@@ -20,7 +21,8 @@
     function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
     var THEMES = {
       pixel: { label: 'Labo pixel', scene: 'js/scene.js' },
-      alchimie: { label: 'Alchimie', scene: 'js/scene-alchimie.js' }
+      alchimie: { label: 'Alchimie', scene: 'js/scene-alchimie.js' },
+      hd: { label: 'Grand labo', scene: 'js/scene-hd.js' }
     };
     var theme = q.get('theme') || get('lab.theme') || 'pixel';
     if (!THEMES[theme]) theme = 'pixel';
