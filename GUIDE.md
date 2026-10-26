@@ -8,6 +8,7 @@ Chaque projet a son dossier : `img/projets/<identifiant>/`.
 
 | Projet | Dossier |
 |---|---|
+| NOX (Outils IA) | `img/projets/nox/` |
 | NoxDL | `img/projets/noxdl/` |
 | Périm-GO Home | `img/projets/perimgo-home/` |
 | Périm-GO Business | `img/projets/perimgo-business/` |
