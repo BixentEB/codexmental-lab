@@ -155,3 +155,4 @@
 [data-universe="vecto"] .shelf .vec { grid-row: span 2; }
 [data-universe="vecto"] .d-cols { align-items: start; }
 @media (max-width: 759px) { [data-universe="vecto"] .shelf .vec { grid-row: auto; } }
+@media (max-width: 759px) { [data-universe="vecto"] .px-title { font-size: 25px; } }

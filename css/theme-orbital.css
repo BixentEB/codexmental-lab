@@ -102,3 +102,4 @@
   [data-universe="orbital"] .brand-name { font-size: 11px; }
   [data-universe="orbital"] .away-btn { display: none; }
 }
+@media (max-width: 759px) { [data-universe="orbital"] .px-title { font-size: 19px; } [data-universe="orbital"] .sec { font-size: 11px; } }

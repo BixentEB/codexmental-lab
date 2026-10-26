@@ -456,6 +456,23 @@ function nextRoom() { const r = roomsHere(), C = window.LAB || {}; return r.leng
   d.addEventListener('click', () => window.dispatchEvent(new CustomEvent('lab:door')));
   document.body.appendChild(d);
 })();
+/* sur mobile, pas de place pour la porte : une petite barre « salle précédente / suivante » */
+function prevRoom() { const r = roomsHere(), C = window.LAB || {}; return r.length > 1 ? r[(r.indexOf(C.theme) - 1 + r.length) % r.length] : null; }
+(function () {
+  const C = window.LAB || {}, rooms = roomsHere();
+  if (rooms.length < 2) return;
+  const i = rooms.indexOf(C.theme), nav = document.createElement('nav');
+  nav.className = 'room-nav'; nav.setAttribute('aria-label', 'Changer de salle');
+  nav.innerHTML = `<button type="button" data-room="prev" aria-label="Salle précédente : ${esc(C.themes[prevRoom()].label)}">‹</button>
+    <span>${esc(C.themes[C.theme].label)} <small>${i + 1}/${rooms.length}</small></span>
+    <button type="button" data-room="next" aria-label="Salle suivante : ${esc(C.themes[nextRoom()].label)}">›</button>`;
+  nav.addEventListener('click', e => {
+    const b = e.target.closest('[data-room]'); if (!b) return;
+    const to = b.dataset.room === 'prev' ? prevRoom() : nextRoom();
+    switchTo('theme', to, '🚪 Direction : ' + C.themes[to].label + '.');
+  });
+  document.body.appendChild(nav);
+})();
 window.addEventListener('lab:door', () => {
   const next = nextRoom(); if (!next) return;
   switchTo('theme', next, '🚪 La porte grince… direction : ' + window.LAB.themes[next].label + '.');
