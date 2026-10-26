@@ -41,6 +41,8 @@
   {
    "id": "noxdl",
    "name": "NoxDL",
+   "cat": "logiciels",
+   "status": "cours",
    "mark": "↓",
    "accent": "#94c8ff",
    "platform": "Windows",
@@ -53,26 +55,26 @@
     "Modes Standard, Chasseur et Radar"
    ],
    "tech": "Python, CustomTkinter, yt-dlp, FFmpeg",
-   "next": "Moteur multi-extracteurs, solutions de repli, authentification multisite, portabilité",
    "state": "Développement avancé (bêta interne)",
    "access": "Non publié",
    "diffusion": "Publication gratuite envisagée après tests",
    "license": "À définir (gratuit ne veut pas dire open source)",
+   "next": "Moteur multi-extracteurs, solutions de repli, authentification multisite, portabilité",
    "download": "Aucun fichier public",
+   "downloads": [],
    "tags": [
     "Windows",
     "Python",
     "Multimédia",
     "Automatisation",
     "Bêta"
-   ],
-   "tab": "cours",
-   "cat": "logiciels",
-   "status": "cours"
+   ]
   },
   {
    "id": "perimgo-home",
    "name": "Périm-GO Home",
+   "cat": "applications",
+   "status": "cours",
    "mark": "◷",
    "accent": "#92e5b5",
    "platform": "Android",
@@ -85,26 +87,26 @@
     "Saisie manuelle des produits absents"
    ],
    "tech": "Flutter, Dart, SQLite, lecture de codes-barres",
-   "next": "Alertes, sauvegardes automatiques, export, synchronisation",
    "state": "Développement (tests sur Android)",
    "access": "Non disponible",
    "diffusion": "Version personnelle publique envisagée",
    "license": "Propriétaire, modalités à confirmer",
+   "next": "Alertes, sauvegardes automatiques, export, synchronisation",
    "download": "Pas de version publique validée",
+   "downloads": [],
    "tags": [
     "Android",
     "Flutter",
     "Gestion",
     "Quotidien",
     "En développement"
-   ],
-   "tab": "cours",
-   "cat": "applications",
-   "status": "cours"
+   ]
   },
   {
    "id": "perimgo-business",
    "name": "Périm-GO Business",
+   "cat": "applications",
+   "status": "cours",
    "mark": "◷",
    "accent": "#71d9bc",
    "platform": "Android",
@@ -117,26 +119,26 @@
     "Import CSV et base locale"
    ],
    "tech": "Flutter, Dart, SQLite, codes-barres",
-   "next": "Sauvegardes, partage des données, synchronisation, protection des licences",
    "state": "Prototype fonctionnel en test",
    "access": "Privé",
    "diffusion": "Réservée à un usage professionnel défini",
    "license": "Privée, mécanisme de protection à finaliser",
+   "next": "Sauvegardes, partage des données, synchronisation, protection des licences",
    "download": "Aucun APK public",
+   "downloads": [],
    "tags": [
     "Android",
     "Flutter",
     "Commerce",
     "Stock",
     "Accès privé"
-   ],
-   "tab": "cours",
-   "cat": "applications",
-   "status": "cours"
+   ]
   },
   {
    "id": "dexlibera",
    "name": "DexLibera",
+   "cat": "applications",
+   "status": "cours",
    "mark": "❖",
    "accent": "#e8c98a",
    "platform": "Android (déclinaison Web/PWA envisagée)",
@@ -149,26 +151,26 @@
     "Recherche, sauvegarde et restauration"
    ],
    "tech": "Flutter, Dart, base locale, métadonnées par ISBN",
-   "next": "Enrichissement des métadonnées, couvertures, synchronisation, version PWA",
    "state": "Fonctionnelle, en développement et tests",
    "access": "Non disponible",
    "diffusion": "Bêta envisagée, puis diffusion publique",
    "license": "Modèle gratuit / Premium envisagé, non arrêté",
+   "next": "Enrichissement des métadonnées, couvertures, synchronisation, version PWA",
    "download": "Non publié officiellement",
+   "downloads": [],
    "tags": [
     "Android",
     "Flutter",
     "Bibliothèque",
     "Culture",
     "Bêta"
-   ],
-   "tab": "cours",
-   "cat": "applications",
-   "status": "cours"
+   ]
   },
   {
    "id": "codex-mental",
    "name": "Codex Mental",
+   "cat": "web",
+   "status": "cours",
    "mark": "✦",
    "accent": "#ffc27a",
    "platform": "Navigateur, ordinateur et mobile",
@@ -180,26 +182,26 @@
     "Plusieurs univers visuels interchangeables"
    ],
    "tech": "HTML, CSS, JavaScript, moteurs graphiques Web",
-   "next": "",
    "state": "V3 en développement",
    "access": "Public",
    "diffusion": "Site Web public",
    "license": "À définir (code et contenus)",
+   "next": "",
+   "link": "Vous y êtes",
    "download": "Sans objet",
+   "downloads": [],
    "tags": [
     "Web",
     "Création",
     "Immersif",
     "Site public"
-   ],
-   "tab": "cours",
-   "link": "Vous y êtes",
-   "cat": "web",
-   "status": "cours"
+   ]
   },
   {
    "id": "css-chatgpt",
    "name": "CSS ChatGPT personnalisé",
+   "cat": "web",
+   "status": "cours",
    "mark": "❏",
    "accent": "#f0a9d0",
    "platform": "Navigateur Web",
@@ -210,22 +212,13 @@
     "Organisation de l'interface"
    ],
    "tech": "CSS (Stylus), JavaScript (Tampermonkey)",
-   "next": "Gestion de profils CSS/JS, activation indépendante selon les sites",
    "state": "Thème « Blue Stellar » utilisable ; extension dédiée (NoxLayer) en réflexion",
    "access": "Public",
    "diffusion": "Gratuit, à installer ci-dessous",
    "license": "À définir",
+   "next": "Gestion de profils CSS/JS, activation indépendante selon les sites",
    "download": "Thème CSS et script ci-dessous",
-   "tags": [
-    "CSS",
-    "Navigateur",
-    "Personnalisation",
-    "UX/UI",
-    "Expérimental"
-   ],
-   "tab": "cours",
-   "cat": "web",
-   "status": "cours",
+   "downloads": [],
    "gallery": [
     {
      "src": "img/lab/chatgpt/accueil.webp",
@@ -300,24 +293,25 @@
    "notes": [
     "Pour désactiver le thème ou le script, cliquez sur l'icône de l'extension et décochez-le.",
     "ChatGPT change régulièrement son interface : si un élément n'est plus coloré, c'est qu'un nom de classe a bougé. Le reste continue de fonctionner."
+   ],
+   "tags": [
+    "CSS",
+    "Navigateur",
+    "Personnalisation",
+    "UX/UI",
+    "Expérimental"
    ]
   },
   {
    "id": "heures-sacrees",
    "name": "Heures Sacrées",
+   "cat": "logiciels",
+   "status": "reflexion",
    "mark": "◔",
    "accent": "#d8b4a0",
    "platform": "Python de bureau (ancien prototype à reprendre)",
-   "concept": "Une application pour observer et consigner ses synchronicités : heures miroirs, séquences répétitives, dates et mots qui reviennent. Elle sert l'observation consciente des motifs, des intuitions et de l'ordre caché dans le chaos du quotidien.",
-   "goal": "Reprendre l'ancien prototype et vérifier ce qui mérite d'être conservé.",
-   "tags": [
-    "Python",
-    "Symbolisme",
-    "Journal",
-    "Prototype"
-   ],
-   "tab": "reflexion",
    "tagline": "Et si les chiffres que tu vois n'étaient pas le fruit du hasard ?",
+   "concept": "Une application pour observer et consigner ses synchronicités : heures miroirs, séquences répétitives, dates et mots qui reviennent. Elle sert l'observation consciente des motifs, des intuitions et de l'ordre caché dans le chaos du quotidien.",
    "features": [
     "Enregistrement des heures miroirs et des séquences numériques",
     "Classement par catégories : heure, répétition, date, mot-clé",
@@ -332,12 +326,26 @@
     "Thème jour / nuit",
     "Fichiers JSON locaux"
    ],
-   "cat": "logiciels",
-   "status": "reflexion"
+   "tech": "",
+   "state": "",
+   "access": "",
+   "diffusion": "",
+   "license": "",
+   "goal": "Reprendre l'ancien prototype et vérifier ce qui mérite d'être conservé.",
+   "download": "",
+   "downloads": [],
+   "tags": [
+    "Python",
+    "Symbolisme",
+    "Journal",
+    "Prototype"
+   ]
   },
   {
    "id": "noxlayer",
    "name": "NoxLayer (nom provisoire)",
+   "cat": "web",
+   "status": "reflexion",
    "mark": "{ }",
    "accent": "#a6d9f5",
    "platform": "Navigateur Web",
@@ -350,7 +358,13 @@
     "Bibliothèque de profils et de thèmes",
     "Importation, exportation et sauvegarde"
    ],
+   "tech": "",
    "state": "Concept en réflexion · nom provisoire",
+   "access": "",
+   "diffusion": "",
+   "license": "",
+   "download": "",
+   "downloads": [],
    "shot": "img/lab/css-exemple.webp",
    "shotAlt": "Exemple de personnalisation : une interface d'IA habillée par des styles CSS (fond étoilé, couleurs, barre de saisie).",
    "tags": [
@@ -358,14 +372,13 @@
     "CSS",
     "JavaScript",
     "Concept"
-   ],
-   "tab": "reflexion",
-   "cat": "web",
-   "status": "reflexion"
+   ]
   },
   {
    "id": "widgets",
    "name": "Widgets Windows & Android",
+   "cat": "applications",
+   "status": "reflexion",
    "mark": "▣",
    "accent": "#f0a9d0",
    "platform": "Windows · Android",
@@ -378,21 +391,26 @@
     "Gestion des thèmes, tailles et transparences",
     "Bibliothèque de widgets extensible"
    ],
+   "tech": "",
    "state": "Concept en réflexion",
+   "access": "",
+   "diffusion": "",
+   "license": "",
+   "download": "",
+   "downloads": [],
    "tags": [
     "Windows",
     "Android",
     "Widget",
     "Photo",
     "Concept"
-   ],
-   "tab": "reflexion",
-   "cat": "applications",
-   "status": "reflexion"
+   ]
   },
   {
    "id": "mini-rpg",
    "name": "Mini-RPG (nom à définir)",
+   "cat": "jeux",
+   "status": "reflexion",
    "mark": "⚔",
    "accent": "#ff9fa8",
    "platform": "Windows · Android · Web",
@@ -413,19 +431,24 @@
     "Ressources : OpenGameArt, itch.io, Kenney",
     "Plateformes : Windows, Android et Web"
    ],
+   "tech": "",
    "state": "Concept en réflexion",
+   "access": "",
+   "diffusion": "",
+   "license": "",
+   "download": "",
+   "downloads": [],
    "tags": [
     "Jeu",
     "Création",
     "Concept"
-   ],
-   "tab": "reflexion",
-   "cat": "jeux",
-   "status": "reflexion"
+   ]
   },
   {
    "id": "salle-experience",
    "name": "La salle d'expérience",
+   "cat": "jeux",
+   "status": "cours",
    "mark": "⚡",
    "accent": "#ff6ad5",
    "platform": "Navigateur, ordinateur et mobile",
@@ -442,16 +465,16 @@
    "state": "Prototype jouable",
    "access": "Public",
    "diffusion": "Dans le labo",
+   "license": "",
+   "download": "",
+   "downloads": [],
+   "play": "#/salle",
    "tags": [
     "Jeu",
     "Navigateur",
     "Création",
     "Prototype"
-   ],
-   "tab": "cours",
-   "cat": "jeux",
-   "status": "cours",
-   "play": "#/salle"
+   ]
   }
  ],
  "categories": [

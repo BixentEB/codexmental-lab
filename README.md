@@ -19,6 +19,8 @@ Le site s'ouvre sur la **Vitrine**, sobre et lisible, en sombre ou en clair (ré
 
 Ajouter une salle : une scène dans `js/`, une entrée dans `THEMES` et dans la liste `rooms` de son univers (script en tête de `index.html`), et un CSS limité à `[data-lab="nom"]`.
 
+**Pour mettre à jour les fiches, les captures et les téléchargements, voir [GUIDE.md](GUIDE.md).**
+
 ## Fiches enrichies
 
 Une fiche de `data/projects.json` peut aussi contenir :

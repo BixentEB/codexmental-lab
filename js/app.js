@@ -79,14 +79,24 @@ function card(p) {
     ${tags((p.tags || []).filter(t => !/^(Bêta|Concept|Prototype|En développement|Expérimental|Accès privé|Site public)$/.test(t)).slice(0, 4))}
   </a>`;
 }
+// petits textes propres à chaque salle
+const ROOM_TEXT = {
+  pixel: { kicker: '<p class="kicker"><span class="prompt">&gt;</span> ouverture du labo… ok <span class="caret"></span></p>', hint: hw => hw ? '🎃 Saison d\'Halloween : la bobine Tesla semble… agitée. Trois décharges rapprochées, et qui sait ?' : '⚡ Astuce : la bobine Tesla, à gauche, réagit aux clics. Les fioles de l\'étagère aussi.' },
+  alchimie: { kicker: '<p class="kicker"><span class="prompt">&gt;</span> paillasse sous tension… ok <span class="caret"></span></p>', hint: hw => hw ? '🎃 Saison d\'Halloween : la bobine Tesla semble… agitée. Trois décharges rapprochées, et qui sait ?' : '⚗ Astuce : la bobine Tesla réagit aux clics, et le ballon de réaction aime les gouttes de réactif.' },
+  hd: { kicker: '<p class="kicker">Codex Mental · Laboratoire d\'alchimie</p>', hint: () => '⚗ Astuce : cliquez sur la grande cuve… si vous osez. Le bouton ⤓ range l\'écran pour admirer le labo.' },
+  observatoire: { kicker: '<p class="kicker">Codex Mental · L\'observatoire</p>', hint: () => '🔭 Astuce : cliquez sur le télescope pour viser un astre, et sur le ciel pour une étoile filante.' },
+  station: { kicker: '<p class="kicker">Station orbitale · Module de recherche</p>', hint: () => '🛰 Astuce : attrapez une bulle de liquide qui flotte, ou faites tourner la planète derrière le hublot.' },
+  avantposte: { kicker: '<p class="kicker">Avant-poste · Planète Kepler-C</p>', hint: () => '👽 Astuce : tapotez la vitre du dôme. Ils finissent toujours par venir voir.' }
+};
+function roomText() { return ROOM_TEXT[(window.LAB || {}).theme] || ROOM_TEXT.pixel; }
 function footer() {
   const hw = window.LAB && window.LAB.halloween;
   if (window.LAB && window.LAB.universe === 'pro') return `<footer class="lab-foot">
-    <p class="hint">Envie d'explorer ? Le labo cache deux univers : <a href="#" data-universe="pixel">en pixel</a> et <a href="#" data-universe="vecto">en vectoriel</a>.</p>
+    <p class="hint">Envie d'explorer ? Le labo cache deux univers : <a href="#" data-go="pixel">en pixel</a> et <a href="#" data-go="vecto">en vectoriel</a>.</p>
     <p>Codex Mental · Laboratoire <span class="sep">/</span> <a href="https://codexmental.com">retour au Codex</a></p>
   </footer>`;
   return `<footer class="lab-foot">
-    <p class="hint">${hw ? '🎃 Saison d\'Halloween : la bobine Tesla semble… agitée. Trois décharges rapprochées, et qui sait ?' : (document.documentElement.dataset.lab === 'alchimie' ? '⚗ Astuce : la bobine Tesla réagit aux clics, et le ballon de réaction aime les gouttes de réactif.' : '⚡ Astuce : la bobine Tesla, à gauche, réagit aux clics. Les fioles de l\'étagère aussi.')}</p>
+    <p class="hint">${esc(roomText().hint(hw))}</p>
     <p>Codex Mental · Laboratoire <span class="sep">/</span> <a href="https://codexmental.com">retour au Codex</a></p>
   </footer>`;
 }
@@ -132,7 +142,7 @@ function pageHome() {
         <p class="lead">Applications, logiciels, styles pour le navigateur, prototypes de jeux… et les concepts qui mijotent dans l'Atelier. Tout ce que je fabrique, au même endroit.</p>
         <div class="cta">
           <a class="btn btn-main" href="#/c/applications">Voir les projets</a>
-          <button type="button" class="btn btn-lab" data-universe="pixel">${pix('potion', '#ff8ad8', 18)} Entrer dans le labo</button>
+          <button type="button" class="btn btn-lab" data-go="pixel">${pix('potion', '#ff8ad8', 18)} Entrer dans le labo</button>
         </div>
         <dl class="pro-stats"><div><dt>Projets</dt><dd>${nApps}</dd></div><div><dt>En cours</dt><dd>${nCours}</dd></div><div><dt>Idées dans l'Atelier</dt><dd>${nIdeas}</dd></div></dl>
       </div>
@@ -145,7 +155,7 @@ function pageHome() {
     ${footer()}`;
   }
   return `<section class="hero">
-      ${document.documentElement.dataset.lab === 'hd' ? '<p class="kicker">Codex Mental · Laboratoire d\'alchimie</p>' : '<p class="kicker"><span class="prompt">&gt;</span> ouverture du labo… ok <span class="caret"></span></p>'}
+      ${roomText().kicker}
       <h1 class="px-title">Le Laboratoire</h1>
       <p class="lead">Bienvenue dans l'antre du Codex Mental. Ici, les idées passent de la fiole à l'éprouvette : applications, logiciels, bidouilles CSS, prototypes de jeux, et tout ce qui mijote dans l'Atelier.</p>
       <p class="warn">${pix('bolt', '#ffb347', 14)} Certaines expériences sont encore instables. Merci de ne pas secouer les fioles.</p>
@@ -175,8 +185,10 @@ function pageCat(id) {
 function pageProject(id) {
   const p = DATA.projects.find(x => x.id === id); if (!p) return page404();
   const c = cat(p.cat), sibs = projectsOf(p.cat), i = sibs.indexOf(p);
-  const specs = [['État', p.state], ['Accès', p.access], ['Diffusion', p.diffusion], ['Licence', p.license], ['Téléchargement', p.download], ['Technologies', p.tech], ['Prochaines étapes', p.next], ['Objectif', p.goal], ['Lien', p.link]]
-    .filter(r => r[1]).map(r => `<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join('');
+  // fiche technique : les lignes essentielles s'affichent toujours, « à renseigner » si l'info manque
+  const todo = '<span class="todo">à renseigner</span>';
+  const specs = [['État', p.state, 1], ['Plateforme', p.platform, 1], ['Logiciels et technologies', p.tech, 1], ['Licence', p.license, 1], ['Accès', p.access, 1], ['Diffusion', p.diffusion, 0], ['Prochaines étapes', p.next, 0], ['Objectif', p.goal, 0], ['Lien', p.link, 0]]
+    .filter(r => r[1] || r[2]).map(r => `<dt>${r[0]}</dt><dd>${r[1] ? esc(r[1]) : todo}</dd>`).join('');
   const list = (title, arr) => arr && arr.length ? `<section class="box"><h2>${title}</h2><ul class="px-list">${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></section>` : '';
   const prev = sibs[i - 1], next = sibs[i + 1];
   return `<nav class="crumbs"><a href="#/c/${c.id}">← ${esc(c.label)}</a></nav>
@@ -200,6 +212,7 @@ function pageProject(id) {
         ${specs ? `<section class="box"><h2>Fiche technique</h2><dl class="specs">${specs}</dl></section>` : ''}
       </div>
       ${list('Pistes de développement', p.dev)}
+      ${downloadsBlock(p)}
       ${toolsBlock(p)}
       ${filesBlock(p)}
       ${guideBlock(p)}
@@ -211,9 +224,39 @@ function pageProject(id) {
 }
 
 /* ---------- fiche : galerie, outils, fichiers, mode d'emploi ---------- */
+// captures : celles décrites dans projects.json, plus celles déposées dans img/projets/<id>/ (1.png, 2.jpg, 3.webp…)
+function galleryItems(p) { return (p.gallery || []).concat(p._auto || []); }
+function galleryHTML(p) {
+  return galleryItems(p).map((g, i) => `<figure role="listitem"><button type="button" class="g-open" data-g="${i}" aria-label="Agrandir : ${esc(g.caption || g.alt)}"><img src="${esc(g.mini || g.src)}" alt="${esc(g.alt)}" loading="lazy"></button><figcaption>${esc(g.caption || '')}</figcaption></figure>`).join('');
+}
 function gallery(p) {
-  if (!p.gallery || !p.gallery.length) return '';
-  return `<div class="gallery" role="list">${p.gallery.map((g, i) => `<figure role="listitem"><button type="button" class="g-open" data-g="${i}" aria-label="Agrandir : ${esc(g.caption || g.alt)}"><img src="${esc(g.mini || g.src)}" alt="${esc(g.alt)}" loading="lazy"></button><figcaption>${esc(g.caption || '')}</figcaption></figure>`).join('')}</div>`;
+  return `<section class="block shots-block" data-shots="${esc(p.id)}" ${galleryItems(p).length ? '' : 'hidden'}><h2 class="sec"><span class="dot"></span>Captures</h2><div class="gallery" role="list">${galleryHTML(p)}</div></section>`;
+}
+const EXTS = ['webp', 'png', 'jpg', 'jpeg'];
+function probe(src) { return new Promise(ok => { const im = new Image(); im.onload = () => ok(true); im.onerror = () => ok(false); im.src = src; }); }
+async function findShots(p) {
+  if (p._auto) return;
+  const found = [];
+  for (let n = 1; n <= 12; n++) {
+    let hit = null;
+    for (const ext of EXTS) { const src = `img/projets/${p.id}/${n}.${ext}`; if (await probe(src)) { hit = src; break; } }
+    if (!hit) break;
+    found.push({ src: hit, alt: `Capture ${n} : ${p.name}`, caption: `Capture ${n}` });
+  }
+  p._auto = found;
+}
+async function fillShots(p) {
+  await findShots(p);
+  const sec = view.querySelector(`[data-shots="${CSS.escape(p.id)}"]`);
+  if (!sec || !galleryItems(p).length) return;
+  sec.querySelector('.gallery').innerHTML = galleryHTML(p); sec.hidden = false; updateTube();
+}
+function downloadsBlock(p) {
+  if (p.files && p.files.length) return '';
+  const dl = (p.downloads || []).filter(x => x && x.url);
+  return `<section class="block"><h2 class="sec"><span class="dot"></span>Téléchargement</h2>${dl.length
+    ? `<div class="dl-list">${dl.map(x => `<a class="btn btn-main" href="${esc(x.url)}"${/^https?:/.test(x.url) ? ' target="_blank" rel="noopener"' : ' download'}>${esc(x.label || 'Télécharger')}${x.version ? ` <small>v${esc(x.version)}</small>` : ''}${x.size ? ` <small>${esc(x.size)}</small>` : ''}</a>`).join('')}</div>`
+    : `<div class="box dl-empty"><p>${p.download ? esc(p.download) + '. ' : ''}Les liens de téléchargement apparaîtront ici dès qu'une version sera prête.</p></div>`}</section>`;
 }
 function toolsBlock(p) {
   if (!p.tools || !p.tools.length) return '';
@@ -257,7 +300,7 @@ view.addEventListener('click', e => {
 let lb = null, lbItems = [], lbIdx = 0;
 function openLightbox(i) {
   const pid = (location.hash.match(/#\/p\/([^/]+)/) || [])[1], p = DATA.projects.find(x => x.id === pid); if (!p) return;
-  lbItems = p.gallery; lbIdx = i;
+  lbItems = galleryItems(p); lbIdx = i;
   if (!lb) {
     lb = document.createElement('dialog'); lb.className = 'lightbox';
     lb.innerHTML = `<figure><img alt=""><figcaption></figcaption></figure><button type="button" class="lb-x" aria-label="Fermer">×</button><button type="button" class="lb-prev" aria-label="Image précédente">‹</button><button type="button" class="lb-next" aria-label="Image suivante">›</button>`;
@@ -368,7 +411,7 @@ function switchTo(key, val, msg) {
   if (ok !== val) u.searchParams.set(K[1], val);
   if (msg) say(msg, 1800);
   document.documentElement.classList.add('leaving');
-  setTimeout(() => { location.href = u.toString(); if (u.pathname === location.pathname && u.search === location.search) location.reload(); }, key === 'theme' ? 650 : 250);
+  setTimeout(() => { if (u.href === location.href) location.reload(); else location.replace(u.href); }, key === 'theme' ? 650 : 250);
 }
 function roomsHere() { const C = window.LAB || {}, U = C.universes && C.universes[C.universe]; return U ? U.rooms.filter(id => C.themes[id]) : []; }
 function nextRoom() { const r = roomsHere(), C = window.LAB || {}; return r.length > 1 ? r[(r.indexOf(C.theme) + 1) % r.length] : null; }
@@ -432,6 +475,7 @@ async function route() {
   }
   view.innerHTML = html;
   view.scrollTop = 0;
+  if (parts[0] === 'p') { const pp = DATA.projects.find(x => x.id === parts[1]); if (pp) fillShots(pp); }
   const t = TABS.find(x => x.id === tab) || TABS[0];
   tabsEl.querySelectorAll('.tab').forEach(a => a.setAttribute('aria-selected', a.dataset.id === t.id));
   lab.style.setProperty('--accent', t.color);
@@ -565,8 +609,17 @@ setPanel.addEventListener('click', e => {
   }
   switchTo(key, val, key === 'theme' ? '🚪 Changement de salle…' : '⚙ Réglage des machines…');
 });
-view.addEventListener('click', e => { const b = e.target.closest('[data-universe]'); if (b) { e.preventDefault(); goUniverse(b.dataset.universe); } });
+document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) { e.preventDefault(); goUniverse(b.dataset.go); } });
 buildSettings();
+
+/* ---------- sortie du labo : toujours un chemin visible vers la Vitrine ---------- */
+if (window.LAB && window.LAB.universe !== 'pro') {
+  const ex = document.createElement('button');
+  ex.type = 'button'; ex.className = 'set-btn exit-btn'; ex.dataset.go = 'pro';
+  ex.title = 'Quitter le labo et revenir à la Vitrine'; ex.setAttribute('aria-label', 'Revenir à la Vitrine');
+  ex.innerHTML = '<span aria-hidden="true">←</span><span class="set-txt">Vitrine</span>';
+  $('.settings').before(ex);
+}
 
 /* ---------- ranger l'écran pour admirer le labo (thème Grand labo) ---------- */
 (function () {

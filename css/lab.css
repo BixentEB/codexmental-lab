@@ -416,11 +416,11 @@ a { color: var(--accent); }
 .lb-prev { left: 16px; top: 50%; transform: translateY(-50%); }
 .lb-next { right: 16px; top: 50%; transform: translateY(-50%); }
 [data-lab="alchimie"] .g-open, [data-lab="alchimie"] .tool, [data-lab="alchimie"] .btn, [data-lab="alchimie"] .code pre { border-radius: 3px; }
-[data-lab="hd"] .g-open, [data-lab="hd"] .tool { border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 1px var(--edge); }
-[data-lab="hd"] .btn { border-radius: 999px; padding: 8px 16px; }
-[data-lab="hd"] .code pre { border-radius: 10px; }
-[data-lab="hd"] .steps li::before { border-radius: 50%; }
-[data-lab="hd"] .lightbox img { border-radius: 10px; }
+[data-universe="vecto"] .g-open, [data-universe="vecto"] .tool { border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 1px var(--edge); }
+[data-universe="vecto"] .btn { border-radius: 999px; padding: 8px 16px; }
+[data-universe="vecto"] .code pre { border-radius: 10px; }
+[data-universe="vecto"] .steps li::before { border-radius: 50%; }
+[data-universe="vecto"] .lightbox img { border-radius: 10px; }
 [data-lab="pixel"] .tool b, [data-lab="pixel"] .file-head b, [data-lab="pixel"] .step-box h3 { font-family: var(--f-px); font-size: 11px; font-weight: 400; line-height: 1.6; }
 
 /* passage d'un labo à l'autre */
@@ -450,7 +450,21 @@ html:not(.leaving)::after { animation: arrive .7s ease-out 1; }
 }
 .lab-door:hover .door-plate, .lab-door:focus-visible .door-plate { opacity: 1; }
 @keyframes door-glow { 50% { opacity: .85; } }
-[data-lab="hd"] .door-plate { font-family: var(--f-title); font-weight: 700; font-size: 13px; letter-spacing: .5px; border-radius: 999px; padding: 6px 12px; }
+[data-universe="vecto"] .door-plate { font-family: var(--f-title); font-weight: 700; font-size: 13px; letter-spacing: .5px; border-radius: 999px; padding: 6px 12px; }
 .in-salle .lab-door { display: none; }
 @media (max-width: 759px) { .lab-door { display: none; } }
 @media (prefers-reduced-motion: reduce) { .lab-door::before { animation: none; } }
+
+/* bouton de sortie vers la Vitrine */
+.exit-btn { flex: 0 0 auto; align-self: center; margin-bottom: 8px; }
+[data-universe="vecto"] .exit-btn, [data-universe="orbital"] .exit-btn { margin: 0 6px 8px 0; }
+@media (max-width: 759px) {
+  .exit-btn { position: absolute; right: 58px; top: 6px; margin: 0; }
+}
+
+/* fiche : informations manquantes et téléchargements */
+.todo { font-style: italic; color: var(--mute); opacity: .8; }
+.dl-list { display: flex; flex-wrap: wrap; gap: 12px; }
+.dl-list small { opacity: .75; font-weight: 400; margin-left: 4px; }
+.dl-empty p { margin: 0; font-size: 14px; color: var(--soft); line-height: 1.6; }
+.shots-block .gallery { margin-top: 0; }
