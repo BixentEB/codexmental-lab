@@ -241,7 +241,7 @@ function anecdoteBlock(p) {
   const paras = (Array.isArray(raw) ? raw : String(raw).split(/\n\s*\n/)).map(x => String(x).trim()).filter(Boolean);
   if (!paras.length) return '';
   const title = typeof a === 'object' && a.title ? a.title : '';
-  return `<aside class="box anecdote"><h2>Anecdote${title ? ` — ${esc(title)}` : ''}</h2>${paras.map(x => `<p>${esc(x)}</p>`).join('')}</aside>`;
+  return `<section class="block"><h2 class="sec"><span class="dot"></span>Anecdote</h2><div class="box anecdote">${title ? `<h3>${esc(title)}</h3>` : ''}${paras.map(x => `<p>${esc(x)}</p>`).join('')}</div></section>`;
 }
 // où en est le projet : ce qui marche, ce qui s'intègre, ce qui est envisagé
 function stagesBlock(p) {

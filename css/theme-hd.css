@@ -151,8 +151,7 @@
 [data-universe="vecto"] .play-btn .vec { filter: none; }
 [data-universe="vecto"] .play-btn .vec path, [data-universe="vecto"] .play-btn .vec circle { stroke: #1a1206; }
 [data-universe="vecto"] .cat-ico { padding: 18px; }
-[data-universe="vecto"] .tagline { font-family: var(--f-title); font-size: 18px; font-style: normal; }
+[data-universe="vecto"] .tagline, [data-universe="vecto"] .anecdote h3 { font-family: var(--f-title); font-size: 18px; font-style: normal; }
 [data-universe="vecto"] .shelf .vec { grid-row: span 2; }
-[data-universe="vecto"] .d-cols { align-items: start; }
 @media (max-width: 759px) { [data-universe="vecto"] .shelf .vec { grid-row: auto; } }
 @media (max-width: 759px) { [data-universe="vecto"] .px-title { font-size: 25px; } }
