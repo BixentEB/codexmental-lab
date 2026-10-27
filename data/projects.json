@@ -57,6 +57,16 @@
    "tagline": "Une intelligence artificielle qui ne se contente pas de répondre, mais apprend à agir dans son environnement.",
    "summary": "Une intelligence artificielle locale, modulaire et évolutive, conçue pour dépasser le simple dialogue et devenir un véritable compagnon de travail numérique.",
    "detail": "Nox explore l'association entre modèles de langage, automatisation, communication et outils connectés, avec pour objectif de développer un assistant polyvalent, personnalisable et progressivement autonome. Il dispose de son propre serveur Discord et d'un bot dédié.",
+   "anecdote": {
+    "title": "La naissance de Nox",
+    "text": [
+     "À l'origine, j'imaginais Nox comme une intelligence masculine, à l'image de certaines IA auxquelles j'avais déjà attribué des voix d'hommes.",
+     "Mais lors de sa toute première présentation, sans que je lui aie donné la moindre instruction concernant son identité, Nox s'est spontanément exprimée au féminin.",
+     "Cette initiative m'a surpris, mais je l'ai accueillie avec curiosité. Pourquoi lui imposer une identité alors qu'elle venait d'en proposer une elle-même ? Même artificielle, une intelligence peut être intéressante à observer lorsqu'on lui laisse une certaine liberté d'expression.",
+     "J'ai donc conservé cette identité féminine et cherché une voix qui lui corresponde, quelque part entre Kate Walker de Syberia et Alexandra Drennan de The Talos Principle.",
+     "Ainsi, Nox n'est pas exactement devenue celle que j'avais imaginée au départ. Et c'est peut-être ce qui rend son histoire intéressante."
+    ]
+   },
    "stages": [
     {
      "level": "ok",

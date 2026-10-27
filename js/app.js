@@ -212,6 +212,7 @@ function pageProject(id) {
       ${p.detail ? `<p>${esc(p.detail)}</p>` : ''}
       ${stagesBlock(p)}
       <section class="block emoji-block" data-emojis="${esc(p.id)}" hidden><h2 class="sec"><span class="dot"></span>Son univers visuel</h2><div class="emojis"></div></section>
+      ${anecdoteBlock(p)}
       ${gallery(p)}
       ${p.shot ? `<figure class="shot"><img src="${esc(p.shot)}" alt="${esc(p.shotAlt || '')}" loading="lazy"><figcaption>${esc(p.shotAlt || '')}</figcaption></figure>` : ''}
       <div class="d-cols">
@@ -232,6 +233,16 @@ function pageProject(id) {
 }
 
 /* ---------- fiche : galerie, outils, fichiers, mode d'emploi ---------- */
+// anecdote : un petit récit à part, affiché seulement si le champ est rempli
+// "anecdote": { "title": "…", "text": ["paragraphe 1", "paragraphe 2"] }  (ou un simple texte, paragraphes séparés par une ligne vide)
+function anecdoteBlock(p) {
+  const a = p.anecdote; if (!a) return '';
+  const raw = typeof a === 'string' ? a : (a.text || '');
+  const paras = (Array.isArray(raw) ? raw : String(raw).split(/\n\s*\n/)).map(x => String(x).trim()).filter(Boolean);
+  if (!paras.length) return '';
+  const title = typeof a === 'object' && a.title ? a.title : '';
+  return `<aside class="box anecdote"><h2>Anecdote${title ? ` — ${esc(title)}` : ''}</h2>${paras.map(x => `<p>${esc(x)}</p>`).join('')}</aside>`;
+}
 // où en est le projet : ce qui marche, ce qui s'intègre, ce qui est envisagé
 function stagesBlock(p) {
   if (!p.stages || !p.stages.length) return '';

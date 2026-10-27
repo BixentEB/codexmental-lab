@@ -214,6 +214,9 @@ a { color: var(--accent); }
 .specs dt { font-family: var(--f-vt); font-size: 19px; line-height: 1.1; color: var(--mute); }
 .specs dd { margin: 0; color: var(--ink); min-width: 0; overflow-wrap: anywhere; }
 .d-cols > *, .specs dt { min-width: 0; }
+.anecdote { margin: 26px 3px; max-width: 76ch; border-left: 3px solid var(--c); }
+.anecdote p { font-size: 14.5px; line-height: 1.75; color: var(--soft); font-style: italic; margin: 0 0 .9em; }
+.anecdote p:last-child { margin-bottom: 0; }
 .shot { margin: 22px 3px; }
 .shot img { width: 100%; display: block; box-shadow: 0 0 0 3px var(--edge); }
 .shot figcaption { font-size: 12.5px; color: var(--mute); margin-top: 10px; }

@@ -68,6 +68,7 @@ Chaque projet ressemble à ceci :
 | `summary` | la description courte (carte et fiche) |
 | `concept` | pour un projet en réflexion : l'idée de départ |
 | `detail` | la description longue de la fiche |
+| `anecdote` | un encadré « Anecdote » après la présentation (voir la fiche NOX) ; absent ou vide, rien ne s'affiche |
 | `features` | la liste « Fonctionnalités » |
 | `dev` | la liste « Pistes de développement » |
 | `tech` | « Logiciels et technologies » |
