@@ -332,26 +332,122 @@
   },
   {
    "id": "css-chatgpt",
-   "name": "CSS ChatGPT personnalisé",
+   "name": "Habiller le Web",
    "cat": "web",
    "status": "cours",
    "mark": "❏",
    "accent": "#f0a9d0",
-   "platform": "Navigateur Web",
-   "summary": "Un thème « nuit étoilée » pour ChatGPT, plus un petit script qui affiche le titre de la conversation en haut de l'écran.",
-   "detail": "Fond étoilé avec étoiles filantes, couleurs indigo, projets rangés en capsules dans la colonne de gauche, bulles et éditeur harmonisés. Le tout s'installe en deux minutes avec deux extensions gratuites, sans toucher au site d'origine.",
+   "platform": "Navigateur Web (Chrome, Edge, Brave…)",
+   "tagline": "Repeindre les sites qu'on utilise tous les jours",
+   "summary": "Changer l'apparence des sites web à sa façon (couleurs, fonds, animations, petits ajouts pratiques) grâce à des feuilles de style CSS et de petits scripts, sans toucher au site d'origine.",
+   "detail": "Aujourd'hui, ça passe par deux extensions gratuites, Stylus pour les styles et Tampermonkey pour les scripts. Le premier thème complet, « Blue Stellar », habille ChatGPT : c'est l'exemple de cette page, avec ses codes prêts à installer. L'étape suivante sera une extension maison qui rassemblera tout ça en un seul outil.",
+   "stages": [
+    {
+     "level": "ok",
+     "label": "Fonctionne déjà",
+     "items": [
+      "Styles CSS appliqués avec Stylus",
+      "Petits scripts avec Tampermonkey",
+      "Thème « Blue Stellar » pour ChatGPT, installable en un clic"
+     ]
+    },
+    {
+     "level": "wip",
+     "label": "En cours",
+     "items": [
+      "Ajustements du thème au fil des changements de ChatGPT",
+      "Script du titre de conversation"
+     ]
+    },
+    {
+     "level": "idea",
+     "label": "Envisagé",
+     "items": [
+      "Une extension maison, sans passer par Stylus ni Tampermonkey",
+      "Profils de thèmes et activation site par site",
+      "D'autres sites habillés, sur le même principe"
+     ]
+    }
+   ],
    "features": [
-    "Couleurs et lisibilité",
-    "Organisation de l'interface"
+    "Couleurs — repeindre un site entier, du fond aux boutons",
+    "Fonds et animations — champ d'étoiles, étoiles filantes, lueurs au survol",
+    "Rangement — réorganiser l'affichage (projets en capsules…)",
+    "Petits ajouts — un script qui ajoute une info utile, comme le titre de la conversation",
+    "Réversible — un clic sur l'extension et le site redevient normal"
    ],
    "tech": "CSS (Stylus), JavaScript (Tampermonkey)",
-   "state": "Thème « Blue Stellar » utilisable ; extension dédiée (NoxLayer) en réflexion",
+   "state": "Thème ChatGPT utilisable ; extension dédiée en réflexion (fiche NoxLayer)",
    "access": "Public",
    "diffusion": "Gratuit, à installer ci-dessous",
    "license": "À définir",
-   "next": "Gestion de profils CSS/JS, activation indépendante selon les sites",
+   "next": "Extension maison : gestion de profils CSS/JS, activation indépendante selon les sites",
    "download": "Thème CSS et script ci-dessous",
    "downloads": [],
+   "sections": [
+    {
+     "title": "Comment ça marche",
+     "text": "Une feuille de style CSS dit au navigateur comment dessiner une page : couleurs, fonds, bordures, animations. Une extension comme Stylus en ajoute une par-dessus celle du site, uniquement chez vous. Pour aller plus loin qu'une simple couleur (ajouter une information, réagir à ce qui se passe à l'écran), un petit script JavaScript prend le relais avec Tampermonkey.",
+     "note": "Rien n'est envoyé au site ni modifié chez lui : tout se passe dans votre navigateur, et se désactive d'un clic."
+    }
+   ],
+   "tools": [
+    {
+     "name": "Stylus",
+     "url": "https://chromewebstore.google.com/detail/clngdbkpkpeebahjckkjfobafhncgmne",
+     "desc": "Applique des feuilles de style (CSS) à n'importe quel site. Sert pour le thème."
+    },
+    {
+     "name": "Tampermonkey",
+     "url": "https://chromewebstore.google.com/detail/dhdgffkkebhmkfjojejmpbldmpobfkfo",
+     "desc": "Fait tourner de petits scripts (JavaScript) sur les sites. Sert pour le titre de conversation."
+    }
+   ],
+   "showcase": {
+    "title": "L'exemple : ChatGPT en nuit étoilée",
+    "name": "Blue Stellar",
+    "site": "chatgpt.com",
+    "text": "Un bleu nuit profond, des accents indigo et un ciel qui vit discrètement derrière les conversations, sans gêner la lecture.",
+    "palette": [
+     {
+      "hex": "#05070D",
+      "label": "Fond profond"
+     },
+     {
+      "hex": "#0D1428",
+      "label": "Bleu nuit"
+     },
+     {
+      "hex": "#151B30",
+      "label": "Barre de saisie"
+     },
+     {
+      "hex": "#243A72",
+      "label": "Vos messages"
+     },
+     {
+      "hex": "#8198E8",
+      "label": "Icônes indigo"
+     },
+     {
+      "hex": "#E8ECF7",
+      "label": "Texte"
+     },
+     {
+      "hex": "#F0A6B5",
+      "label": "Fermer"
+     }
+    ],
+    "effects": [
+     "Champ d'étoiles fixe, en six couches de tailles différentes",
+     "Trois étoiles filantes, sur des trajectoires différentes, toutes les 45 secondes",
+     "Lueur indigo au survol des liens de la colonne",
+     "Projets rangés en capsules, conversations alignées sur un fin repère vertical",
+     "Blocs de code, onglets, info-bulles et menus accordés au thème",
+     "Visionneuse de fichiers harmonisée (zoom, téléchargement, fermeture)"
+    ],
+    "note": "Version 1.1 : les boutons de la visionneuse de fichiers sont de retour (une règle trop large recouvrait la barre du haut) et ont désormais leurs propres couleurs."
+   },
    "gallery": [
     {
      "src": "img/lab/chatgpt/accueil.webp",
@@ -370,18 +466,6 @@
      "mini": "img/lab/chatgpt/projets-mini.webp",
      "alt": "La colonne de gauche ouverte : projets épinglés en capsules et liste des conversations récentes.",
      "caption": "Projets et conversations dans la colonne"
-    }
-   ],
-   "tools": [
-    {
-     "name": "Stylus",
-     "url": "https://chromewebstore.google.com/detail/clngdbkpkpeebahjckkjfobafhncgmne",
-     "desc": "Applique des feuilles de style (CSS) à n'importe quel site. Sert pour le thème."
-    },
-    {
-     "name": "Tampermonkey",
-     "url": "https://chromewebstore.google.com/detail/dhdgffkkebhmkfjojejmpbldmpobfkfo",
-     "desc": "Fait tourner de petits scripts (JavaScript) sur les sites. Sert pour le titre de conversation."
     }
    ],
    "files": [
@@ -424,11 +508,13 @@
     }
    ],
    "notes": [
+    "Déjà installé avec Stylus ? Il proposera la mise à jour 1.1 tout seul (ou icône Stylus › Gérer › Rechercher les mises à jour).",
     "Pour désactiver le thème ou le script, cliquez sur l'icône de l'extension et décochez-le.",
     "ChatGPT change régulièrement son interface : si un élément n'est plus coloré, c'est qu'un nom de classe a bougé. Le reste continue de fonctionner."
    ],
    "tags": [
     "CSS",
+    "JavaScript",
     "Navigateur",
     "Personnalisation",
     "UX/UI",

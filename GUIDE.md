@@ -14,7 +14,7 @@ Chaque projet a son dossier : `img/projets/<identifiant>/`.
 | Périm-GO Business | `img/projets/perimgo-business/` |
 | DexLibera | `img/projets/dexlibera/` |
 | Codex Mental | `img/projets/codex-mental/` |
-| CSS ChatGPT personnalisé | `img/projets/css-chatgpt/` |
+| Habiller le Web (thème ChatGPT) | `img/projets/css-chatgpt/` |
 | Heures Sacrées | `img/projets/heures-sacrees/` |
 | NoxLayer | `img/projets/noxlayer/` |
 | Widgets Windows & Android | `img/projets/widgets/` |

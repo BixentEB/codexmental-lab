@@ -1,8 +1,8 @@
 /* ==UserStyle==
 @name           ChatGPT — Blue Stellar
 @namespace      lab.codexmental.com
-@version        1.0.0
-@description    Thème nuit étoilée pour ChatGPT : fond étoilé, étoiles filantes, projets en capsules, couleurs indigo.
+@version        1.1.0
+@description    Thème nuit étoilée pour ChatGPT : fond étoilé, étoiles filantes, projets en capsules, couleurs indigo, visionneuse harmonisée.
 @author         Bixent (Codex Mental)
 @homepageURL    https://lab.codexmental.com/#/p/css-chatgpt
 ==/UserStyle== */
@@ -41,7 +41,7 @@ main,
    ========================================== */
 
 .sidebar,
-[class*="sidebar"],
+[class*="sidebar"]:not(header),
 .bg-token-sidebar-surface-primary {
     background: #0D1428 !important;
 }
@@ -439,6 +439,8 @@ main::before {
         );
 
     animation: shooting-star 45s linear infinite;
+    pointer-events: none !important;
+
 }
 
 @keyframes shooting-star {
@@ -615,7 +617,7 @@ kbd {
 /* ==========================================
    18. MSTELLAR — SURFACES NATIVES CHATGPT
    Neutralise les fonds noirs sous l'interface
-   ========================================== */
+   ========================================== */ 
 
 .chatgpt-theme[data-theme="dark"],
 .chatgpt-theme [data-theme="dark"] {
@@ -626,11 +628,8 @@ kbd {
 
 
 /* ==========================================
-   19. TITRE DE CONVERSATION (script Tampermonkey)
-   Habille le titre ajouté par le script
-   « ChatGPT - Titre de conversation »
+   19. TITRE CONVERSATION
    ========================================== */
-
 #nox-conversation-title {
     position: fixed;
     top: 42px;
@@ -654,5 +653,54 @@ kbd {
     display: none;
 }
 
+/* ==========================================
+   20. NOX — COMMANDES VISIONNEUSE
+   ========================================== */
+
+/* Capsule commune */
+[aria-label="Commandes de la visionneuse"] {
+    background: #202A47 !important;
+    border: 1px solid rgba(125, 148, 235, 0.30) !important;
+    border-radius: 12px !important;
+}
+
+/* Boutons intégrés à la capsule */
+[aria-label="Commandes de la visionneuse"] button {
+    background: transparent !important;
+    color: #B5C5FF !important;
+    border-radius: 9px !important;
+    transition: background .2s, color .2s !important;
+}
+
+/* Survol des commandes */
+[aria-label="Commandes de la visionneuse"] button:hover {
+    background: #344577 !important;
+    color: #FFFFFF !important;
+}
+
+/* Fermeture : rose discret */
+[aria-label="Commandes de la visionneuse"]
+button[aria-label="Fermer la visionneuse"] {
+    color: #F0A6B5 !important;
+}
+
+/* Fermeture au survol */
+[aria-label="Commandes de la visionneuse"]
+button[aria-label="Fermer la visionneuse"]:hover {
+    background: #71334B !important;
+    color: #FFFFFF !important;
+}
+
+/* Bouton téléchargement séparé */
+button[aria-label="Télécharger"] {
+    background: #202A47 !important;
+    color: #B5C5FF !important;
+    border-radius: 50% !important;
+}
+
+button[aria-label="Télécharger"]:hover {
+    background: #344577 !important;
+    color: #FFFFFF !important;
+}
 
 }

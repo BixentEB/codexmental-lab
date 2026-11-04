@@ -213,7 +213,7 @@ function pageProject(id) {
       ${stagesBlock(p)}
       <section class="block emoji-block" data-emojis="${esc(p.id)}" hidden><h2 class="sec"><span class="dot"></span>Son univers visuel</h2><div class="emojis"></div></section>
       ${anecdoteBlock(p)}
-      ${gallery(p)}
+      ${p.showcase ? '' : gallery(p)}
       ${p.shot ? `<figure class="shot"><img src="${esc(p.shot)}" alt="${esc(p.shotAlt || '')}" loading="lazy"><figcaption>${esc(p.shotAlt || '')}</figcaption></figure>` : ''}
       <div class="d-cols">
         ${list('Fonctionnalités', p.features)}
@@ -223,6 +223,7 @@ function pageProject(id) {
       ${sectionsBlock(p)}
       ${downloadsBlock(p)}
       ${toolsBlock(p)}
+      ${showcaseBlock(p)}
       ${filesBlock(p)}
       ${guideBlock(p)}
       ${p.play ? `<p class="play"><a class="play-btn" href="${esc(p.play)}">${pix('door', '#ffb347', 18)} Entrer dans la salle</a></p>` : ''}
@@ -311,6 +312,21 @@ function downloadsBlock(p) {
 function toolsBlock(p) {
   if (!p.tools || !p.tools.length) return '';
   return `<section class="block"><h2 class="sec"><span class="dot"></span>Les outils</h2><div class="tools">${p.tools.map(tl => `<a class="tool" href="${esc(tl.url)}" target="_blank" rel="noopener"><b>${esc(tl.name)} <span aria-hidden="true">↗</span></b><span>${esc(tl.desc)}</span><small>Chrome Web Store · gratuit</small></a>`).join('')}</div></section>`;
+}
+// vitrine d'un thème : pour quel site, sa palette, ses animations, puis ses captures
+// "showcase": { "title": "…", "name": "…", "site": "chatgpt.com", "text": "…", "palette": [{ "hex": "#0D1428", "label": "Nuit" }], "effects": ["…"], "note": "…" }
+function showcaseBlock(p) {
+  const s = p.showcase; if (!s) return '';
+  const hex = h => /^#[0-9a-f]{3,8}$/i.test(h || '') ? h : '#888';
+  return `<section class="block showcase"><h2 class="sec"><span class="dot"></span>${esc(s.title || 'Exemple')}</h2>
+    <div class="box sc-card">
+      <div class="sc-id"><b>${esc(s.name || '')}</b>${s.site ? `<small>pour ${esc(s.site)}</small>` : ''}</div>
+      ${s.text ? `<p class="sc-text">${esc(s.text)}</p>` : ''}
+      ${s.palette && s.palette.length ? `<h3>Palette</h3><ul class="swatches">${s.palette.map(c => `<li><span class="sw" style="--sw:${hex(c.hex)}"></span><b>${esc(c.label || '')}</b><code>${esc(hex(c.hex))}</code></li>`).join('')}</ul>` : ''}
+      ${s.effects && s.effects.length ? `<h3>Animations et détails</h3><ul class="px-list">${s.effects.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+    </div>
+    ${s.note ? `<p class="sc-note">${esc(s.note)}</p>` : ''}
+    ${gallery(p)}</section>`;
 }
 function filesBlock(p) {
   if (!p.files || !p.files.length) return '';
