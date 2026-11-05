@@ -57,7 +57,9 @@ async function load() {
     .concat(DATA.categories.map(c => ({ id: c.id, label: c.label, color: c.color, href: '#/c/' + c.id })))
     .concat([{ id: 'atelier', label: 'Atelier', color: '#c9a6ff', href: '#/atelier' }]);
   $('.brand-ico').innerHTML = pix('flask', window.LAB && window.LAB.halloween ? '#ff8c1a' : '#9dff5c', 16);
-  tabsEl.innerHTML = TABS.map(t => `<a class="tab" role="tab" href="${t.href}" data-id="${t.id}" style="--c:${t.color}">${esc(t.label)}</a>`).join('');
+  tabsEl.innerHTML = TABS.map(t => `<a class="tab" role="tab" href="${t.href}" data-id="${t.id}" style="--c:${t.color}">${esc(t.label)}</a>`).join('')
+    // même retour que sur l'Observatoire : un lien vers le site principal, en fin de menu
+    + '<a class="tab tab-ext" href="https://codexmental.com" title="Revenir sur le site Codex Mental">Codex Mental <span aria-hidden="true">↗</span></a>';
 }
 const cat = id => DATA.categories.find(c => c.id === id);
 const projectsOf = id => DATA.projects.filter(p => p.cat === id);
@@ -566,7 +568,7 @@ async function route() {
   view.scrollTop = 0;
   if (parts[0] === 'p') { const pp = DATA.projects.find(x => x.id === parts[1]); if (pp) { fillShots(pp); fillBrand(pp); } }
   const t = TABS.find(x => x.id === tab) || TABS[0];
-  tabsEl.querySelectorAll('.tab').forEach(a => a.setAttribute('aria-selected', a.dataset.id === t.id));
+  tabsEl.querySelectorAll('.tab[role="tab"]').forEach(a => a.setAttribute('aria-selected', a.dataset.id === t.id));
   lab.style.setProperty('--accent', t.color);
   if (window.LabScene) window.LabScene.setAccent(t.color);
   document.title = (t.id === 'accueil' ? '' : t.label + ' · ') + 'Codex Mental · Laboratoire';
