@@ -7,7 +7,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const view = $('#view'), lab = $('#lab'), tabsEl = $('#tabs');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-let DATA = null, ATELIER = null, TABS = [];
+let DATA = null, ATELIER = null, TABS = [], NEWS = [];
 const filters = {};
 const articleCache = new Map();
 
@@ -50,9 +50,36 @@ function pix(name, color, size = 32, forcePixel) {
 const CAT_ICON = { applications: 'flask', logiciels: 'tube', web: 'beaker', jeux: 'potion', ia: 'chip' };
 
 /* ---------- données ---------- */
+/* ---------- nouveautés : pastilles pendant 7 jours après la date ---------- */
+const NEW_DAYS = 7;
+function ageDays(d) { const t = new Date(d + 'T12:00:00'); return (Date.now() - t) / 864e5; }
+function fresh() { return NEWS.filter(n => n.date && ageDays(n.date) < NEW_DAYS && ageDays(n.date) > -1); }
+function freshFor(href) { return fresh().find(n => n.href === href); }
+function badge(kind) { return kind === 'new' ? '<span class="nb nb-new">NEW</span>' : '<span class="nb nb-dot" title="Mis à jour récemment"></span>'; }
+function tabBadge(id) { const h = fresh().filter(n => n.tab === id); return h.length ? ' ' + badge(h.some(n => n.kind === 'new') ? 'new' : 'maj') : ''; }
+function markTabs() {
+  const F = fresh();
+  tabsEl.querySelectorAll('.tab[role="tab"]').forEach(a => {
+    a.querySelector('.nb')?.remove();
+    const hits = F.filter(n => n.tab === a.dataset.id); if (!hits.length) return;
+    const k = hits.some(n => n.kind === 'new') ? 'new' : 'maj';
+    a.insertAdjacentHTML('beforeend', badge(k));
+    a.setAttribute('aria-label', a.textContent.replace('NEW', '').trim() + (k === 'new' ? ' (nouveau)' : ' (mis à jour)'));
+  });
+}
+function fmtDate(d) { return new Date(d + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' }); }
+function newsBlock() {
+  if (!NEWS.length) return '';
+  const tabOf = id => TABS.find(t => t.id === id) || TABS[0];
+  return `<h2 class="sec">Dernières mises à jour</h2>
+    <ol class="news">${NEWS.slice(0, 4).map(n => { const t = tabOf(n.tab), f = ageDays(n.date) < NEW_DAYS; return `<li style="--c:${t.color}"><a href="${esc(n.href || t.href)}">
+      <span class="news-meta"><time datetime="${esc(n.date)}">${fmtDate(n.date)}</time><span class="news-tab">${esc(t.label)}</span>${f ? badge(n.kind) : ''}</span>
+      <b>${esc(n.title)}</b>${n.text ? `<span class="news-txt">${esc(n.text)}</span>` : ''}</a></li>`; }).join('')}</ol>`;
+}
 async function load() {
   const [p, a] = await Promise.all([fetch('data/projects.json').then(r => r.json()), fetch('data/atelier.json').then(r => r.json())]);
   DATA = p; ATELIER = a;
+  NEWS = await fetch('data/news.json').then(r => r.ok ? r.json() : {}).then(n => n.updates || []).catch(() => []);
   TABS = [{ id: 'accueil', label: 'Accueil', color: '#ffb347', href: '#/' }]
     .concat(DATA.categories.map(c => ({ id: c.id, label: c.label, color: c.color, href: '#/c/' + c.id })))
     .concat([{ id: 'atelier', label: 'Atelier', color: '#c9a6ff', href: '#/atelier' }]);
@@ -60,6 +87,7 @@ async function load() {
   tabsEl.innerHTML = TABS.map(t => `<a class="tab" role="tab" href="${t.href}" data-id="${t.id}" style="--c:${t.color}">${esc(t.label)}</a>`).join('')
     // même retour que sur l'Observatoire : un lien vers le site principal, en fin de menu
     + '<a class="tab tab-ext" href="https://codexmental.com" title="Revenir sur le site Codex Mental">Codex Mental <span aria-hidden="true">↗</span></a>';
+  markTabs();
 }
 const cat = id => DATA.categories.find(c => c.id === id);
 const projectsOf = id => DATA.projects.filter(p => p.cat === id);
@@ -76,7 +104,7 @@ function tags(list) {
 function card(p) {
   const sum = p.summary || p.tagline || p.concept || '';
   return `<a class="card" href="#/p/${esc(p.id)}" style="--c:${esc(p.accent || cat(p.cat).color)}">
-    <div class="card-top">${markHTML(p, '')}${statusBadge(p)}</div>
+    <div class="card-top">${markHTML(p, '')}${(f => f ? badge(f.kind) : '')(freshFor('#/p/' + p.id))}${statusBadge(p)}</div>
     <h3>${esc(p.name)}</h3>
     <p class="plat">${esc(p.platform || '')}</p>
     <p class="sum">${esc(sum.length > 150 ? sum.slice(0, 147).trim() + '…' : sum)}</p>
@@ -132,10 +160,10 @@ function pageHome() {
     const ps = projectsOf(c.id), n1 = ps.filter(p => p.status === 'cours').length, n2 = ps.length - n1;
     return `<a class="shelf" href="#/c/${c.id}" style="--c:${c.color}">
       ${pix(CAT_ICON[c.id], c.color, 30)}
-      <b>${esc(c.label)}</b>
+      <b>${esc(c.label)}${tabBadge(c.id)}</b>
       <small>${ps.length ? `${n1} en cours${n2 ? ` · ${n2} en réflexion` : ''}` : 'Bientôt sur l\'étagère'}</small>
     </a>`;
-  }).join('') + `<a class="shelf" href="#/atelier" style="--c:#c9a6ff">${pix('book', '#c9a6ff', 30)}<b>Atelier</b><small>${ATELIER.sections.reduce((s, x) => s + x.items.length, 0)} dossiers d'idées</small></a>`;
+  }).join('') + `<a class="shelf" href="#/atelier" style="--c:#c9a6ff">${pix('book', '#c9a6ff', 30)}<b>Atelier${tabBadge('atelier')}</b><small>${ATELIER.sections.reduce((s, x) => s + x.items.length, 0)} dossiers d'idées</small></a>`;
   const now = DATA.projects.filter(p => p.status === 'cours').slice(0, 3).map(card).join('');
   if (window.LAB && window.LAB.universe === 'pro') {
     const nApps = DATA.projects.length, nCours = DATA.projects.filter(p => p.status === 'cours').length, nIdeas = ATELIER.sections.reduce((s2, x) => s2 + x.items.length, 0);
@@ -154,6 +182,7 @@ function pageHome() {
     </section>
     <h2 class="sec">Les étagères</h2>
     <div class="shelves">${inv}</div>
+    ${newsBlock()}
     <h2 class="sec">En cours</h2>
     <div class="grid">${now}</div>
     ${footer()}`;
@@ -166,6 +195,7 @@ function pageHome() {
     </section>
     <h2 class="sec">Inventaire des étagères</h2>
     <div class="shelves">${inv}</div>
+    ${newsBlock()}
     <h2 class="sec">Sur la paillasse en ce moment</h2>
     <div class="grid">${now}</div>
     ${footer()}`;
@@ -405,7 +435,7 @@ async function pageAtelier() {
     <h2 class="sec" style="--c:${s.color}"><span class="dot"></span>${esc(s.label)}</h2>
     <div class="grid">${s.items.map(it => {
       const a = articleCache.get(it.id);
-      return `<a class="card art" href="#/atelier/${it.id}" style="--c:${s.color}">
+      return `<a class="card art" href="#/atelier/${it.id}" style="--c:${s.color}">${(f => f ? badge(f.kind) : '')(freshFor('#/atelier/' + it.id))}
         ${it.cover ? `<img class="cover" src="${esc(it.cover)}" alt="" loading="lazy">` : ''}
         <div class="card-top"><span class="kicker small">${esc(s.label)}</span>${a ? `<span class="read">${Math.max(1, Math.round(a.words / 200))} min</span>` : ''}</div>
         <h3>${esc(it.title)}</h3>

@@ -149,6 +149,24 @@ Copiez un bloc existant dans `data/projects.json`, changez l'`id` (en minuscules
 1. Déposez le fichier HTML dans `content/atelier/<dossier>/<nom>.html` (par exemple `content/atelier/explo/mon-idee.html`). Les images vont dans `img/articles/`.
 2. Ajoutez une ligne dans `data/atelier.json`, dans la bonne section : `{ "id": "explo/mon-idee", "title": "Mon idée" }`.
 
+## Annoncer une nouveauté (accueil et pastilles)
+
+Les « Dernières mises à jour » de l'accueil viennent du fichier **`data/news.json`**. Ajoutez une ligne **en haut** de la liste `updates` :
+
+```json
+{ "date": "2026-11-05", "kind": "new", "tab": "atelier", "title": "Titre court", "text": "Une phrase d'explication.", "href": "#/atelier/explo/hypercodex" },
+```
+
+| Champ | Ce qu'il fait |
+|---|---|
+| `date` | la date de publication, au format `AAAA-MM-JJ` |
+| `kind` | `new` pour une nouvelle page ou un nouveau menu (pastille **NEW**), `maj` pour une mise à jour (petit rond de couleur) |
+| `tab` | l'onglet qui reçoit la pastille : `accueil`, `applications`, `logiciels`, `web`, `jeux`, `ia` ou `atelier` |
+| `title`, `text` | le titre et la petite phrase affichés sur l'accueil |
+| `href` | le lien : `#/p/<identifiant>` pour une fiche, `#/atelier/<dossier>/<nom>` pour un article, `#/c/<étagère>` pour une étagère |
+
+La pastille apparaît sur l'onglet, sur l'étagère de l'accueil et sur la carte de la fiche ou de l'article. Elle disparaît toute seule **7 jours** après la date. La liste de l'accueil montre les 4 dernières entrées.
+
 ## Besoin d'un coup de main
 
 Vous pouvez aussi m'envoyer les infos et les images dans la conversation : je les range au bon endroit.
