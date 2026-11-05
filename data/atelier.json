@@ -16,6 +16,11 @@
    "color": "#7fd8ff",
    "items": [
     {
+     "id": "explo/hypercodex",
+     "title": "HyperCodex, les courses en VR",
+     "cover": "img/articles/hypercodex-logo.svg"
+    },
+    {
      "id": "explo/modelexplo",
      "title": "Modèle d'exploration"
     },

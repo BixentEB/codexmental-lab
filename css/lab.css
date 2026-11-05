@@ -578,3 +578,15 @@ html:not(.leaving)::after { animation: arrive .7s ease-out 1; }
 .tab.tab-ext { --c: transparent; opacity: .72; margin-left: 6px; }
 .tab.tab-ext:hover, .tab.tab-ext:focus-visible { opacity: 1; }
 .tab.tab-ext span { font-size: .85em; }
+
+/* articles : logo sans cadre, bloc « pour / contre » */
+.prose img.logo-plain { box-shadow: none; border-radius: 16px; }
+.prose .pm { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 1.2em 0; }
+.prose .pm > div { background: var(--card); padding: 4px 18px 10px; border-radius: 12px; box-shadow: inset 0 3px 0 var(--pm, var(--c)), 0 0 0 1px var(--line); }
+.prose .pm-plus { --pm: #5ee0a0; }
+.prose .pm-moins { --pm: #ff8a7a; }
+.prose .pm h3 { margin-top: .9em; color: var(--pm); }
+.prose .pm-plus li::marker { content: '+  '; color: #5ee0a0; font-weight: 700; }
+.prose .pm-moins li::marker { content: '−  '; color: #ff8a7a; font-weight: 700; }
+@media (max-width: 760px) { .prose .pm { grid-template-columns: 1fr; } }
+.cover[src$=".svg"] { object-fit: contain; background: #0d1424; padding: 6% 8%; box-sizing: border-box; filter: none; }
