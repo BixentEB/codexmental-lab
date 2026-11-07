@@ -175,6 +175,6 @@ Vous pouvez aussi m'envoyer les infos et les images dans la conversation : je le
 
 Rien à faire à la main : à chaque modification de `data/projects.json`, `data/atelier.json`, `data/news.json` ou d'un article de l'Atelier, une automatisation régénère une page HTML simple par projet (`projets/<id>/`) et par dossier de l'Atelier (`atelier/<id>/`), le sommaire `projets/` et `sitemap.xml`. Le site animé ne change pas.
 
-- Les dates viennent de `data/news.json` : la première annonce d'une page sert de date de publication, la dernière de date de mise à jour.
+- Dates : champ `"published": "AAAA-MM-JJ"` d'un projet ou d'un dossier de l'Atelier (première apparition), complété par les annonces de `data/news.json`. La plus ancienne sert de date de publication, la plus récente de date de mise à jour. Pour une nouvelle fiche, l'annonce dans `news.json` suffit.
 - Pour qu'un projet ou un dossier n'apparaisse pas dans ces pages : `"index": false` dans son entrée (ou `"hidden": true`).
 - Pour régénérer à la main : `python3 tools/build_static.py`.
