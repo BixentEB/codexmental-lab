@@ -74,12 +74,20 @@ def dates_for(news, href, published=None):
     return (ds[0], ds[-1]) if ds else (None, None)
 
 
+BAR = ('<header class="bar"><a class="brand" href="/"><img src="/favicon.svg" alt="" width="26" height="26"><span>CODEX MENTAL · LABORATOIRE</span></a>'
+       '<a class="enter" href="/">Entrer dans le Laboratoire <span aria-hidden="true">→</span></a></header>')
+PROMO = ('<a class="promo%s" href="/"><img src="/projets/apercu.webp" alt="Aperçu du site" width="1280" height="720" loading="lazy">'
+         '<span class="promo-t"><b>Le Laboratoire de Codex Mental</b><span>Des idées qui passent de la fiole à l’éprouvette : applications, logiciels, styles pour le navigateur, prototypes de jeux et dossiers d’idées, à parcourir étagère par étagère.</span>'
+         '<span class="enter">Entrer dans le Laboratoire <span aria-hidden="true">→</span></span></span></a>')
+OG_IMAGE = 'https://lab.codexmental.com/projets/apercu.webp'
+
+
 FOOT = ('<footer class="foot"><p>© %s — Codex Mental. Citation et reprise d\'extraits bienvenues, avec le nom de '
         'l\'auteur et un lien vers la page d\'origine. Pour une reprise plus large, <a href="%s">écrivez-moi</a>.</p>'
         '<p><a href="/projets/">Tous les projets</a> · <a href="/">Entrer dans le Laboratoire</a></p></footer>')
 
 
-def shell(title, desc, canonical, body, ld, og_type='article'):
+def shell(title, desc, canonical, body, ld, og_type='article', top=False):
     return '''<!doctype html>
 <html lang="fr">
 <head>
@@ -95,18 +103,22 @@ def shell(title, desc, canonical, body, ld, og_type='article'):
 <meta property="og:description" content="{d}">
 <meta property="og:url" content="{c}">
 <meta property="og:locale" content="fr_FR">
+<meta property="og:image" content="{ogimg}">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/projets/lisible.css">
 <script type="application/ld+json">{ld}</script>
 </head>
 <body>
+{bar}
 <main class="page">
-{b}
+{top}{b}
+{promo}
 {f}
 </main>
 </body>
 </html>
-'''.format(t=esc(title), d=esc(desc), a=esc(AUTHOR), c=esc(canonical), o=og_type, s=esc(SITE_NAME), b=body,
+'''.format(bar=BAR, promo=PROMO % '', top=(PROMO % ' top') if top else '', ogimg=OG_IMAGE, t=esc(title), d=esc(desc), a=esc(AUTHOR), c=esc(canonical), o=og_type, s=esc(SITE_NAME), b=body,
            f=FOOT % (esc(AUTHOR), esc(CONTACT)), ld=json.dumps(ld, ensure_ascii=False).replace('</', '<\\/'))
 
 
@@ -238,7 +250,7 @@ def main():
           'hasPart': [{'@type': 'CreativeWork', 'name': t, 'url': u} for _, u, t, _, _ in listing]}
     write('projets/index.html', shell('Tous les projets — ' + SITE_NAME,
                                       'Sommaire des projets et dossiers d\'idées du Laboratoire de Codex Mental, par ' + AUTHOR + '.',
-                                      SITE + '/projets/', '\n'.join(parts), ld, og_type='website'))
+                                      SITE + '/projets/', '\n'.join(parts), ld, og_type='website', top=True))
 
     urls = [(SITE + '/', None), (SITE + '/projets/', None)] + [(u, pub) for _, u, _, pub, _ in listing]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
