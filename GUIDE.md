@@ -170,3 +170,11 @@ La pastille apparaît sur l'onglet, sur l'étagère de l'accueil et sur la carte
 ## Besoin d'un coup de main
 
 Vous pouvez aussi m'envoyer les infos et les images dans la conversation : je les range au bon endroit.
+
+## Pages lisibles (moteurs de recherche et IA)
+
+Rien à faire à la main : à chaque modification de `data/projects.json`, `data/atelier.json`, `data/news.json` ou d'un article de l'Atelier, une automatisation régénère une page HTML simple par projet (`projets/<id>/`) et par dossier de l'Atelier (`atelier/<id>/`), le sommaire `projets/` et `sitemap.xml`. Le site animé ne change pas.
+
+- Les dates viennent de `data/news.json` : la première annonce d'une page sert de date de publication, la dernière de date de mise à jour.
+- Pour qu'un projet ou un dossier n'apparaisse pas dans ces pages : `"index": false` dans son entrée (ou `"hidden": true`).
+- Pour régénérer à la main : `python3 tools/build_static.py`.
