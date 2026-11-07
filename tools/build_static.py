@@ -8,7 +8,8 @@ Génère, sans toucher au site animé :
 - atelier/<id>/index.html : une page par dossier de data/atelier.json ;
 - projets/index.html : le sommaire ;
 - sitemap.xml.
-Dates : tirées de data/news.json (première annonce = publication, dernière = mise à jour).
+Dates : champ "published" (première apparition, retrouvée dans l'historique des sites) et annonces de
+data/news.json ; la plus ancienne = publication, la plus récente = mise à jour.
 Exclus : toute entrée marquée "hidden": true, "status": "draft" ou "index": false.
 
 Bibliothèque standard uniquement. Relancé par .github/workflows/pages-lisibles.yml.
@@ -68,8 +69,8 @@ def short(t, n=220):
     return t if len(t) <= n else t[:n].rsplit(' ', 1)[0] + '…'
 
 
-def dates_for(news, href):
-    ds = sorted(u['date'] for u in news if u.get('href') == href and u.get('date'))
+def dates_for(news, href, published=None):
+    ds = sorted([u['date'] for u in news if u.get('href') == href and u.get('date')] + ([published] if published else []))
     return (ds[0], ds[-1]) if ds else (None, None)
 
 
@@ -191,7 +192,7 @@ def main():
         if excluded(p):
             skipped.append(p['id']); continue
         href = '#/p/' + p['id']
-        pub, mod = dates_for(news, href)
+        pub, mod = dates_for(news, href, p.get('published'))
         desc = short(p.get('summary') or p.get('tagline') or p.get('detail'))
         extra = {'@type': 'SoftwareApplication', 'applicationCategory': cats.get(p.get('cat'), ''),
                  'operatingSystem': p.get('platform') or ''} if p.get('cat') in ('applications', 'logiciels') else None
@@ -209,7 +210,7 @@ def main():
             with open(src, encoding='utf8') as f:
                 frag = f.read()
             href = '#/atelier/' + it['id']
-            pub, mod = dates_for(news, href)
+            pub, mod = dates_for(news, href, it.get('published'))
             desc = short(text_of(frag))
             url = page('atelier', it['id'], it['title'], desc, clean(frag), SITE + '/' + href,
                        'Atelier › ' + sec.get('label', ''), pub, mod, schema_type='Article')
