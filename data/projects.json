@@ -45,8 +45,14 @@
    "id": "nox",
    "icon": "img/projets/nox/icone.png",
    "emojis": [
-    { "src": "img/projets/nox/nox_thinking.png", "label": "Quand NOX réfléchit" },
-    { "src": "img/projets/nox/nox_starry.png", "label": "Quand NOX est émerveillé" }
+    {
+     "src": "img/projets/nox/nox_thinking.png",
+     "label": "Quand NOX réfléchit"
+    },
+    {
+     "src": "img/projets/nox/nox_starry.png",
+     "label": "Quand NOX est émerveillé"
+    }
    ],
    "name": "NOX — Assistant IA personnel",
    "cat": "ia",
@@ -169,7 +175,8 @@
     "Python",
     "Discord",
     "Prototype"
-   ]
+   ],
+   "published": "2026-10-26"
   },
   {
    "id": "noxdl",
@@ -201,7 +208,8 @@
     "Multimédia",
     "Automatisation",
     "Bêta"
-   ]
+   ],
+   "published": "2026-10-26"
   },
   {
    "id": "perimgo-home",
@@ -233,7 +241,8 @@
     "Gestion",
     "Quotidien",
     "En développement"
-   ]
+   ],
+   "published": "2026-10-26"
   },
   {
    "id": "perimgo-business",
@@ -265,7 +274,8 @@
     "Commerce",
     "Stock",
     "Accès privé"
-   ]
+   ],
+   "published": "2026-10-26"
   },
   {
    "id": "dexlibera",
@@ -297,7 +307,8 @@
     "Bibliothèque",
     "Culture",
     "Bêta"
-   ]
+   ],
+   "published": "2026-10-26"
   },
   {
    "id": "codex-mental",
@@ -328,7 +339,8 @@
     "Création",
     "Immersif",
     "Site public"
-   ]
+   ],
+   "published": "2025-06-05"
   },
   {
    "id": "css-chatgpt",
@@ -519,7 +531,8 @@
     "Personnalisation",
     "UX/UI",
     "Expérimental"
-   ]
+   ],
+   "published": "2026-10-26"
   },
   {
    "id": "heures-sacrees",
@@ -558,7 +571,8 @@
     "Symbolisme",
     "Journal",
     "Prototype"
-   ]
+   ],
+   "published": "2025-06-14"
   },
   {
    "id": "noxlayer",
@@ -591,7 +605,8 @@
     "CSS",
     "JavaScript",
     "Concept"
-   ]
+   ],
+   "published": "2026-10-26"
   },
   {
    "id": "widgets",
@@ -623,7 +638,8 @@
     "Widget",
     "Photo",
     "Concept"
-   ]
+   ],
+   "published": "2026-10-26"
   },
   {
    "id": "mini-rpg",
@@ -661,7 +677,8 @@
     "Jeu",
     "Création",
     "Concept"
-   ]
+   ],
+   "published": "2026-10-26"
   },
   {
    "id": "salle-experience",
@@ -693,7 +710,8 @@
     "Navigateur",
     "Création",
     "Prototype"
-   ]
+   ],
+   "published": "2026-10-26"
   }
  ],
  "categories": [

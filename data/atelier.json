@@ -7,7 +7,8 @@
    "items": [
     {
      "id": "projets/nox",
-     "title": "NOX Electron Lab"
+     "title": "NOX Electron Lab",
+     "published": "2026-10-26"
     }
    ]
   },
@@ -22,20 +23,24 @@
     },
     {
      "id": "explo/modelexplo",
-     "title": "Modèle d'exploration"
+     "title": "Modèle d'exploration",
+     "published": "2025-06-21"
     },
     {
      "id": "explo/cryodynamic",
-     "title": "Cryodynamique"
+     "title": "Cryodynamique",
+     "published": "2025-06-21"
     },
     {
      "id": "explo/polaris",
      "title": "POLARIS",
-     "cover": "img/articles/polaris-1.webp"
+     "cover": "img/articles/polaris-1.webp",
+     "published": "2025-06-21"
     },
     {
      "id": "explo/solunar",
-     "title": "SOLUNAR"
+     "title": "SOLUNAR",
+     "published": "2025-06-20"
     }
    ]
   },
@@ -45,11 +50,13 @@
    "items": [
     {
      "id": "aievo/b12",
-     "title": "B-12, assistant IA personnel"
+     "title": "B-12, assistant IA personnel",
+     "published": "2025-06-14"
     },
     {
      "id": "projets/ia1",
-     "title": "IA & outils"
+     "title": "IA & outils",
+     "published": "2025-06-15"
     }
    ]
   }
