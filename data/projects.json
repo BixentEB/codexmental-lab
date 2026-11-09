@@ -712,8 +712,28 @@
     "Prototype"
    ],
    "published": "2026-10-26"
-  }
- ],
+  },
+    {
+      "id": "reseau-propulsion",
+      "name": "Réseau d'assistance propulsive",
+      "cat": "logiciels",
+      "status": "reflexion",
+      "mark": "✧",
+      "accent": "#9ec8ff",
+      "platform": "Concept interplanétaire",
+      "tagline": "Un réseau modulaire d'assistance propulsive pour les trajets interplanétaires",
+      "concept": "Une idée de réseau de propulsion d'appoint, modulaire, pour faciliter les déplacements entre planètes. Le développement complet est dans l'article du Codex.",
+      "state": "Concept en réflexion",
+      "article": "https://codexmental.com/articles/atelier/explo/reseau/",
+      "tags": [
+        "Espace",
+        "Astronautique",
+        "Propulsion",
+        "Concept"
+      ],
+      "published": "2026-11-09"
+    }
+  ],
  "categories": [
   {
    "id": "applications",
