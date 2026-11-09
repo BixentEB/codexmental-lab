@@ -259,7 +259,6 @@ function pageProject(id) {
       ${filesBlock(p)}
       ${guideBlock(p)}
       ${p.play ? `<p class="play"><a class="play-btn" href="${esc(p.play)}">${pix('door', '#ffb347', 18)} Entrer dans la salle</a></p>` : ''}
-      ${p.article ? `<p class="play"><a class="play-btn" href="${esc(p.article)}">Lire l'article entier sur Codex Mental ↗</a></p>` : ''}
       ${tags(p.tags)}
     </article>
     <nav class="pager">${prev ? `<a href="#/p/${prev.id}">← ${esc(prev.name)}</a>` : '<span></span>'}${next ? `<a href="#/p/${next.id}">${esc(next.name)} →</a>` : '<span></span>'}</nav>
