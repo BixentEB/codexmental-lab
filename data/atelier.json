@@ -10,7 +10,8 @@
      "title": "NOX Electron Lab",
      "published": "2026-10-26"
     }
-   ]
+   ],
+   "mark": "⚙"
   },
   {
    "label": "Exploration futuriste",
@@ -24,12 +25,8 @@
     {
      "id": "explo/reseau",
      "title": "Réseau d'assistance propulsive",
-     "published": "2026-11-09"
-    },
-    {
-     "id": "explo/modelexplo",
-     "title": "Modèle d'exploration",
-     "published": "2025-06-21"
+     "published": "2026-11-09",
+     "cover": "img/articles/reseau-entete.svg"
     },
     {
      "id": "explo/cryodynamic",
@@ -47,7 +44,8 @@
      "title": "SOLUNAR",
      "published": "2025-06-20"
     }
-   ]
+   ],
+   "mark": "✧"
   },
   {
    "label": "Évolutions de l'IA",
@@ -63,7 +61,20 @@
      "title": "IA & outils",
      "published": "2025-06-15"
     }
-   ]
+   ],
+   "mark": "◈"
+  },
+  {
+   "label": "Méthode de présentation",
+   "color": "#c9a6ff",
+   "items": [
+    {
+     "id": "explo/modelexplo",
+     "title": "Modèle d'exploration",
+     "published": "2025-06-21"
+    }
+   ],
+   "mark": "❖"
   }
  ]
 }

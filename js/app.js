@@ -103,7 +103,9 @@ function tags(list) {
 }
 function card(p) {
   const sum = p.summary || p.tagline || p.concept || '';
+  const head = p.cover ? `<img class="cover" src="${esc(p.cover)}" alt="" loading="lazy">` : `<div class="cover cover-gen" aria-hidden="true">${pix(cat(p.cat).icon, p.accent || cat(p.cat).color, 44)}</div>`;
   return `<a class="card" href="#/p/${esc(p.id)}" style="--c:${esc(p.accent || cat(p.cat).color)}">
+    ${head}
     <div class="card-top">${markHTML(p, '')}${(f => f ? badge(f.kind) : '')(freshFor('#/p/' + p.id))}${statusBadge(p)}</div>
     <h3>${esc(p.name)}</h3>
     <p class="plat">${esc(p.platform || '')}</p>
@@ -436,7 +438,7 @@ async function pageAtelier() {
     <div class="grid">${s.items.map(it => {
       const a = articleCache.get(it.id);
       return `<a class="card art" href="#/atelier/${it.id}" style="--c:${s.color}">${(f => f ? badge(f.kind) : '')(freshFor('#/atelier/' + it.id))}
-        ${it.cover ? `<img class="cover" src="${esc(it.cover)}" alt="" loading="lazy">` : ''}
+        ${it.cover ? `<img class="cover" src="${esc(it.cover)}" alt="" loading="lazy">` : `<div class="cover cover-gen" aria-hidden="true"><span class="g">${esc(it.mark || s.mark || '✧')}</span></div>`}
         <div class="card-top"><span class="kicker small">${esc(s.label)}</span>${a ? `<span class="read">${Math.max(1, Math.round(a.words / 200))} min</span>` : ''}</div>
         <h3>${esc(it.title)}</h3>
         <p class="sum">${esc(a ? (a.excerpt.length > 160 ? a.excerpt.slice(0, 157).trim() + '…' : a.excerpt) : '')}</p>

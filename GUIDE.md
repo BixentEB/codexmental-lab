@@ -149,6 +149,29 @@ Copiez un bloc existant dans `data/projects.json`, changez l'`id` (en minuscules
 1. Déposez le fichier HTML dans `content/atelier/<dossier>/<nom>.html` (par exemple `content/atelier/explo/mon-idee.html`). Les images vont dans `img/articles/`.
 2. Ajoutez une ligne dans `data/atelier.json`, dans la bonne section : `{ "id": "explo/mon-idee", "title": "Mon idée" }`.
 
+### Image d'en-tête des cartes
+
+Chaque carte (projet ou article de l'Atelier) a un en-tête. Pour y mettre une image, ajoutez le champ `"cover": "img/articles/mon-idee.webp"` (ou `img/projets/<id>/…` pour un projet). Format conseillé : 16:7, environ 1600 × 700 px. Sans image, la carte affiche un en-tête provisoire à ses couleurs, avec son pictogramme (le champ `mark` d'une section de l'Atelier).
+
+### Résumer un long article en fiche (classes `fx-`)
+
+Quand l'article complet vit sur Codex Mental, la fiche du Labo en reprend l'essentiel, avec un bouton vers l'original. Modèle : `content/atelier/explo/reseau.html`. Tout est dans un `<div class="fx">` :
+
+| Classe | Rôle |
+|---|---|
+| `fx-banner` | image en bandeau en haut (un nom en `-entete` garde l'image pleine sur la carte) |
+| `fx-hero` + `fx-kicker`, `fx-q`, `fx-id` | titre, question de départ et petite carte d'identité (domaine, nature, état) |
+| `fx-grid` (`c2`, `c4`) + `fx-card` | blocs, seulement pour les points qui en ont besoin ; `fx-card key` = colonne ouverte sans cadre |
+| `fx-chips` | petites étiquettes sous un texte |
+| `fx-split` | deux colonnes côte à côte |
+| `fx-table` | tableau |
+| `fx-list` | liste de questions ouvertes, sans cadre |
+| `fx-steps` | frise numérotée (feuille de route) |
+| `fx-cta` + `fx-btn` | bandeau « Lire l'article entier » |
+| `fx-foot` | petite note de fin |
+
+Conseil : ne pas tout mettre en blocs, alterner avec des listes et des colonnes ouvertes. Penser aux espaces insécables avant `:` `?` `!` `;` (`&nbsp;`).
+
 ## Annoncer une nouveauté (accueil et pastilles)
 
 Les « Dernières mises à jour » de l'accueil viennent du fichier **`data/news.json`**. Ajoutez une ligne **en haut** de la liste `updates` :
