@@ -22,6 +22,11 @@
      "cover": "img/articles/hypercodex-logo.svg"
     },
     {
+     "id": "explo/reseau",
+     "title": "Réseau d'assistance propulsive",
+     "published": "2026-11-09"
+    },
+    {
      "id": "explo/modelexplo",
      "title": "Modèle d'exploration",
      "published": "2025-06-21"

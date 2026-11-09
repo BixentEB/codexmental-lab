@@ -1,6 +1,7 @@
 {
  "info": "Dernières mises à jour, de la plus récente à la plus ancienne. kind : « new » (nouvelle page ou nouveau menu, pastille NEW) ou « maj » (mise à jour, petit rond). tab : accueil, applications, logiciels, web, jeux, ia ou atelier. La pastille disparaît 7 jours après la date.",
  "updates": [
+  { "date": "2026-11-09", "kind": "new", "tab": "atelier", "title": "Réseau d'assistance propulsive", "text": "Une idée d'Exploration futuriste sur les déplacements interplanétaires, à lire en entier sur Codex Mental.", "href": "#/atelier/explo/reseau" },
   { "date": "2026-11-05", "kind": "new", "tab": "atelier", "title": "HyperCodex : faire ses courses en réalité virtuelle", "text": "Un nouveau dossier d'idée dans l'Exploration futuriste.", "href": "#/atelier/explo/hypercodex" },
   { "date": "2026-11-04", "kind": "maj", "tab": "web", "title": "Habiller le Web", "text": "La fiche CSS ChatGPT s'élargit : ChatGPT devient un exemple, avec palette et animations. Thème Blue Stellar 1.1.", "href": "#/p/css-chatgpt" },
   { "date": "2026-10-27", "kind": "maj", "tab": "ia", "title": "NOX : une première anecdote", "text": "Les fiches peuvent maintenant raconter une anecdote.", "href": "#/p/nox" },
