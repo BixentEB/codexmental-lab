@@ -26,11 +26,11 @@
 [data-lab="nexus"][data-nxpal="lavande"] { --nx-bg: #09080d; --nx-text: #ece9f5; --nx-sub: #b3aec6; --nx-dim: #8a85a0; --nx-line: #2a2637; --nx-acc: #b9a2ff; }
 [data-lab="nexus"][data-nxpal="bleu"]    { --nx-bg: #05080f; --nx-text: #e6ecf7; --nx-sub: #a3b0c4; --nx-dim: #7a8aa5; --nx-line: #1c2740; --nx-acc: #5aaeff; }
 [data-lab="nexus"][data-nxpal="menthe"]  { --nx-bg: #070c0a; --nx-text: #e4f2ec; --nx-sub: #a4bcb1; --nx-dim: #7a958a; --nx-line: #1f2e28; --nx-acc: #6fd3a6; }
-[data-lab="nexus"][data-nxfont="pixel"]   { --nx-read: 'VT323', ui-monospace, monospace; --nx-lh: 1.45; }
+[data-lab="nexus"][data-nxfont="pixel"]   { --nx-read: 'VT323', ui-monospace, monospace; --nx-size: 22px; --nx-lh: 1.4; }
 [data-lab="nexus"][data-nxfont="lisible"] { --nx-read: 'IBM Plex Sans', system-ui, sans-serif; --nx-size: 17px; --nx-lh: 1.75; }
 /* VT323 est petite à taille égale : on aligne la hauteur de ses lettres sur celle des autres polices */
-[data-lab="nexus"][data-nxfont="pixel"] .view { font-size-adjust: .5; }
-[data-lab="nexus"][data-nxfont="pixel"] :is(.px-title, .sec, .card h3, .tagline, .anecdote h3, .prose h1, .prose h2, .prose h3, .kicker, .crumbs, .chip, .status, .tags, .plat, .read, .specs dt, .box h2, .btn, .lab-foot, .more, .shelf b, .shelf small) { font-size-adjust: none; }
+/* largeur de lecture en pixels : elle ne doit pas dépendre de la police choisie (VT323 est très étroite) */
+[data-lab="nexus"] { --nx-col: 760px; }
 
 [data-lab="nexus"] body { background: var(--nx-bg); color: var(--nx-text); transition: background .3s, color .3s; }
 [data-lab="nexus"] #scene, [data-lab="nexus"] .lab::before, [data-lab="nexus"] .crt, [data-lab="nexus"] .tube { display: none; }
@@ -54,7 +54,7 @@
 
 /* en-tête */
 [data-lab="nexus"] .lab-head {
-  align-items: center; gap: 16px; padding: 14px max(20px, calc((100% - 1120px) / 2)); min-height: 66px;
+  align-items: center; gap: 14px; padding: 14px max(20px, calc((100% - 1240px) / 2)); min-height: 66px;
   background: var(--nx-bg); border-bottom: 1px dashed var(--nx-line); box-shadow: none;
 }
 [data-lab="nexus"] .brand { padding: 0; gap: 12px; color: var(--nx-text); }
@@ -65,7 +65,7 @@
 @media (min-width: 760px) { [data-lab="nexus"] .lab-head { flex-wrap: nowrap; } }
 [data-lab="nexus"] .tab {
   font-family: var(--nx-font); font-size: 14px; line-height: 1.2; color: var(--nx-sub); background: transparent;
-  border: 1px solid transparent; margin: 0; padding: 6px 10px;
+  border: 1px solid transparent; margin: 0; padding: 6px 8px; white-space: nowrap;
 }
 [data-lab="nexus"] .tab::after { display: none; }
 [data-lab="nexus"] .tab:hover, [data-lab="nexus"] .tab:focus-visible { color: var(--nx-text); }
@@ -128,7 +128,7 @@
 [data-lab="nexus"] .kicker.small { font-size: 12px; text-transform: uppercase; letter-spacing: 1.4px; }
 [data-lab="nexus"] .prompt { color: var(--nx-dim); }
 [data-lab="nexus"] .caret { width: .55em; height: 1.05em; vertical-align: -.15em; background: var(--nx-acc); }
-[data-lab="nexus"] .lead { font-size: 1.05em; line-height: var(--nx-lh); color: var(--nx-sub); max-width: 68ch; }
+[data-lab="nexus"] .lead { font-size: 1.05em; line-height: var(--nx-lh); color: var(--nx-sub); max-width: var(--nx-col); }
 [data-lab="nexus"] .warn { font-family: var(--nx-font); font-size: 13px; color: var(--nx-sub); background: transparent; box-shadow: none; padding: 0; border-left: 2px solid var(--nx-acc); padding-left: 10px; }
 [data-lab="nexus"] .sec { font-family: var(--nx-title); font-weight: 400; font-size: 30px; line-height: 1.1; color: var(--nx-text); text-shadow: var(--nx-glow); margin: 48px 0 18px; }
 [data-lab="nexus"] .sec::before { content: '> '; color: var(--nx-acc); }
@@ -194,15 +194,16 @@
 /* fiche projet */
 [data-lab="nexus"] .detail { --c: var(--nx-acc) !important; }
 [data-lab="nexus"] .tagline, [data-lab="nexus"] .anecdote h3 { font-family: var(--nx-title); font-size: 26px; color: var(--nx-acc); }
-[data-lab="nexus"] .detail > p { font-size: 1em; color: var(--nx-sub); max-width: 70ch; }
+[data-lab="nexus"] .detail > p { font-size: 1em; color: var(--nx-sub); max-width: var(--nx-col); }
 [data-lab="nexus"] .box { background: transparent; padding: 14px 0 0; border-top: 1px dashed var(--nx-line); }
 [data-lab="nexus"] .box h2 { font-family: var(--nx-font); font-size: 12px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--nx-acc); }
 [data-lab="nexus"] .anecdote { border-top: 0; border-left: 2px solid var(--nx-acc); padding: 4px 0 4px 18px; }
 [data-lab="nexus"] .anecdote p { color: var(--nx-sub); font-size: .95em; }
-[data-lab="nexus"] .px-list li { font-size: .92em; }
+[data-lab="nexus"] .px-list li { font-size: calc(var(--nx-size) * .92); }
 [data-lab="nexus"] .px-list li::before { content: '>'; width: auto; height: auto; background: none; box-shadow: none; color: var(--nx-acc); top: 0; font-family: var(--nx-font); }
 [data-lab="nexus"] .specs dt { font-family: var(--nx-font); font-size: 12.5px; color: var(--nx-dim); }
-[data-lab="nexus"] .specs dd { font-size: .92em; }
+[data-lab="nexus"] .specs dd { font-size: calc(var(--nx-size) * .9); }
+[data-lab="nexus"] :is(.sc-text, .news-txt, .dl-empty p, .file p, .steps li, .notes li) { font-size: calc(var(--nx-size) * .9); }
 [data-lab="nexus"] .btn, [data-lab="nexus"] .play-btn { font-family: var(--nx-font); font-size: 13.5px; color: var(--nx-text); background: transparent; border: 1px solid var(--edge); border-radius: 0; box-shadow: none; }
 [data-lab="nexus"] .btn:hover, [data-lab="nexus"] .play-btn:hover { border-color: var(--nx-acc); color: var(--nx-acc); }
 [data-lab="nexus"] .btn-main { color: var(--nx-bg); background: var(--nx-acc); border-color: var(--nx-acc); }
@@ -215,10 +216,13 @@
 /* Atelier et articles */
 [data-lab="nexus"] .intro-box { padding-top: 14px; font-size: .95em; color: var(--nx-sub); }
 [data-lab="nexus"] .more { font-family: var(--nx-font); font-size: 14px; }
-[data-lab="nexus"] .prose { --c: var(--nx-acc) !important; max-width: 72ch; font-size: 1em; line-height: var(--nx-lh); }
+[data-lab="nexus"] .prose { --c: var(--nx-acc) !important; max-width: calc(var(--nx-col) + 40px); font-size: 1em; line-height: var(--nx-lh); }
 [data-lab="nexus"] .prose h1 { font-family: var(--nx-title); font-weight: 400; font-size: clamp(40px, 5vw, 60px); line-height: 1; color: var(--nx-text); text-shadow: var(--nx-glow); }
 [data-lab="nexus"] .prose h2 { font-family: var(--nx-title); font-weight: 400; font-size: 32px; line-height: 1.1; color: var(--nx-acc); text-shadow: var(--nx-glow); background: none; padding: 0; border-top: 1px dashed var(--nx-line); padding-top: .6em; }
 [data-lab="nexus"] .prose h2::before { content: '> '; color: var(--nx-dim); }
+/* sous-titre centré juste sous le titre (« – Faire ses courses… – ») : ni chevron ni filet */
+[data-lab="nexus"] .prose h1 + h2, [data-lab="nexus"] .prose h2.text-center { border-top: 0; padding-top: 0; margin-top: .2em; font-size: 26px; color: var(--nx-sub); text-shadow: none; }
+[data-lab="nexus"] .prose h1 + h2::before, [data-lab="nexus"] .prose h2.text-center::before { content: none; }
 [data-lab="nexus"] .prose h3 { font-family: var(--nx-title); font-size: 25px; color: var(--nx-text); }
 [data-lab="nexus"] .prose p, [data-lab="nexus"] .prose li { color: var(--nx-sub); }
 [data-lab="nexus"] .prose strong { color: var(--nx-text); }
@@ -229,6 +233,9 @@
 [data-lab="nexus"] .prose hr { height: 0; background: none; border-top: 1px dashed var(--nx-line); }
 [data-lab="nexus"] .prose code { font-family: 'IBM Plex Mono', monospace; background: transparent; box-shadow: inset 0 0 0 1px var(--nx-line); color: var(--nx-acc); }
 [data-lab="nexus"] .prose .fiche-projet, [data-lab="nexus"] .prose .codex-note, [data-lab="nexus"] .prose .notes-fin { background: transparent; box-shadow: none; border-left: 2px solid var(--nx-line); padding: 4px 0 4px 18px; }
+/* quand .fiche-projet enveloppe tout l'article, ce n'est pas un encadré : on l'efface */
+[data-lab="nexus"] .prose > .fiche-projet:only-child, [data-lab="nexus"] .prose > .fiche-projet:has(> h1) { border: 0; padding: 0; margin: 0; }
+[data-lab="nexus"] .prose .text-center { text-align: center; }
 [data-lab="nexus"] .prose details { border-top: 1px dashed var(--nx-line); padding-top: 10px; }
 
 /* mise en page visuelle des articles (.fx) : filets au lieu des cartes arrondies */
