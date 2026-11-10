@@ -231,7 +231,8 @@ a { color: var(--accent); }
 .intro-box { margin: 10px 3px 6px; font-size: 14.5px; line-height: 1.75; color: var(--soft); }
 .intro-box p:first-child { margin-top: 0; }
 .more { font-family: var(--f-vt); font-size: 20px; text-decoration: none; }
-.prose { max-width: min(100%, 1080px); font-size: 15px; line-height: 1.8; color: var(--ink); }
+/* l'article remplit la zone de lecture du thème (panneau du labo ou colonne de la Vitrine) */
+.prose { max-width: 100%; font-size: 15px; line-height: 1.8; color: var(--ink); }
 .prose h1 { font-family: var(--f-px); font-weight: 400; font-size: clamp(16px, 2vw, 24px); line-height: 1.5; color: #fff; text-shadow: 3px 3px 0 #000, 0 0 18px color-mix(in srgb, var(--c) 50%, transparent); margin: .2em 0 .8em; }
 .prose h2 { font-family: var(--f-px); font-weight: 400; font-size: 12.5px; line-height: 1.7; color: var(--c); margin: 2.3em 0 .9em; padding-bottom: 10px; background: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 10px) bottom / 100% 3px no-repeat; }
 .prose h1 + h2 { margin-top: .4em; }
