@@ -88,6 +88,9 @@ async function load() {
     // même retour que sur l'Observatoire : un lien vers le site principal, en fin de menu
     + '<a class="tab tab-ext" href="https://codexmental.com" title="Revenir sur le site Codex Mental">Codex Mental <span aria-hidden="true">↗</span></a>';
   markTabs();
+  // lecture seule pour la console de NEXUS
+  window.LABDATA = { projects: DATA.projects, categories: DATA.categories, atelier: ATELIER, tabs: TABS };
+  window.dispatchEvent(new Event('lab:ready'));
 }
 const cat = id => DATA.categories.find(c => c.id === id);
 const projectsOf = id => DATA.projects.filter(p => p.cat === id);
@@ -120,13 +123,14 @@ const ROOM_TEXT = {
   hd: { kicker: '<p class="kicker">Codex Mental · Laboratoire d\'alchimie</p>', hint: () => '⚗ Astuce : cliquez sur la grande cuve… si vous osez. Le bouton ⤓ range l\'écran pour admirer le labo.' },
   observatoire: { kicker: '<p class="kicker">Codex Mental · L\'observatoire</p>', hint: () => '🔭 Salle libre : rangez l\'écran (⤓) et cliquez partout. Le télescope vise un astre, le ciel lâche des étoiles filantes.' },
   station: { kicker: '<p class="kicker">Station orbitale · Module de recherche</p>', hint: () => '🛰 Salle libre : rangez l\'écran et explorez. Le réacteur, la console, le soleil et les bulles réagissent aux clics.' },
-  avantposte: { kicker: '<p class="kicker">Avant-poste · Planète Kepler-C</p>', hint: () => '👽 Astuce : tapotez la vitre du dôme. Ils finissent toujours par venir voir.' }
+  avantposte: { kicker: '<p class="kicker">Avant-poste · Planète Kepler-C</p>', hint: () => '👽 Astuce : tapotez la vitre du dôme. Ils finissent toujours par venir voir.' },
+  nexus: { kicker: '<p class="kicker"><span class="prompt">&gt;</span> NEXUS OS 5.0 · session visiteur <span class="caret"></span></p>', hint: () => '⌨ La console en bas de l\'écran attend vos ordres. Commencez par taper help.' }
 };
 function roomText() { return ROOM_TEXT[(window.LAB || {}).theme] || ROOM_TEXT.pixel; }
 function footer() {
   const hw = window.LAB && window.LAB.halloween;
   if (window.LAB && window.LAB.universe === 'pro') return `<footer class="lab-foot">
-    <p class="hint">Envie d'explorer ? Le labo cache trois univers : <a href="#" data-go="pixel">en pixel</a>, <a href="#" data-go="vecto">en vectoriel</a> et <a href="#" data-go="orbital">en orbite</a>.</p>
+    <p class="hint">Envie d'explorer ? Le labo cache quatre univers : <a href="#" data-go="pixel">en pixel</a>, <a href="#" data-go="vecto">en vectoriel</a>, <a href="#" data-go="orbital">en orbite</a> et <a href="#" data-go="nexus">sur un écran des années 80</a>.</p>
     <p>Codex Mental · Laboratoire <span class="sep">/</span> <a href="https://codexmental.com">retour au Codex</a></p>
   </footer>`;
   return `<footer class="lab-foot">
@@ -726,7 +730,7 @@ function goUniverse(id) {
   const C = window.LAB || {}, U = C.universes[id];
   if (!U || U.soon) { say('🛰 La station orbitale est encore en construction. Revenez bientôt !', 2600); return; }
   if (id === C.universe) { openSettings(false); return; }
-  switchTo('theme', U.rooms[0], id === 'pro' ? '✦ Retour à la vitrine…' : '⚗ Ouverture du ' + U.label.toLowerCase() + '…');
+  switchTo('theme', U.rooms[0], id === 'pro' ? '✦ Retour à la vitrine…' : id === 'nexus' ? '⌨ Démarrage de NEXUS…' : '⚗ Ouverture du ' + U.label.toLowerCase() + '…');
 }
 setPanel.addEventListener('click', e => {
   const b = e.target.closest('.opt'); if (!b) return;
@@ -779,6 +783,7 @@ if (window.LAB && window.LAB.universe !== 'pro') {
 })();
 
 /* ---------- démarrage ---------- */
+window.LabSay = say;   // NEXUS s'en sert pour ses messages
 window.addEventListener('hashchange', route);
 load().then(route).catch(err => {
   console.error(err);

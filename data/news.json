@@ -1,6 +1,7 @@
 {
  "info": "Dernières mises à jour, de la plus récente à la plus ancienne. kind : « new » (nouvelle page ou nouveau menu, pastille NEW) ou « maj » (mise à jour, petit rond). tab : accueil, applications, logiciels, web, jeux, ia ou atelier. La pastille disparaît 7 jours après la date.",
  "updates": [
+  { "date": "2026-11-10", "kind": "new", "tab": "accueil", "title": "NEXUS LAB, un écran des années 80", "text": "Un quatrième univers pour le labo : console à taper, six couleurs phosphore, trois polices et un effet cathodique réglable.", "href": "?theme=nexus#/" },
   { "date": "2026-11-09", "kind": "maj", "tab": "atelier", "title": "Des en-têtes sur toutes les fiches", "text": "Chaque carte du Labo a maintenant un en-tête, et la fiche Réseau inaugure une mise en page plus visuelle.", "href": "#/atelier" },
   { "date": "2026-11-09", "kind": "new", "tab": "atelier", "title": "Réseau d'assistance propulsive", "text": "Une idée d'Exploration futuriste sur les déplacements interplanétaires, à lire en entier sur Codex Mental.", "href": "#/atelier/explo/reseau" },
   { "date": "2026-11-05", "kind": "new", "tab": "atelier", "title": "HyperCodex : faire ses courses en réalité virtuelle", "text": "Un nouveau dossier d'idée dans l'Exploration futuriste.", "href": "#/atelier/explo/hypercodex" },

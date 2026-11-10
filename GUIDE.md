@@ -190,6 +190,20 @@ Les « Dernières mises à jour » de l'accueil viennent du fichier **`data/news
 
 La pastille apparaît sur l'onglet, sur l'étagère de l'accueil et sur la carte de la fiche ou de l'article. Elle disparaît toute seule **7 jours** après la date. La liste de l'accueil montre les 4 dernières entrées.
 
+## L'univers NEXUS et les images « old »
+
+NEXUS est l'univers « écran des années 80 » du labo (menu **Univers**, ou l'adresse `lab.codexmental.com/?theme=nexus`). Le visiteur y choisit sa palette, sa police et l'intensité de l'effet cathodique avec le rouage ⚙, et peut naviguer en tapant dans la console en bas (`help` pour la liste).
+
+**Images « old »** : pour qu'une image ait une version rétro dans NEXUS, déposez à côté de l'originale une copie suffixée `-old`, même dossier et même format :
+
+| Image normale | Version NEXUS |
+|---|---|
+| `img/articles/reseau-entete.svg` | `img/articles/reseau-entete-old.svg` |
+| `img/projets/noxdl/1.png` | `img/projets/noxdl/1-old.png` |
+| `img/projets/nox/banniere.webp` | `img/projets/nox/banniere-old.webp` |
+
+NEXUS l'affiche automatiquement à la place de l'originale. Sans version `-old`, l'image originale s'affiche quand même, légèrement teintée et dans un cadre d'écran. Pensez-y à chaque nouvelle image.
+
 ## Besoin d'un coup de main
 
 Vous pouvez aussi m'envoyer les infos et les images dans la conversation : je les range au bon endroit.

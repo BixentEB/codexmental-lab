@@ -23,9 +23,10 @@
 <link rel="stylesheet" href="css/theme-hd.css">
 <link rel="stylesheet" href="css/theme-pro.css">
 <link rel="stylesheet" href="css/theme-orbital.css">
+<link rel="stylesheet" href="css/theme-nexus.css">
 <script>
   // Réglages du labo : univers, salle, apparence, animations, saison d'Halloween.
-  // Raccourcis d'adresse : ?theme=pro|pixel|alchimie|hd, ?scheme=dark|light, ?anim=full|calm|off, ?halloween=1|0
+  // Raccourcis d'adresse : ?theme=pro|pixel|alchimie|hd|nexus, ?scheme=dark|light, ?anim=full|calm|off, ?halloween=1|0
   window.LAB = (function () {
     var q = new URLSearchParams(location.search), d = new Date(), m = d.getMonth(), day = d.getDate();
     function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -37,13 +38,15 @@
       hd: { label: 'Le grand labo', universe: 'vecto', scene: 'js/scene-hd.js' },
       observatoire: { label: 'L\'observatoire', universe: 'vecto', scene: 'js/scene-observatoire.js', kit: true, explore: true },
       station: { label: 'La station', universe: 'orbital', scene: 'js/scene-station.js', kit: true, explore: true },
-      avantposte: { label: 'L\'avant-poste', universe: 'orbital', scene: 'js/scene-avantposte.js', kit: true }
+      avantposte: { label: 'L\'avant-poste', universe: 'orbital', scene: 'js/scene-avantposte.js', kit: true },
+      nexus: { label: 'NEXUS LAB', universe: 'nexus', scene: null }
     };
     var UNIVERSES = {
       pro: { label: 'Vitrine', desc: 'Sobre et lisible : l\'essentiel, sans décor.', rooms: ['pro'] },
       pixel: { label: 'Labo pixel', desc: 'Fioles, bobine Tesla et petit chimiste, façon vieux jeux.', rooms: ['pixel', 'alchimie'] },
       vecto: { label: 'Labo vectoriel', desc: 'Grand laboratoire d\'alchimie, puis l\'observatoire sous la coupole, à explorer librement.', rooms: ['hd', 'observatoire'] },
-      orbital: { label: 'Univers orbital', desc: 'Un avant-poste sur une planète habitée, puis une station en apesanteur à explorer librement.', rooms: ['avantposte', 'station'] }
+      orbital: { label: 'Univers orbital', desc: 'Un avant-poste sur une planète habitée, puis une station en apesanteur à explorer librement.', rooms: ['avantposte', 'station'] },
+      nexus: { label: 'NEXUS', desc: 'Un écran des années 80 : console à taper, couleurs phosphore et effet cathodique réglable.', rooms: ['nexus'] }
     };
     var theme = q.get('theme') || get('lab.theme') || 'pro';
     if (!THEMES[theme]) theme = 'pro';
@@ -68,6 +71,14 @@
     root.dataset.lab = theme; root.dataset.universe = universe; root.dataset.motion = motion;
     applyScheme(); mq.addEventListener('change', applyScheme);
     if (hw) root.classList.add('halloween');
+    // NEXUS : palette, police et intensité de l'écran, posées avant l'affichage pour éviter un flash
+    if (universe === 'nexus') {
+      var pal = get('nexus.palette'), font = get('nexus.font'), fx = get('nexus.fx');
+      root.dataset.nxpal = /^(glacier|ambre|cuivre|lavande|bleu|menthe)$/.test(pal) ? pal : 'glacier';
+      root.dataset.nxfont = /^(ecran|pixel|lisible)$/.test(font) ? font : 'ecran';
+      fx = fx === null ? (motion === 'off' ? 0 : 55) : Math.max(0, Math.min(100, +fx || 0));
+      root.style.setProperty('--nx-fx', (fx / 100).toFixed(2));
+    }
     // salle libre : on y entre sans écran, pour explorer ; les projets restent à un bouton
     var explore = !!THEMES[theme].explore;
     if (explore) { root.classList.add('explore'); if (!/^#\/?[a-z]/.test(location.hash)) root.classList.add('panel-away'); }
@@ -109,5 +120,6 @@
 
 <script>(function (th) { if (!th.scene) return; if (th.kit) document.write('<script src="js/vec-kit.js"><\/script>'); document.write('<script src="' + th.scene + '"><\/script>'); })(LAB.themes[LAB.theme]);</script>
 <script src="js/app.js"></script>
+<script>if (LAB.universe === 'nexus') document.write('<script src="js/nexus.js"><\/script>');</script>
 </body>
 </html>

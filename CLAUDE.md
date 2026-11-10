@@ -9,3 +9,4 @@
 - Ne rien inventer dans les fiches : laisser vide (« à renseigner ») ce que l'auteur n'a pas donné.
 - Textes en français, ton de l'auteur ; vérifier le rendu (Playwright) dans la Vitrine sombre et claire, un labo et sur mobile avant de pousser.
 - Mode d'emploi pour l'auteur : `GUIDE.md` (le tenir à jour si un nouveau champ ou fichier apparaît).
+- Univers NEXUS (`css/theme-nexus.css`, `js/nexus.js`) : pour chaque nouvelle image, prévoir aussi une version rétro `nom-old.ext` à côté de `nom.ext` (NEXUS la prend automatiquement ; sinon il teinte l'originale). Le rappeler à l'auteur si elle manque.
