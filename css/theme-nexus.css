@@ -31,6 +31,8 @@
 /* VT323 est petite à taille égale : on aligne la hauteur de ses lettres sur celle des autres polices */
 /* largeur de lecture en pixels : elle ne doit pas dépendre de la police choisie (VT323 est très étroite) */
 [data-lab="nexus"] { --nx-col: 760px; }
+/* une seule largeur de page pour l'en-tête, le contenu et la console */
+:root { --nx-page: 1240px; }
 
 [data-lab="nexus"] body { background: var(--nx-bg); color: var(--nx-text); transition: background .3s, color .3s; }
 [data-lab="nexus"] #scene, [data-lab="nexus"] .lab::before, [data-lab="nexus"] .crt, [data-lab="nexus"] .tube { display: none; }
@@ -54,7 +56,7 @@
 
 /* en-tête */
 [data-lab="nexus"] .lab-head {
-  align-items: center; gap: 14px; padding: 14px max(20px, calc((100% - 1240px) / 2)); min-height: 66px;
+  align-items: center; gap: 14px; padding: 14px max(20px, calc((100% - var(--nx-page)) / 2)); min-height: 66px;
   background: var(--nx-bg); border-bottom: 1px dashed var(--nx-line); box-shadow: none;
 }
 [data-lab="nexus"] .brand { padding: 0; gap: 12px; color: var(--nx-text); }
@@ -116,7 +118,7 @@
 /* zone de lecture */
 [data-lab="nexus"] .view {
   font-family: var(--nx-read);
-  padding: 36px max(20px, calc((100% - 1120px) / 2)) 48px; font-size: var(--nx-size); line-height: var(--nx-lh);
+  padding: 36px max(20px, calc((100% - var(--nx-page)) / 2)) 48px; font-size: var(--nx-size); line-height: var(--nx-lh);
   scrollbar-width: thin; scrollbar-color: var(--nx-line) transparent;
 }
 [data-lab="nexus"] .view::-webkit-scrollbar { display: block; width: 8px; }
@@ -216,7 +218,8 @@
 /* Atelier et articles */
 [data-lab="nexus"] .intro-box { padding-top: 14px; font-size: .95em; color: var(--nx-sub); }
 [data-lab="nexus"] .more { font-family: var(--nx-font); font-size: 14px; }
-[data-lab="nexus"] .prose { --c: var(--nx-acc) !important; max-width: calc(var(--nx-col) + 40px); font-size: 1em; line-height: var(--nx-lh); }
+/* les articles prennent toute la largeur de la page, comme la mise en page visuelle (Réseau) */
+[data-lab="nexus"] .prose { --c: var(--nx-acc) !important; max-width: none; font-size: 1em; line-height: var(--nx-lh); }
 [data-lab="nexus"] .prose h1 { font-family: var(--nx-title); font-weight: 400; font-size: clamp(40px, 5vw, 60px); line-height: 1; color: var(--nx-text); text-shadow: var(--nx-glow); }
 [data-lab="nexus"] .prose h2 { font-family: var(--nx-title); font-weight: 400; font-size: 32px; line-height: 1.1; color: var(--nx-acc); text-shadow: var(--nx-glow); background: none; padding: 0; border-top: 1px dashed var(--nx-line); padding-top: .6em; }
 [data-lab="nexus"] .prose h2::before { content: '> '; color: var(--nx-dim); }
@@ -239,7 +242,7 @@
 [data-lab="nexus"] .prose details { border-top: 1px dashed var(--nx-line); padding-top: 10px; }
 
 /* mise en page visuelle des articles (.fx) : filets au lieu des cartes arrondies */
-[data-lab="nexus"] .prose:has(.fx) { max-width: 1120px; }
+[data-lab="nexus"] .prose:has(.fx) { max-width: none; }
 [data-lab="nexus"] .prose .fx { font-size: 1em; }
 [data-lab="nexus"] .prose :is(.fx-id, .fx-card, .fx-table) { background: transparent; border-radius: 0; box-shadow: none; }
 [data-lab="nexus"] .prose .fx-id { border-left: 1px dashed var(--nx-line); padding: 0 0 0 18px; }
@@ -275,7 +278,7 @@
 /* ---------- la console ---------- */
 .nx-console { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: var(--nx-bg); border-top: 1px solid var(--nx-line); font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 .nx-out {
-  max-height: 0; overflow: hidden; padding: 0 max(20px, calc((100% - 1120px) / 2)); font-size: 13.5px; line-height: 1.55; color: var(--nx-sub);
+  max-height: 0; overflow: hidden; padding: 0 max(20px, calc((100% - var(--nx-page)) / 2)); font-size: 13.5px; line-height: 1.55; color: var(--nx-sub);
   white-space: pre-wrap; overflow-wrap: anywhere; transition: max-height .2s ease, padding .2s ease;
 }
 .nx-console.open .nx-out { max-height: min(38vh, 340px); overflow-y: auto; padding-top: 12px; padding-bottom: 4px; scrollbar-width: thin; scrollbar-color: var(--nx-line) transparent; }
@@ -285,7 +288,7 @@
 .nx-out .nx-dim { color: var(--nx-dim); }
 .nx-out a { color: var(--nx-text); text-decoration: none; border-bottom: 1px dotted var(--nx-dim); }
 .nx-out a:hover { color: var(--nx-acc); }
-.nx-line { display: flex; align-items: center; gap: 10px; height: var(--nx-con); padding: 0 max(20px, calc((100% - 1120px) / 2)); margin: 0; }
+.nx-line { display: flex; align-items: center; gap: 10px; height: var(--nx-con); padding: 0 max(20px, calc((100% - var(--nx-page)) / 2)); margin: 0; }
 .nx-prompt { color: var(--nx-acc); font-size: 14px; white-space: nowrap; text-shadow: var(--nx-glow); }
 .nx-line input { flex: 1; min-width: 0; background: transparent; border: 0; outline: none; font: inherit; font-size: 16px; color: var(--nx-text); caret-color: var(--nx-acc); }
 .nx-line input::placeholder { color: var(--nx-dim); opacity: .8; }
@@ -295,7 +298,7 @@
 .nx-console:focus-within { border-top-color: color-mix(in srgb, var(--nx-acc) 55%, var(--nx-line)); }
 
 /* ---------- écran de démarrage ---------- */
-.nx-boot { position: fixed; inset: 0; z-index: 60; background: var(--nx-bg); padding: 48px max(24px, calc((100% - 1120px) / 2)); font-family: 'VT323', monospace; font-size: 24px; line-height: 1.3; color: var(--nx-acc); text-shadow: var(--nx-glow); cursor: pointer; transition: opacity .3s; }
+.nx-boot { position: fixed; inset: 0; z-index: 60; background: var(--nx-bg); padding: 48px max(24px, calc((100% - var(--nx-page)) / 2)); font-family: 'VT323', monospace; font-size: 24px; line-height: 1.3; color: var(--nx-acc); text-shadow: var(--nx-glow); cursor: pointer; transition: opacity .3s; }
 .nx-boot div { white-space: pre-wrap; opacity: 0; }
 .nx-boot div.on { opacity: 1; }
 .nx-boot .nx-skip { color: var(--nx-dim); margin-top: 28px; font-size: 19px; }
