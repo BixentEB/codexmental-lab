@@ -122,7 +122,7 @@ con.className = 'nx-console'; con.id = 'nx-console';
 con.innerHTML = `<div class="nx-out" id="nx-out" role="log" aria-live="polite" aria-label="Journal de la console"></div>
   <form class="nx-line" id="nx-form" autocomplete="off">
     <label class="nx-prompt" for="nx-cmd"><span class="nx-host">visiteur@nexus:~</span>$</label>
-    <input id="nx-cmd" name="cmd" spellcheck="false" autocapitalize="off" enterkeyhint="go" placeholder="tapez help, une rubrique ou un nom de fiche">
+    <input id="nx-cmd" name="cmd" spellcheck="false" autocapitalize="off" enterkeyhint="go" placeholder="help, rubrique ou fiche…">
     <button type="button" class="nx-log-btn" id="nx-log" aria-expanded="false" aria-controls="nx-out">journal</button>
   </form>`;
 document.body.appendChild(con);
@@ -166,23 +166,29 @@ function find(q) {
 }
 function go(x) { print('ouverture : ' + x.label, 'nx-ok'); location.hash = x.href.slice(1) ? x.href : '#/'; }
 
-const HELP = [
-  'tapez directement :',
-  '  un nom de fiche        noxdl, perimgo-home…  → ouvre la fiche',
-  '  une rubrique           logiciels, jeux, atelier, accueil',
-  '  un mot du titre        reseau, polaris…  → ouvre l\'article',
-  'commandes :',
-  '  ls [rubrique]          liste les fiches (ou celles d\'une rubrique)',
-  '  cd <rubrique>          va dans une rubrique ; cd .. revient à l\'accueil',
-  '  open <nom>             ouvre une fiche ou un article',
-  '  palette <nom>          glacier, ambre, cuivre, lavande, bleu, menthe',
-  '  police <nom>           ecran, pixel, lisible',
-  '  fx <0-100>             intensité de l\'effet cathodique',
-  '  reglages               ouvre le panneau des réglages',
-  '  vitrine                quitte NEXUS pour la Vitrine',
-  '  clear                  vide le journal',
-  'astuces : touche / pour revenir ici, flèches ↑ ↓ pour l\'historique, Tab pour compléter.'
-].join('\n');
+// aide : rangée de raccourcis à toucher, puis une ligne par commande (lisible aussi sur téléphone)
+const HELP_ROWS = [
+  ['ls [rubrique]', 'liste les fiches'],
+  ['cd <rubrique>', 'change de rubrique · cd .. = accueil'],
+  ['open <nom>', 'ouvre une fiche ou un article'],
+  ['palette <nom>', 'glacier, ambre, cuivre, lavande, bleu, menthe'],
+  ['police <nom>', 'ecran, pixel, lisible'],
+  ['fx <0-100>', 'intensité de l\'effet cathodique'],
+  ['reglages', 'ouvre le panneau des réglages'],
+  ['vitrine', 'quitte NEXUS pour la Vitrine'],
+  ['clear', 'vide le journal']
+];
+function printHelp() {
+  const D = window.LABDATA;
+  const go = D ? ['accueil'].concat(D.categories.map(c => c.id), ['atelier']) : [];
+  const d = document.createElement('div');
+  d.className = 'nx-help';
+  d.innerHTML = `<p>Tapez un nom de fiche, une rubrique ou un mot du titre. Ou touchez :</p>
+    <div class="nx-chips">${go.map(k => `<button type="button" data-run="cd ${esc(k)}">${esc(k)}</button>`).join('')}<button type="button" data-run="ls">ls</button></div>
+    <dl>${HELP_ROWS.map(([c, t]) => `<div><dt>${esc(c)}</dt><dd>${esc(t)}</dd></div>`).join('')}</dl>
+    <p class="nx-tips">/ revient ici · ↑ ↓ historique · Tab complète</p>`;
+  out.appendChild(d); out.scrollTop = out.scrollHeight; openLog(true);
+}
 
 function openThing(arg) {
   const hits = find(arg);
@@ -192,8 +198,8 @@ function openThing(arg) {
   hits.slice(0, 12).forEach(x => printLink(x.label, x.href, x.kind));
 }
 const COMMANDS = {
-  help: () => print(HELP, 'nx-ok'),
-  aide: () => print(HELP, 'nx-ok'),
+  help: () => printHelp(),
+  aide: () => printHelp(),
   ls: arg => {
     const D = window.LABDATA; if (!D) return print('les données chargent encore…');
     const where = arg ? find(arg).find(x => x.kind === 'rubrique') : null;
@@ -248,7 +254,11 @@ cmd.addEventListener('keydown', e => {
   else if (e.key === 'Escape') { openLog(false); cmd.blur(); }
 });
 logBtn.addEventListener('click', () => openLog(!con.classList.contains('open')));
-out.addEventListener('click', e => { if (e.target.closest('a')) cmd.focus({ preventScroll: true }); });
+out.addEventListener('click', e => {
+  const b = e.target.closest('[data-run]');
+  if (b) { run(b.dataset.run); return; }
+  if (e.target.closest('a') && matchMedia('(hover: hover)').matches) cmd.focus({ preventScroll: true });
+});
 document.addEventListener('keydown', e => {
   if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
   const a = document.activeElement;

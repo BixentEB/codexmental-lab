@@ -610,6 +610,7 @@ async function route() {
   document.title = (t.id === 'accueil' ? '' : t.label + ' · ') + 'Codex Mental · Laboratoire';
   const act = tabsEl.querySelector('[aria-selected="true"]');
   if (act) act.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  setMenu(t);
   if (!firstRender) view.focus({ preventScroll: true });
   firstRender = false;
   updateTube();
@@ -781,6 +782,30 @@ if (window.LAB && window.LAB.universe !== 'pro') {
   call.addEventListener('click', () => setAway(false));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.documentElement.classList.contains('panel-away')) setAway(false); });
 })();
+
+/* ---------- menu des rubriques sur mobile ----------
+   Sous 760 px, la rangée d'onglets est remplacée par un bouton « ☰ rubrique ▾ »
+   qui déplie la liste complète (on ne devine pas toujours qu'une rangée défile). */
+const menuBtn = $('#menu-btn'), head = $('.lab-head');
+function setMenu(t) {
+  if (!menuBtn) return;
+  menuBtn.querySelector('.menu-cur').textContent = t.label;
+  const news = fresh().length > 0;
+  menuBtn.classList.toggle('has-news', news);
+}
+function toggleMenu(on) {
+  if (!menuBtn) return;
+  on = typeof on === 'boolean' ? on : !head.classList.contains('menu-open');
+  head.classList.toggle('menu-open', on);
+  menuBtn.setAttribute('aria-expanded', on);
+  if (on) { const a = tabsEl.querySelector('[aria-selected="true"]') || tabsEl.querySelector('.tab'); a && a.focus({ preventScroll: true }); }
+}
+if (menuBtn) {
+  menuBtn.addEventListener('click', e => { e.stopPropagation(); toggleMenu(); });
+  tabsEl.addEventListener('click', e => { if (e.target.closest('.tab')) toggleMenu(false); });
+  document.addEventListener('click', e => { if (head.classList.contains('menu-open') && !e.target.closest('.tabs, .menu-btn')) toggleMenu(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && head.classList.contains('menu-open')) { toggleMenu(false); menuBtn.focus(); } });
+}
 
 /* ---------- démarrage ---------- */
 window.LabSay = say;   // NEXUS s'en sert pour ses messages

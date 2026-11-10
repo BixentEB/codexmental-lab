@@ -306,20 +306,47 @@
 
 /* ---------- mobile ---------- */
 @media (max-width: 759px) {
-  [data-lab="nexus"] { --nx-con: 46px; }
-  [data-lab="nexus"] .lab-head { padding: 10px 14px 8px; gap: 8px; min-height: 0; flex-wrap: wrap; }
-  [data-lab="nexus"] .brand-name { font-size: 26px; }
-  [data-lab="nexus"] .brand-ico svg { width: 24px; height: 24px; }
-  [data-lab="nexus"] .tabs { order: 3; width: 100%; margin: 0; }
-  [data-lab="nexus"] .tab { font-size: 13px; padding: 5px 9px; }
+  /* téléphone : texte plus petit, console compacte, onglets dans le bouton menu */
+  [data-lab="nexus"] { --nx-con: 44px; --nx-size: 14px; --nx-lh: 1.65; }
+  [data-lab="nexus"][data-nxfont="pixel"] { --nx-size: 19px; }
+  [data-lab="nexus"][data-nxfont="lisible"] { --nx-size: 15px; }
+  [data-lab="nexus"] .lab-head { padding: 10px 14px 0; gap: 8px; min-height: 0; flex-wrap: wrap; }
+  [data-lab="nexus"] .brand-name { font-size: 24px; }
+  [data-lab="nexus"] .brand-ico svg { width: 22px; height: 22px; }
   [data-lab="nexus"] .settings { margin-left: auto; }
   [data-lab="nexus"] .exit-btn { position: static; }
-  [data-lab="nexus"] .view { padding: 22px 16px 32px; }
-  [data-lab="nexus"] .px-title { font-size: 40px; }
-  .nx-line, .nx-console.open .nx-out { padding-left: 14px; padding-right: 14px; }
+  [data-lab="nexus"] .menu-btn { font-family: var(--nx-font); font-size: 13px; color: var(--nx-text); background: transparent; border: 1px dashed var(--nx-line); border-radius: 0; }
+  [data-lab="nexus"] .menu-btn .menu-cur { font-weight: 400; color: var(--nx-acc); }
+  [data-lab="nexus"] .menu-btn .menu-cur::before { content: '> '; color: var(--nx-dim); }
+  [data-lab="nexus"] .lab-head.menu-open .tabs { background: var(--nx-bg); border-color: var(--nx-line); border-radius: 0; }
+  [data-lab="nexus"] .lab-head.menu-open .tab { font-size: 14px; padding: 9px 10px; }
+  [data-lab="nexus"] .view { padding: 18px 16px 28px; }
+  [data-lab="nexus"] .px-title { font-size: 32px; }
+  [data-lab="nexus"] .kicker { font-size: 11px; letter-spacing: .8px; }
+  [data-lab="nexus"] .sec { font-size: 24px; margin: 34px 0 14px; }
+  [data-lab="nexus"] .card h3 { font-size: 25px; }
+  [data-lab="nexus"] .prose h1 { font-size: 34px; }
+  [data-lab="nexus"] .prose h2 { font-size: 25px; }
+  [data-lab="nexus"] .prose h1 + h2, [data-lab="nexus"] .prose h2.text-center { font-size: 20px; }
+  .nx-line, .nx-console.open .nx-out { padding-left: 12px; padding-right: 12px; }
+  .nx-line { gap: 8px; }
   .nx-prompt .nx-host { display: none; }
   .nx-line input { font-size: 16px; }
+  .nx-out { font-size: 12px; line-height: 1.5; }
+  .nx-console.open .nx-out { max-height: 32vh; padding-top: 8px; }
 }
+/* raccourcis et aide de la console */
+.nx-help p { margin: 0 0 6px; color: var(--nx-text); }
+.nx-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+.nx-chips button { font: inherit; font-size: 12px; color: var(--nx-acc); background: transparent; border: 1px solid var(--nx-line); padding: 3px 8px; cursor: pointer; }
+.nx-chips button:hover, .nx-chips button:focus-visible { border-color: var(--nx-acc); outline: none; }
+.nx-help dl { margin: 0 0 6px; }
+.nx-help dl > div { display: grid; grid-template-columns: 15ch 1fr; gap: 12px; padding: 1px 0; }
+@media (max-width: 400px) { .nx-help dl > div { grid-template-columns: 1fr; gap: 0; } .nx-help dd { padding-left: 1.2em; } }
+.nx-help dt { color: var(--nx-acc); white-space: nowrap; }
+.nx-help dd { margin: 0; color: var(--nx-sub); }
+.nx-help .nx-tips { color: var(--nx-dim); }
+@media (hover: none) { .nx-help .nx-tips { display: none; } }
 @media (prefers-reduced-motion: reduce) {
   [data-lab="nexus"] body::before { animation: none; }
 }
