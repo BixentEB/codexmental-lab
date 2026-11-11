@@ -122,7 +122,25 @@ def shell(title, desc, canonical, body, ld, og_type='article', top=False):
            f=FOOT % (esc(AUTHOR), esc(CONTACT)), ld=json.dumps(ld, ensure_ascii=False).replace('</', '<\\/'))
 
 
+# typographie française pour les pages générées : espace insécable avant : ; ! ? » et après «,
+# appliquée au texte seulement (jamais aux balises, scripts, styles, code) ; les sources ne changent pas
+_TYPO_SPLIT = re.compile(r'(<script[\s\S]*?</script>|<style[\s\S]*?</style>|<pre[\s\S]*?</pre>|<code[\s\S]*?</code>|<textarea[\s\S]*?</textarea>|<[^>]+>)', re.I)
+
+
+def typo_html(s):
+    out = []
+    for i, part in enumerate(_TYPO_SPLIT.split(s)):
+        if i % 2 == 0 and part:
+            part = re.sub(r'[ \t\n]+([:»])', ' \\1', part)
+            part = re.sub(r'[ \t\n]+([;!?])', ' \\1', part)
+            part = re.sub(r'«[ \t\n]+', '« ', part)
+        out.append(part)
+    return ''.join(out)
+
+
 def write(rel, content):
+    if rel.endswith('.html'):
+        content = typo_html(content)
     p = os.path.join(ROOT, rel)
     os.makedirs(os.path.dirname(p), exist_ok=True)
     with open(p, 'w', encoding='utf8') as f:
