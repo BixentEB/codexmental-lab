@@ -305,7 +305,12 @@ function gallery(p) {
   return `<section class="block shots-block" data-shots="${esc(p.id)}" ${galleryItems(p).length ? '' : 'hidden'}><h2 class="sec"><span class="dot"></span>Captures</h2><div class="gallery" role="list">${galleryHTML(p)}</div></section>`;
 }
 const EXTS = ['webp', 'png', 'jpg', 'jpeg'];
-function probe(src) { return new Promise(ok => { const im = new Image(); im.onload = () => ok(true); im.onerror = () => ok(false); im.src = src; }); }
+/* inventaire des images (data/images.json, généré par tools/build_static.py) : on vérifie qu'un fichier existe
+   sans le demander au serveur ; si l'inventaire manque, on retombe sur l'ancien test par chargement */
+window.LAB_IMGS = window.LAB_IMGS || fetch('data/images.json', { cache: 'no-cache' }).then(r => r.ok ? r.json() : null).then(a => a ? new Set(a) : null).catch(() => null);
+function imgPath(src) { return /^(https?:|data:)/.test(src) ? null : src.replace(/^\.?\//, '').replace(/[?#].*$/, ''); }
+function loadProbe(src) { return new Promise(ok => { const im = new Image(); im.onload = () => ok(true); im.onerror = () => ok(false); im.src = src; }); }
+async function probe(src) { const set = await window.LAB_IMGS, k = imgPath(src); return set && k ? set.has(k) : loadProbe(src); }
 async function findShots(p) {
   if (p._auto) return;
   const found = [];

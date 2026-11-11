@@ -102,7 +102,11 @@ function markSettings() {
 const oldCache = new Map();
 function oldSrc(src) { const m = /^(.*?)(\.(webp|png|jpe?g|svg))(\?.*)?$/i.exec(src); return m && !/-old$/.test(m[1]) ? m[1] + '-old' + m[2] : null; }
 function probe(src) {
-  if (!oldCache.has(src)) oldCache.set(src, new Promise(ok => { const im = new Image(); im.onload = () => ok(true); im.onerror = () => ok(false); im.src = src; }));
+  if (!oldCache.has(src)) oldCache.set(src, Promise.resolve(window.LAB_IMGS).then(set => {
+    const k = /^(https?:|data:)/.test(src) ? null : src.replace(/^\.?\//, '').replace(/[?#].*$/, '');
+    if (set && k) return set.has(k);
+    return new Promise(ok => { const im = new Image(); im.onload = () => ok(true); im.onerror = () => ok(false); im.src = src; });
+  }));
   return oldCache.get(src);
 }
 function retro(scope) {

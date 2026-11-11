@@ -1,5 +1,5 @@
 name: Pages lisibles
-# Régénère projets/, atelier/ et sitemap.xml
+# Régénère projets/, atelier/, sitemap.xml et l'inventaire des images (data/images.json)
 # à chaque modification du catalogue ou des contenus.
 on:
   push:
@@ -10,6 +10,12 @@ on:
       - 'data/atelier.json'
       - 'data/news.json'
       - 'tools/build_static.py'
+      - '**/*.webp'
+      - '**/*.png'
+      - '**/*.jpg'
+      - '**/*.jpeg'
+      - '**/*.svg'
+      - '**/*.gif'
   workflow_dispatch:
 # Moindre privilège : aucun droit par défaut pour le workflow,
 # seul le job de génération peut écrire le contenu du dépôt (rien d'autre).
@@ -32,5 +38,5 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add projets atelier sitemap.xml
+          git add projets atelier sitemap.xml data/images.json
           git diff --cached --quiet || (git commit -m "Pages lisibles régénérées" && git push)

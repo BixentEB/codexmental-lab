@@ -258,6 +258,12 @@ def main():
         sm.append('  <url><loc>%s</loc>%s</url>' % (esc(u), ('<lastmod>%s</lastmod>' % d) if d else ''))
     sm.append('</urlset>')
     write('sitemap.xml', '\n'.join(sm) + '\n')
+    # inventaire des images : le site s'en sert pour trouver bannières, logos, captures et versions « old »
+    # sans tester des adresses au hasard (plus d'erreurs 404 dans la console)
+    imgs = sorted(os.path.relpath(os.path.join(dp, f), ROOT).replace(os.sep, '/')
+                  for dp, ds, fs in os.walk(ROOT) if not ds.__setitem__(slice(None), [d for d in ds if not d.startswith('.')])
+                  for f in fs if re.search(r'\.(webp|png|jpe?g|gif|svg|avif)$', f, re.I))
+    write('data/images.json', json.dumps(imgs, ensure_ascii=False, indent=0) + '\n')
     print('%d pages générées, exclues : %s' % (len(listing), ', '.join(skipped) or 'aucune'))
     print('%d sans date' % sum(1 for x in listing if not x[3]))
 
