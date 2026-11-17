@@ -30,7 +30,7 @@ main,
    ========================================== */
 
 .sidebar,
-[class*="sidebar"]:not(header),
+[class*="sidebar"]:not(header, main, [role="main"], [data-app-shell-main-surface]),
 .bg-token-sidebar-surface-primary {
     background: #0D1428 !important;
 }
@@ -668,14 +668,12 @@ kbd {
 }
 
 /* Fermeture : rose discret */
-[aria-label="Commandes de la visionneuse"]
-button[aria-label="Fermer la visionneuse"] {
+[aria-label="Commandes de la visionneuse"] button[aria-label="Fermer la visionneuse"] {
     color: #F0A6B5 !important;
 }
 
 /* Fermeture au survol */
-[aria-label="Commandes de la visionneuse"]
-button[aria-label="Fermer la visionneuse"]:hover {
+[aria-label="Commandes de la visionneuse"] button[aria-label="Fermer la visionneuse"]:hover {
     background: #71334B !important;
     color: #FFFFFF !important;
 }

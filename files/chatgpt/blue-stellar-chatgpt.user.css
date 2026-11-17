@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           ChatGPT — Blue Stellar
 @namespace      lab.codexmental.com
-@version        1.1.0
+@version        1.1.1
 @description    Thème nuit étoilée pour ChatGPT : fond étoilé, étoiles filantes, projets en capsules, couleurs indigo, visionneuse harmonisée.
 @author         Bixent (Codex Mental)
 @homepageURL    https://lab.codexmental.com/#/p/css-chatgpt
@@ -41,7 +41,7 @@ main,
    ========================================== */
 
 .sidebar,
-[class*="sidebar"]:not(header),
+[class*="sidebar"]:not(header, main, [role="main"], [data-app-shell-main-surface]),
 .bg-token-sidebar-surface-primary {
     background: #0D1428 !important;
 }
@@ -679,14 +679,12 @@ kbd {
 }
 
 /* Fermeture : rose discret */
-[aria-label="Commandes de la visionneuse"]
-button[aria-label="Fermer la visionneuse"] {
+[aria-label="Commandes de la visionneuse"] button[aria-label="Fermer la visionneuse"] {
     color: #F0A6B5 !important;
 }
 
 /* Fermeture au survol */
-[aria-label="Commandes de la visionneuse"]
-button[aria-label="Fermer la visionneuse"]:hover {
+[aria-label="Commandes de la visionneuse"] button[aria-label="Fermer la visionneuse"]:hover {
     background: #71334B !important;
     color: #FFFFFF !important;
 }
