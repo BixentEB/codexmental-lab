@@ -700,6 +700,15 @@
      "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.3.3/Ligne4-0.3.3-windows-portable.zip",
      "version": "0.3.3",
      "size": "16 Mo"
+    },
+    {
+     "label": "Versions classiques Excel + Google Sheets",
+     "url": "files/ligne4/Ligne4-versions-classiques.zip",
+     "size": "0,7 Mo"
+    },
+    {
+     "label": "Copier la version Google Sheets",
+     "url": "https://docs.google.com/spreadsheets/d/1SGnFgoy8jWDFVvqs9FUBO4byk2jAlS_TVG2aufOGAWM/copy"
     }
    ],
    "tags": [
@@ -710,7 +719,24 @@
     "Sport",
     "En développement"
    ],
-   "published": "2026-11-20"
+   "published": "2026-11-20",
+   "sections": [
+    {
+     "title": "Les versions classiques",
+     "text": "Avant l'appli, Ligne 4 a été un classeur Excel, puis une feuille Google Sheets. Elles restent disponibles pour ceux qui préfèrent le tableur : règles à cocher, propositions de groupes, tournoi, archives et historique. Les ajouts de l'appli (niveaux et bonnets, catégories FFN, QR codes, profils nageur) n'y sont pas.",
+     "list": [
+      "Excel (hors ligne) : ouvrir Relais_Natation.xlsm et cliquer sur « Activer le contenu ». Si les macros sont bloquées : clic droit sur le fichier › Propriétés › Débloquer.",
+      "Google Sheets (en ligne) : le bouton crée votre propre copie dans votre Drive ; le menu Relais apparaît après rechargement, à autoriser une fois.",
+      "Le LISEZ-MOI du zip détaille les deux versions et le dépannage des boutons Excel."
+     ],
+     "tags": [
+      "Excel",
+      "Google Sheets",
+      "Macros VBA",
+      "Apps Script"
+     ]
+    }
+   ]
   },
   {
    "id": "mini-rpg",
