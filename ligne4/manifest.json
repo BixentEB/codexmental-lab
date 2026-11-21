@@ -1,11 +1,11 @@
 {
-    "name": "relaisapp",
-    "short_name": "relaisapp",
+    "name": "Ligne 4",
+    "short_name": "Ligne 4",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0077B6",
     "theme_color": "#0077B6",
-    "description": "A new Flutter project.",
+    "description": "Relais de natation équilibrés",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
