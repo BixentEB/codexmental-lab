@@ -664,43 +664,46 @@
     "Trois profils : entraîneur, organisateur de tournoi, nageur",
     "Groupes d'entraînement avec QR code d'invitation, fiche du nageur partagée par QR",
     "Niveaux du club (bonnets, groupes de niveau) et catégories d'âge FFN calculées",
-    "Sauvegarde, import / export Excel, PDF à imprimer ou partager",
+    "Sauvegardes automatiques sans écrasement (5 dernières, une par jour, une par semaine), copie de sécurité avant toute opération risquée, copie automatique dans un dossier sur ordinateur (Drive, clé USB)",
+    "Import / export Excel, PDF à imprimer ou partager",
+    "Mise à jour en un bouton depuis l'appli, notes de version",
     "Couleurs et logo du club, thème clair ou sombre, français et anglais"
    ],
    "tech": "Flutter, Dart, Hive, PDF, Excel, QR codes",
-   "state": "Version 0.4.2, en test auprès du club",
+   "state": "Version 0.5.0, en test auprès du club",
    "access": "Téléchargement libre (Android, Windows) et version Web",
    "diffusion": "Gratuite ; Play Store envisagé après validation par le club",
    "license": "",
-   "next": "Chronomètre bord de bassin, séances d'entraînement, sauvegarde Google Drive, groupes en ligne, mises à jour intégrées, autres langues",
+   "next": "Chronomètre bord de bassin, séances d'entraînement, groupes en ligne, autres langues",
    "download": "Version de test : sur Android, autoriser l'installation depuis cette source ; sur Windows, « Informations complémentaires › Exécuter quand même » si SmartScreen s'affiche.",
    "downloads": [
     {
      "label": "Ouvrir la version Web",
      "url": "https://lab.codexmental.com/ligne4/",
-     "version": "0.4.2"
+     "version": "0.5.0"
     },
     {
      "label": "Android (téléphones récents)",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.4.2/Ligne4-0.4.2-arm64.apk",
-     "version": "0.4.2"
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.0/Ligne4-0.5.0-arm64.apk",
+     "version": "0.5.0",
+     "size": "29 Mo"
     },
     {
      "label": "Android (universel)",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.4.2/Ligne4-0.4.2.apk",
-     "version": "0.4.2",
-     "size": "78 Mo"
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.0/Ligne4-0.5.0.apk",
+     "version": "0.5.0",
+     "size": "80 Mo"
     },
     {
      "label": "Windows",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.4.2/Ligne4-0.4.2-windows.zip",
-     "version": "0.4.2",
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.0/Ligne4-0.5.0-windows.zip",
+     "version": "0.5.0",
      "size": "16 Mo"
     },
     {
      "label": "Windows portable (clé USB)",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.4.2/Ligne4-0.4.2-windows-portable.zip",
-     "version": "0.4.2",
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.0/Ligne4-0.5.0-windows-portable.zip",
+     "version": "0.5.0",
      "size": "16 Mo"
     },
     {
@@ -738,7 +741,8 @@
       "Apps Script"
      ]
     }
-   ]
+   ],
+   "changelog": "https://bixenteb.github.io/codex-updates/apps/ligne4/changelog.json"
   },
   {
    "id": "mini-rpg",

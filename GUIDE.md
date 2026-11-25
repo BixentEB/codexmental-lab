@@ -130,6 +130,20 @@ Dans le champ `downloads` du projet :
 
 Seuls `label` et `url` sont nécessaires. Le lien peut pointer vers une « release » GitHub, un Google Drive, etc. Pour un petit fichier, vous pouvez aussi le déposer dans `files/<identifiant>/` et mettre `"url": "files/noxdl/NoxDL.zip"`.
 
+## Notes de version (facultatif)
+
+Pour une appli publiée avec des versions, la fiche peut afficher un bloc « Notes de version », replié par défaut : une ligne par version (numéro en gras, date, titre), les détails s'ouvrent au clic.
+
+```json
+"changelog": "https://bixenteb.github.io/codex-updates/apps/ligne4/changelog.json"
+```
+
+Le fichier `changelog.json` est produit par le script de publication de l'appli et déposé à côté de `latest.json` dans `codex-updates`. On peut aussi écrire les notes directement dans la fiche, au même format :
+
+```json
+"changelog": { "1.0": { "date": "2026-12-01", "titre": { "fr": "Première version" }, "fr": "Résumé en une ligne.", "details": { "fr": ["Détail 1", "Détail 2"] } } }
+```
+
 ## Captures avec légende (facultatif)
 
 ```json

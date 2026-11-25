@@ -1,0 +1,79 @@
+{
+  "0.5.0": {
+    "date": "2026-11-25",
+    "titre": {
+      "fr": "Sauvegardes et mises à jour",
+      "en": "Backups and updates"
+    },
+    "fr": "Sauvegardes automatiques sans écrasement et mise à jour en un bouton.",
+    "en": "Automatic backups that never overwrite, and one-button updates.",
+    "details": {
+      "fr": [
+        "Sauvegarde automatique quelques secondes après chaque modification, sans jamais écraser la précédente : les 5 dernières, une par jour sur 7 jours, une par semaine sur 4 semaines",
+        "Copie de sécurité avant toute restauration, effacement ou mise à jour : on peut toujours revenir en arrière",
+        "Fichiers de sauvegarde vérifiés par une empreinte, aperçu avant de restaurer",
+        "Sur ordinateur, copie automatique dans un ou plusieurs dossiers (Google Drive, OneDrive, clé USB)",
+        "Rappel quand aucune copie n'a été gardée hors de l'appareil depuis 7 jours",
+        "Mise à jour en un bouton : vérification une fois par jour, téléchargement vérifié, installation sur Android et Windows",
+        "Nouvelle signature Android : exporter ses données (Réglages › Données), désinstaller une fois l'ancienne version, installer la 0.5.0 puis restaurer le fichier"
+      ],
+      "en": [
+        "Automatic backup a few seconds after each change, never overwriting the previous one: last 5, one per day for 7 days, one per week for 4 weeks",
+        "Safety copy before any restore, erase or update: you can always go back",
+        "Backup files checked with a checksum, preview before restoring",
+        "On computers, automatic copy to one or more folders (Google Drive, OneDrive, USB stick)",
+        "Reminder when no copy has been kept outside the device for 7 days",
+        "One-button updates: daily check, verified download, install on Android and Windows",
+        "New Android signature: export your data (Settings › Data), uninstall the old version once, install 0.5.0, then restore the file"
+      ]
+    }
+  },
+  "0.4.2": {
+    "date": "2026-11-21",
+    "titre": {
+      "fr": "Interclubs FFN",
+      "en": "FFN Interclubs"
+    },
+    "fr": "Composition des équipes des Interclubs FFN avec les points de la table de cotation fédérale.",
+    "en": "FFN Interclubs team builder with points from the federal scoring table.",
+    "details": {
+      "fr": [
+        "Équipes de 10, filles et garçons séparés, une épreuve individuelle par nageur",
+        "Relais 10×50 NL, 4×200 NL et 4×100 4 nages",
+        "Points de la table de cotation fédérale exacte",
+        "Estimation des temps manquants, remplacements à la main",
+        "Import du tableau de records de l'entraîneur, feuille d'engagement en PDF"
+      ],
+      "en": [
+        "Teams of 10, girls and boys separate, one individual event per swimmer",
+        "10×50 free, 4×200 free and 4×100 medley relays",
+        "Points from the exact federal scoring table",
+        "Estimates for missing times, manual swaps",
+        "Import of the coach's records sheet, PDF entry sheet"
+      ]
+    }
+  },
+  "0.3.3": {
+    "date": "2026-11-21",
+    "titre": {
+      "fr": "Première version de test",
+      "en": "First test version"
+    },
+    "fr": "Première version publique de test.",
+    "en": "First public test version.",
+    "details": {
+      "fr": [
+        "Niveaux et bonnets du club",
+        "Année de naissance et catégories FFN calculées",
+        "Version portable Windows",
+        "APK allégé pour les téléphones récents"
+      ],
+      "en": [
+        "Club levels and caps",
+        "Year of birth and calculated FFN age groups",
+        "Portable Windows version",
+        "Lighter APK for recent phones"
+      ]
+    }
+  }
+}

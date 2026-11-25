@@ -480,6 +480,20 @@ html:not(.leaving)::after { animation: arrive .7s ease-out 1; }
 .dl-list small { opacity: .75; font-weight: 400; margin-left: 4px; }
 .dl-empty p { margin: 0; font-size: 14px; color: var(--soft); line-height: 1.6; }
 .shots-block .gallery { margin-top: 0; }
+/* notes de version : bloc replié par défaut, une ligne repliable par version */
+.relnotes > summary { display: flex; align-items: baseline; gap: 12px; cursor: pointer; list-style: none; }
+.relnotes > summary::-webkit-details-marker, .relnote > summary::-webkit-details-marker { display: none; }
+.relnotes > summary .sec { margin: 0; }
+.relnotes > summary small { color: var(--mute); }
+.relnotes > summary::after { content: '▸'; margin-left: auto; color: var(--mute); }
+.relnotes[open] > summary::after { content: '▾'; }
+.relnotes-list { margin-top: 12px; display: grid; gap: 6px; }
+.relnote > summary { cursor: pointer; list-style: none; padding: 6px 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; border-top: 1px dashed var(--line); }
+.relnote > summary::before { content: '▸'; color: var(--mute); }
+.relnote[open] > summary::before { content: '▾'; }
+.relnote > summary small { color: var(--mute); }
+.relnote-body { padding: 4px 0 8px 18px; font-size: 14px; line-height: 1.6; color: var(--soft); }
+.relnote-body p { margin: 0 0 6px; }
 @media (max-width: 1700px) { .exit-btn .set-txt { display: none; } .exit-btn { padding-inline: 10px; } }
 
 /* le menu Univers passe toujours au-dessus du décor et défile s'il est trop long */

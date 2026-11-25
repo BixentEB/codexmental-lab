@@ -260,6 +260,7 @@ function pageProject(id) {
       ${list('Pistes de développement', p.dev)}
       ${sectionsBlock(p)}
       ${downloadsBlock(p)}
+      ${p.changelog ? `<section class="block relnotes-block" data-relnotes="${esc(p.id)}" hidden></section>` : ''}
       ${toolsBlock(p)}
       ${showcaseBlock(p)}
       ${filesBlock(p)}
@@ -338,6 +339,35 @@ async function fillBrand(p) {
   const es = view.querySelector(`[data-emojis="${CSS.escape(p.id)}"]`);
   if (es && B.emojis.length) { es.querySelector('.emojis').innerHTML = B.emojis.map(e => typeof e === 'string' ? `<img src="${esc(e)}" alt="" loading="lazy">` : `<figure class="emo"><img src="${esc(e.src)}" alt="${esc(e.label || '')}" loading="lazy">${e.label ? `<figcaption>${esc(e.label)}</figcaption>` : ''}</figure>`).join(''); es.hidden = false; }
   updateTube();
+}
+// notes de version : "changelog": "https://…/changelog.json" (publié avec chaque version) ou l'objet lui-même
+// format : { "0.5.0": { "date": "AAAA-MM-JJ", "titre": { "fr": "…" }, "fr": "résumé", "details": { "fr": ["…"] } }, … }
+function cmpVersions(a, b) {
+  const x = String(a).split('.').map(n => parseInt(n, 10) || 0), y = String(b).split('.').map(n => parseInt(n, 10) || 0);
+  for (let i = 0; i < Math.max(x.length, y.length); i++) { const d = (x[i] || 0) - (y[i] || 0); if (d) return d; }
+  return 0;
+}
+function relnotesHTML(cl) {
+  const fr = m => (m && typeof m === 'object' ? (m.fr || m.en || Object.values(m)[0] || '') : (m || ''));
+  const versions = Object.keys(cl || {}).sort((a, b) => cmpVersions(b, a));
+  if (!versions.length) return '';
+  const items = versions.map(v => {
+    const n = cl[v] || {}, titre = fr(n.titre), details = (n.details && (n.details.fr || n.details.en)) || [];
+    return `<details class="relnote"><summary><b>${esc(v)}</b>${n.date ? ` <small>${esc(n.date)}</small>` : ''}${titre ? ` <span>${esc(titre)}</span>` : ''}</summary>
+      <div class="relnote-body">${n.fr ? `<p>${esc(n.fr)}</p>` : ''}${details.length ? `<ul class="px-list">${details.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</div></details>`;
+  }).join('');
+  return `<details class="box relnotes"><summary><h2 class="sec"><span class="dot"></span>Notes de version</h2><small>${versions.length} version${versions.length > 1 ? 's' : ''}</small></summary><div class="relnotes-list">${items}</div></details>`;
+}
+async function fillRelnotes(p) {
+  if (!p.changelog) return;
+  let cl = p.changelog;
+  if (typeof cl === 'string') {
+    try { const r = await fetch(cl, { cache: 'no-cache' }); if (!r.ok) return; cl = await r.json(); } catch (e) { return; }
+  }
+  const sec = view.querySelector(`[data-relnotes="${CSS.escape(p.id)}"]`);
+  const html = relnotesHTML(cl);
+  if (!sec || !html) return;
+  sec.innerHTML = html; sec.hidden = false; updateTube();
 }
 async function fillShots(p) {
   await findShots(p);
@@ -607,7 +637,7 @@ async function route() {
   }
   view.innerHTML = html;
   view.scrollTop = 0;
-  if (parts[0] === 'p') { const pp = DATA.projects.find(x => x.id === parts[1]); if (pp) { fillShots(pp); fillBrand(pp); } }
+  if (parts[0] === 'p') { const pp = DATA.projects.find(x => x.id === parts[1]); if (pp) { fillShots(pp); fillBrand(pp); fillRelnotes(pp); } }
   const t = TABS.find(x => x.id === tab) || TABS[0];
   tabsEl.querySelectorAll('.tab[role="tab"]').forEach(a => a.setAttribute('aria-selected', a.dataset.id === t.id));
   lab.style.setProperty('--accent', t.color);
