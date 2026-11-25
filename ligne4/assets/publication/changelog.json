@@ -1,6 +1,37 @@
 {
-  "0.5.0": {
+  "0.5.1": {
     "date": "2026-11-25",
+    "titre": {
+      "fr": "Règles en pack",
+      "en": "Rules in a pack"
+    },
+    "fr": "Les règles de la FFN rangées dans un pack de règles, et une correction de la fenêtre de couleur.",
+    "en": "FFN rules moved into a rules pack, and a fix for the color picker.",
+    "details": {
+      "fr": [
+        "Table de cotation, épreuves, catégories d'âge et modèle des Interclubs rangés dans un pack de règles FFN : une nouvelle table pourra être livrée sans nouvelle version de l'appli",
+        "Aucun changement de calcul : mêmes points, mêmes équipes",
+        "Fenêtre de choix de couleur lisible sur ordinateur et sur le Web",
+        "Première mise à jour livrée par le bouton « Mettre à jour » de la 0.5.0",
+        "Le pack décrit maintenant les Interclubs U11, U13, U15 et Maîtres en plus des Toutes catégories (calcul complet à venir).",
+        "Au-delà de 18 ans, la catégorie s'appelle « Seniors », comme à la FFN.",
+        "Table de cotation vérifiée point par point avec les fichiers officiels FFNex, et complétée (1000 NL, relais 4×50 dos, brasse, papillon, 8×, 12×, 24×…)",
+        "Coefficients de rajeunissement Maîtres intégrés : le calcul des points Maîtres est prêt"
+      ],
+      "en": [
+        "Scoring table, events, age groups and the Interclubs model moved into an FFN rules pack: a new table can be shipped without a new app version",
+        "No change in calculations: same points, same teams",
+        "Color picker readable on computers and on the Web",
+        "First update delivered through the 0.5.0 « Update » button",
+        "The pack now describes U11, U13, U15 and Masters Interclubs besides the open format (full calculation coming).",
+        "Above 18, the category is now called \"Seniors\", as in the FFN rules.",
+        "Scoring table checked point by point against the official FFNex files and extended (1000 free, 4×50 back, breast, fly relays, 8×, 12×, 24×…)",
+        "Masters age coefficients included: Masters points calculation is ready"
+      ]
+    }
+  },
+  "0.5.0": {
+    "date": "",
     "titre": {
       "fr": "Sauvegardes et mises à jour",
       "en": "Backups and updates"

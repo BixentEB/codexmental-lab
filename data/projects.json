@@ -656,7 +656,8 @@
    "summary": "Composer des relais équilibrés et les équipes des Interclubs FFN à partir des temps des nageurs, selon des règles qu'on coche.",
    "detail": "Né d'un problème soumis par un club de natation de Vienne (Isère) : répartir les nageurs en groupes de relais équilibrés, quand certains sont bons dans plusieurs nages et qu'un nageur peut nager plusieurs relais mais n'appartient qu'à un seul groupe. D'abord un fichier Excel, puis une version Google Sheets, et enfin une application pour l'entraîneur, l'organisateur de tournoi et le nageur. Son nom change selon la langue : Lane 4, Calle 4, Bahn 4…",
    "features": [
-    "Interclubs FFN : équipes de 10 filles et garçons, une épreuve par nageur, relais 10×50, 4×200 NL et 4×100 4 nages, points de la table de cotation fédérale",
+    "Interclubs FFN : équipes de 10 filles et garçons, une épreuve par nageur, relais 10×50, 4×200 NL et 4×100 4 nages, points de la table de cotation fédérale (vérifiée avec les fichiers officiels FFNex)",
+    "Règles des fédérations rangées dans un pack : formats Interclubs U11, U13, U15, toutes catégories et Maîtres, coefficients Maîtres",
     "Import du tableau de records de l'entraîneur (Excel), feuille d'engagement en PDF",
     "Règles à cocher : 4 nages ou nage libre, mixité, catégories, niveaux / bonnets, tout le monde nage…",
     "Plusieurs propositions de groupes équilibrés, à comparer puis valider",
@@ -670,7 +671,7 @@
     "Couleurs et logo du club, thème clair ou sombre, français et anglais"
    ],
    "tech": "Flutter, Dart, Hive, PDF, Excel, QR codes",
-   "state": "Version 0.5.0, en test auprès du club",
+   "state": "Version 0.5.1, en test auprès du club",
    "access": "Téléchargement libre (Android, Windows) et version Web",
    "diffusion": "Gratuite ; Play Store envisagé après validation par le club",
    "license": "",
@@ -684,26 +685,26 @@
     },
     {
      "label": "Android (téléphones récents)",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.0/Ligne4-0.5.0-arm64.apk",
-     "version": "0.5.0",
-     "size": "29 Mo"
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.1/Ligne4-0.5.1-arm64.apk",
+     "version": "0.5.1",
+     "size": "29,5 Mo"
     },
     {
      "label": "Android (universel)",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.0/Ligne4-0.5.0.apk",
-     "version": "0.5.0",
-     "size": "80 Mo"
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.1/Ligne4-0.5.1.apk",
+     "version": "0.5.1",
+     "size": "82 Mo"
     },
     {
      "label": "Windows",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.0/Ligne4-0.5.0-windows.zip",
-     "version": "0.5.0",
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.1/Ligne4-0.5.1-windows.zip",
+     "version": "0.5.1",
      "size": "16 Mo"
     },
     {
      "label": "Windows portable (clé USB)",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.0/Ligne4-0.5.0-windows-portable.zip",
-     "version": "0.5.0",
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.1/Ligne4-0.5.1-windows-portable.zip",
+     "version": "0.5.1",
      "size": "16 Mo"
     },
     {
