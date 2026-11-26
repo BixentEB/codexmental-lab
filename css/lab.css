@@ -222,6 +222,7 @@ a { color: var(--accent); }
 .anecdote p:last-child { margin-bottom: 0; }
 .shot { margin: 22px 3px; }
 .shot img { width: 100%; display: block; box-shadow: 0 0 0 3px var(--edge); }
+.shot video { width: 100%; display: block; aspect-ratio: 16 / 9; background: #0b1830; box-shadow: 0 0 0 3px var(--edge); }
 .shot figcaption { font-size: 12.5px; color: var(--mute); margin-top: 10px; }
 .pager { display: flex; justify-content: space-between; gap: 14px; margin: 34px 3px 0; flex-wrap: wrap; }
 .pager a { font-family: var(--f-vt); font-size: 20px; color: var(--ink); text-decoration: none; background: #0f181b; padding: 6px 12px; }

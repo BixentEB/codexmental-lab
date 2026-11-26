@@ -63,6 +63,7 @@ Chaque projet ressemble à ceci :
 | `name` | le nom du projet |
 | `cat` | l'étagère : `applications`, `logiciels`, `web`, `jeux` ou `ia` (Outils IA) |
 | `status` | `cours` (en cours) ou `reflexion` (en réflexion) |
+| `video`, `videoPoster`, `videoAlt` | une vidéo de présentation sur la fiche (fichier .mp4 dans `img/projets/<id>/`), son image d'attente et sa légende |
 | `accueil` | `true` pour placer le projet en tête de « En cours » sur l'accueil (4 cartes au plus) |
 | `platform` | sous le titre (Windows, Android…) |
 | `tagline` | la petite phrase entre guillemets, sous le titre |

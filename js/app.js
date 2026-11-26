@@ -253,6 +253,7 @@ function pageProject(id) {
       <section class="block emoji-block" data-emojis="${esc(p.id)}" hidden><h2 class="sec"><span class="dot"></span>Son univers visuel</h2><div class="emojis"></div></section>
       ${anecdoteBlock(p)}
       ${p.showcase ? '' : gallery(p)}
+      ${p.video ? `<figure class="shot video"><video src="${esc(p.video)}"${p.videoPoster ? ` poster="${esc(p.videoPoster)}"` : ''} controls playsinline preload="metadata"></video><figcaption>${esc(p.videoAlt || '')}</figcaption></figure>` : ''}
       ${p.shot ? `<figure class="shot"><img src="${esc(p.shot)}" alt="${esc(p.shotAlt || '')}" loading="lazy"><figcaption>${esc(p.shotAlt || '')}</figcaption></figure>` : ''}
       <div class="d-cols">
         ${list('Fonctionnalités', p.features)}

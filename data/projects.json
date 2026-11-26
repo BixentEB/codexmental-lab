@@ -747,7 +747,10 @@
     }
    ],
    "changelog": "https://bixenteb.github.io/codex-updates/apps/ligne4/changelog.json",
-   "accueil": true
+   "accueil": true,
+   "video": "img/projets/ligne4/presentation.mp4",
+   "videoPoster": "img/projets/ligne4/presentation.jpg",
+   "videoAlt": "Présentation de Ligne 4 en une minute (club et nageurs fictifs)."
   },
   {
    "id": "mini-rpg",
