@@ -170,7 +170,8 @@ function pageHome() {
       <small>${ps.length ? `${n1} en cours${n2 ? ` · ${n2} en réflexion` : ''}` : 'Bientôt sur l\'étagère'}</small>
     </a>`;
   }).join('') + `<a class="shelf" href="#/atelier" style="--c:#c9a6ff">${pix('book', '#c9a6ff', 30)}<b>Atelier${tabBadge('atelier')}</b><small>${ATELIER.sections.reduce((s, x) => s + x.items.length, 0)} dossiers d'idées</small></a>`;
-  const now = DATA.projects.filter(p => p.status === 'cours').slice(0, 3).map(card).join('');
+  // « En cours » de l'accueil : les fiches marquées "accueil": true d'abord, puis les autres projets en cours (4 au plus)
+  const now = DATA.projects.filter(p => p.status === 'cours').sort((a, b) => (b.accueil ? 1 : 0) - (a.accueil ? 1 : 0)).slice(0, 4).map(card).join('');
   if (window.LAB && window.LAB.universe === 'pro') {
     const nApps = DATA.projects.length, nCours = DATA.projects.filter(p => p.status === 'cours').length, nIdeas = ATELIER.sections.reduce((s2, x) => s2 + x.items.length, 0);
     return `<section class="pro-hero">

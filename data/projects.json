@@ -656,9 +656,12 @@
    "summary": "Composer des relais équilibrés et les équipes des Interclubs FFN à partir des temps des nageurs, selon des règles qu'on coche.",
    "detail": "Né d'un problème soumis par un club de natation de Vienne (Isère) : répartir les nageurs en groupes de relais équilibrés, quand certains sont bons dans plusieurs nages et qu'un nageur peut nager plusieurs relais mais n'appartient qu'à un seul groupe. D'abord un fichier Excel, puis une version Google Sheets, et enfin une application pour l'entraîneur, l'organisateur de tournoi et le nageur. Son nom change selon la langue : Lane 4, Calle 4, Bahn 4…",
    "features": [
+    "Nouvelle allure (0.6.0) : nouveau logo, thème Marine sombre, menu réorganisé (Effectif, Relais du club, Compétitions) et accueil avec vos compétitions et vos activités",
     "Interclubs FFN : équipes de 10 filles et garçons, une épreuve par nageur, relais 10×50, 4×200 NL et 4×100 4 nages, points de la table de cotation fédérale (vérifiée avec les fichiers officiels FFNex)",
     "Règles des fédérations rangées dans un pack : formats Interclubs U11, U13, U15, toutes catégories et Maîtres, coefficients Maîtres",
     "Import du tableau de records de l'entraîneur (Excel), feuille d'engagement en PDF",
+    "Tableau des temps : références, records et qualifications (25 m / 50 m), colonnes au choix, export des records en Excel et modèle à remplir",
+    "Premier lancement guidé en un écran, mode Découverte avec des nageurs d'exemple et petit tutoriel",
     "Règles à cocher : 4 nages ou nage libre, mixité, catégories, niveaux / bonnets, tout le monde nage…",
     "Plusieurs propositions de groupes équilibrés, à comparer puis valider",
     "Tournoi : saisie des temps réels, archives et historique de progression",
@@ -668,12 +671,12 @@
     "Sauvegardes automatiques sans écrasement (5 dernières, une par jour, une par semaine), copie de sécurité avant toute opération risquée, copie automatique dans un dossier sur ordinateur (Drive, clé USB)",
     "Import / export Excel, PDF à imprimer ou partager",
     "Mise à jour en un bouton depuis l'appli, notes de version",
-    "Couleurs et logo du club, thème clair ou sombre, français et anglais"
+    "Couleurs et logo du club (ou ses initiales), thème sombre ou clair, français et anglais ; version Web installable sur l'écran d'accueil (Android, iPhone, ordinateur)"
    ],
    "tech": "Flutter, Dart, Hive, PDF, Excel, QR codes",
-   "state": "Version 0.5.1, en test auprès du club",
+   "state": "Version 0.6.0, en test",
    "access": "Téléchargement libre (Android, Windows) et version Web",
-   "diffusion": "Gratuite ; Play Store envisagé après validation par le club",
+   "diffusion": "Gratuite ; ouverte aux clubs et bêta-testeurs, Play Store envisagé",
    "license": "",
    "next": "Chronomètre bord de bassin, séances d'entraînement, groupes en ligne, autres langues",
    "download": "Version de test : sur Android, autoriser l'installation depuis cette source ; sur Windows, « Informations complémentaires › Exécuter quand même » si SmartScreen s'affiche.",
@@ -681,31 +684,31 @@
     {
      "label": "Ouvrir la version Web",
      "url": "https://lab.codexmental.com/ligne4/",
-     "version": "0.5.0"
+     "version": "0.6.0"
     },
     {
      "label": "Android (téléphones récents)",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.1/Ligne4-0.5.1-arm64.apk",
-     "version": "0.5.1",
-     "size": "29,5 Mo"
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.6.0/Ligne4-0.6.0-arm64.apk",
+     "version": "0.6.0",
+     "size": "29,9 Mo"
     },
     {
      "label": "Android (universel)",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.1/Ligne4-0.5.1.apk",
-     "version": "0.5.1",
-     "size": "82 Mo"
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.6.0/Ligne4-0.6.0.apk",
+     "version": "0.6.0",
+     "size": "83,3 Mo"
     },
     {
      "label": "Windows",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.1/Ligne4-0.5.1-windows.zip",
-     "version": "0.5.1",
-     "size": "16 Mo"
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.6.0/Ligne4-0.6.0-windows.zip",
+     "version": "0.6.0",
+     "size": "16,2 Mo"
     },
     {
      "label": "Windows portable (clé USB)",
-     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.5.1/Ligne4-0.5.1-windows-portable.zip",
-     "version": "0.5.1",
-     "size": "16 Mo"
+     "url": "https://github.com/BixentEB/codex-updates/releases/download/ligne4-v0.6.0/Ligne4-0.6.0-windows-portable.zip",
+     "version": "0.6.0",
+     "size": "16,2 Mo"
     },
     {
      "label": "Versions classiques Excel + Google Sheets",
@@ -743,7 +746,8 @@
      ]
     }
    ],
-   "changelog": "https://bixenteb.github.io/codex-updates/apps/ligne4/changelog.json"
+   "changelog": "https://bixenteb.github.io/codex-updates/apps/ligne4/changelog.json",
+   "accueil": true
   },
   {
    "id": "mini-rpg",
