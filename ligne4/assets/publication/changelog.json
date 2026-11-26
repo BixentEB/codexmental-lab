@@ -1,6 +1,43 @@
 {
+  "0.6.0": {
+    "date": "2026-11-26",
+    "titre": {
+      "fr": "Nouvelle allure",
+      "en": "A new look"
+    },
+    "fr": "Nouveau logo, nouveau thème Marine et une appli réorganisée : plus claire, moins de texte, tout à portée de main.",
+    "en": "New logo, new Marine theme and a reorganized app: clearer, less text, everything within reach.",
+    "details": {
+      "fr": [
+        "Nouveau logo : le « 4 » et son nageur, dans son couloir entre deux lignes d'eau",
+        "Thème Marine sombre par défaut ; les couleurs du club s'y intègrent en restant lisibles",
+        "Premier lancement : un seul écran pour choisir sa langue, son profil, ses activités et son club, puis une page d'ouverture qu'on peut passer",
+        "Menu réorganisé : Accueil, Effectif (Nageurs, Temps, Groupes), Relais du club (Équipes, Règles, Épreuves, Jour J), Compétitions, Archives, Réglages",
+        "Nouvel accueil avec vos compétitions et vos activités, et un mode Découverte avec des nageurs d'exemple et un petit tutoriel",
+        "Nouvel onglet Temps : tableau des temps de référence, des records et des qualifications (25 m / 50 m), avec noms figés, colonnes au choix et indication quand il reste des épreuves à droite",
+        "Compétitions : export des records en Excel et modèle Excel à remplir, compteurs filles/garçons, raccourci vers les nageurs sans records",
+        "Règles des relais du club regroupées en rubriques repliables, avec des interrupteurs et une page « Comprendre les règles »",
+        "Réglages en rubriques repliables ; langue dans une liste déroulante ; logo du club ou ses initiales",
+        "Version Web : guide pour l'installer sur l'écran d'accueil (Android, iPhone, ordinateur)",
+        "Petites finitions : pastilles F/G alignées, lignes qui ne se coupent plus n'importe où, logo plus visible"
+      ],
+      "en": [
+        "New logo: the « 4 » and its swimmer, in its lane between two lane ropes",
+        "Dark Marine theme by default; club colors blend in while staying readable",
+        "First launch: a single screen to pick your language, profile, activities and club, then an opening page you can skip",
+        "Reorganized menu: Home, Squad (Swimmers, Times, Groups), Club relays (Teams, Rules, Events, Race day), Competitions, Archives, Settings",
+        "New home with your competitions and activities, and a Discovery mode with sample swimmers and a short tutorial",
+        "New Times tab: reference times, records and qualifications (25 m / 50 m), with frozen names, selectable columns and a hint when more events are to the right",
+        "Competitions: export records to Excel and a fill-in Excel template, girls/boys counters, shortcut to swimmers without records",
+        "Club relay rules grouped in collapsible sections, with switches and an « Understand the rules » page",
+        "Settings in collapsible sections; language in a drop-down list; club logo or its initials",
+        "Web version: guide to install it on the home screen (Android, iPhone, computer)",
+        "Finishing touches: aligned F/G badges, lines that no longer break anywhere, more visible logo"
+      ]
+    }
+  },
   "0.5.1": {
-    "date": "2026-11-25",
+    "date": "",
     "titre": {
       "fr": "Règles en pack",
       "en": "Rules in a pack"
